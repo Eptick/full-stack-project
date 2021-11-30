@@ -12,7 +12,7 @@ import { RestaurantService } from 'src/app/services/restaurant.service';
 export class RestaurantOverviewComponent implements OnInit {
 
   public loading: boolean = true;
-  page: number = 1;
+  page: number = 10;
   public restaurants: Page<Restaurant>;
 
   constructor(private restaurantService: RestaurantService) {
@@ -24,6 +24,7 @@ export class RestaurantOverviewComponent implements OnInit {
   }
 
   public getRestaurants(page = 0) {
+    this.page = page;
     this.restaurantService.getRestaurants(page).pipe(
       catchError(error => {
         return throwError(() => error);
@@ -33,7 +34,25 @@ export class RestaurantOverviewComponent implements OnInit {
       })
     ).subscribe((data) => {
       this.restaurants = data as Page<Restaurant>;
+      if(this.restaurants.empty && this.restaurants.pageable.pageNumber > 0) {
+        this.getRestaurants(--page);
+      }
     })
   }
+
+  public deleteRestaurant(restaurantId: number) {
+    this.restaurantService.deleteRestaurant(restaurantId).pipe(
+      catchError(error => {
+        return throwError(() => error);
+      }),
+      finalize(() => {
+        this.loading = false;
+      })
+    ).subscribe((data) => {
+      this.getRestaurants(this.page)
+    })
+  }
+
+
 
 }

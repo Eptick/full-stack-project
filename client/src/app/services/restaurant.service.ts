@@ -15,9 +15,13 @@ export class RestaurantService {
     return this.http.get(`${this.base}/restaurants`, {params: { page }})
   }
 
-  public createRestaurant(restaurant: Restaurant) {
+  public createRestaurant(restaurant: Partial<Restaurant>) {
     return this.http
     .post(`${this.base}/restaurants`, restaurant)
+  }
+  public deleteRestaurant(restaurantId: number) {
+    return this.http
+    .delete(`${this.base}/restaurants/${restaurantId}`)
   }
 
   public addReview(content: string, rating: number, restaurant: number) {

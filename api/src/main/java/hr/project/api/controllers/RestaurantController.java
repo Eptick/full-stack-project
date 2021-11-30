@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -39,5 +40,11 @@ public class RestaurantController {
     @PostMapping("/{restaurantId}/review")
     public ResponseEntity<Review> addReview(@PathVariable("restaurantId") Long restaurantId, @RequestBody Review review) {
         return ResponseEntity.ok().body(this.restaurantService.createReview(restaurantId, review));
+    }
+
+    @DeleteMapping("/{restaurantId}")
+    public ResponseEntity<String> deleteRestaurant(@PathVariable("restaurantId") Long restaurantId) {
+        this.restaurantService.deleteRestaurant(restaurantId);
+        return ResponseEntity.ok().body(null);
     }
 }

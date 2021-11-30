@@ -34,6 +34,10 @@ public class RestaurantService {
         return restaurant.isPresent() ? restaurant.get() : null;
     }
 
+    public void deleteRestaurant(Long id) {
+        this.restaurantRepository.deleteById(id);
+    }
+
     public Page<Restaurant> getRestaurants(Pageable paegable) {
         return  restaurantRepository.findAll(paegable);
     }
