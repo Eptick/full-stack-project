@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-router-outlet',
-  templateUrl: './router-outlet.component.html',
-  styleUrls: ['./router-outlet.component.scss']
+  template: '<app-page-padding><router-outlet></router-outlet></app-page-padding>',
 })
 export class RouterOutletComponent implements OnInit {
 
