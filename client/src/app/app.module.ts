@@ -16,6 +16,13 @@ import { LogoComponent } from './logo/logo.component'
 import { AddBearerTokenInterceptor } from './add-bearer-token.interceptor';
 import { AuthErrorInterceptorInterceptor } from './auth-error-interceptor.interceptor';
 import { FooterComponent } from './footer/footer.component';
+import { IsAdminDirective } from './directives/is-admin.directive';
+import { InAdminSectionDirective } from './directives/in-admin-section.directive';
+import { RestaurantOverviewComponent } from './admin/restaurant/restaurant-overview/restaurant-overview.component';
+import { AdminOverviewComponent } from './admin/admin-overview/admin-overview.component';
+import { RouterOutletComponent } from './util/router-outlet/router-outlet.component';
+import { PagePaddingComponent } from './util/page-padding/page-padding.component';
+import { AdminNavigationComponent } from './admin/admin-navigation/admin-navigation.component';
 
 /** Http interceptor providers in outside-in order */
 export const httpInterceptorProviders = [
@@ -31,7 +38,14 @@ export const httpInterceptorProviders = [
     LoginLogoutButtonComponent,
     RegisterComponent,
     LogoComponent,
-    FooterComponent
+    FooterComponent,
+    IsAdminDirective,
+    InAdminSectionDirective,
+    RestaurantOverviewComponent,
+    AdminOverviewComponent,
+    RouterOutletComponent,
+    PagePaddingComponent,
+    AdminNavigationComponent
   ],
   imports: [
     BrowserModule,

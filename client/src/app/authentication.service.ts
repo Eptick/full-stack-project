@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { catchError, tap, throwError } from 'rxjs';
+import { catchError, take, tap, throwError } from 'rxjs';
 import { CONSTANTS } from './constants';
 import { Role } from './constants/Role';
 import JwtToken from './interfaces/JwtToken';
@@ -29,7 +29,7 @@ export class AuthenticationService {
     this.jwt.tokenChanged.subscribe((token) => {
       this.setLoggedIn(!!token);
     });
-    this.jwt.decodedTokenChanged.subscribe(this.handleDecodedToken);
+    this.jwt.decodedTokenChanged.subscribe(this.handleDecodedToken.bind(this));
   }
 
   private handleDecodedToken(decodedToken: JwtToken) {
@@ -62,7 +62,14 @@ export class AuthenticationService {
       .subscribe((data: { access_token?: string }) => {
         if (data.access_token) {
           this.jwt.setToken(data.access_token);
-          this.router.navigate(['/'], { queryParams: { state: 'logged-in' } });
+          const queryParams = {
+            state: 'logged-in'
+          }
+          if(this.isAdmin) {
+            this.router.navigate(["/admin"], { queryParams });
+          } else {
+            this.router.navigate(["/"], { queryParams });
+          }
         }
       });
   }

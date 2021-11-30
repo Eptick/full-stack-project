@@ -1,15 +1,14 @@
 package hr.project.api.controllers;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import hr.project.api.models.Restaurant;
@@ -26,13 +25,8 @@ public class RestaurantController {
     ReviewService reviewSerview;
     
     @GetMapping()
-    public ResponseEntity<List<Restaurant>> Index(
-        @RequestParam(defaultValue = "0") Integer pageNumber, 
-        @RequestParam(defaultValue = "10") Integer pageSize,
-        @RequestParam(defaultValue = "id") String sortBy
-    ) {
-        List<Restaurant> list = restaurantService.getRestaurants(pageNumber, pageSize, sortBy);
-        return ResponseEntity.ok().body(list);
+    public ResponseEntity<Page<Restaurant>> Index(Pageable pageable) {
+        return ResponseEntity.ok().body(restaurantService.getRestaurants(pageable));
     }
 
     @PostMapping()

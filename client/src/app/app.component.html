@@ -8,6 +8,7 @@
       <bal-navbar-menu>
         <bal-navbar-menu-start>
           <a class="navbar-item" [routerLink]="['/']"><bal-text >Home</bal-text></a>
+          <a class="navbar-item" [routerLink]="['/admin']" *isAdmin><bal-text >Admin</bal-text></a>
           <!-- <div class="navbar-item has-dropdown is-hoverable">
             <a class="navbar-link"><bal-text>Language</bal-text></a>
             <div class="navbar-dropdown">
@@ -24,6 +25,7 @@
         </bal-navbar-menu-end>
       </bal-navbar-menu>
     </bal-navbar>
+    <app-admin-navigation></app-admin-navigation>
   </header>
   <main>
     <div class="container">

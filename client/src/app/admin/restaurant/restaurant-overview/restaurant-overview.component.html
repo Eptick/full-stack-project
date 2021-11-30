@@ -1,0 +1,40 @@
+<div class="bal-buttons is-right">
+  <bal-button color="info" outlined icon="plus">Create new</bal-button>
+</div>
+<bal-spinner *ngIf="loading"></bal-spinner>
+<ng-container *ngIf="restaurants">
+  <bal-card>
+    <table class="table is-fullwidth is-striped is-hoverable p-0">
+      <thead>
+        <th>Selected</th>
+        <th>Name</th>
+        <th>Number of reviews</th>
+        <th></th>
+      </thead>
+      <tbody>
+
+        <tr *ngFor="let restaurant of restaurants.content">
+          <td>
+            <bal-checkbox id="checkbox1"></bal-checkbox>
+          </td>
+          <td>{{ restaurant.name }}</td>
+          <td><bal-tag size="small" color="success">Ready</bal-tag></td>
+          <td class="has-buttons">
+            <bal-button color="info" size="small" icon="edit" square outlined></bal-button>
+            <bal-button color="info" size="small" icon="trash" square outlined></bal-button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </bal-card>
+  <div class="py-4">
+    <bal-pagination
+      [attr.value]="restaurants.pageable.pageNumber + 1"
+      [attr.page-range]="3"
+      [attr.total-pages]="restaurants.totalPages"
+      (balChange)="getRestaurants($event.detail - 1)"
+    ></bal-pagination>
+  </div>
+</ng-container>
+
+

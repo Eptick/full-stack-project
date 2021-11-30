@@ -44,6 +44,8 @@ typescript                      4.4.4
     - zapamti url odakle si došao
     - možda dodati lokaciju na mapi, leaflet?
 
+    - Restaurants, dodati broj review-a
+
 ### backend
     - forgot password
     - username already exists ( do this with http codes)
@@ -51,7 +53,6 @@ typescript                      4.4.4
     - confirm account
     - update password / email
     - update account details
-
 
 
 Write an application to Review Restaurants

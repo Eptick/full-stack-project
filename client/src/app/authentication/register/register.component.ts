@@ -32,7 +32,6 @@ export class RegisterComponent {
         catchError(error => {
           console.log(error)
           this.registerErrorResponse = error;
-          debugger;
           return throwError(() => new Error(...error));
         })
       )

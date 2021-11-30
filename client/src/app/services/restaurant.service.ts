@@ -11,8 +11,8 @@ export class RestaurantService {
 
   constructor(private http: HttpClient) { }
 
-  public getRestaurants() {
-    return this.http.get(`${this.base}/restaurants`)
+  public getRestaurants(page: number = 0) {
+    return this.http.get(`${this.base}/restaurants`, {params: { page }})
   }
 
   public createRestaurant(restaurant: Restaurant) {

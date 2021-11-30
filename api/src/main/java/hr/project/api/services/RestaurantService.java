@@ -1,15 +1,11 @@
 package hr.project.api.services;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import hr.project.api.exceptions.ParentNotFoundException;
@@ -38,16 +34,8 @@ public class RestaurantService {
         return restaurant.isPresent() ? restaurant.get() : null;
     }
 
-    public List<Restaurant> getRestaurants(Integer pageNumber, Integer pageSize, String sortBy) {
-        Pageable paging = PageRequest.of(pageNumber, pageSize, Sort.by(sortBy));
- 
-        Page<Restaurant> pagedResult = restaurantRepository.findAll(paging);
-         
-        if(pagedResult.hasContent()) {
-            return pagedResult.getContent();
-        } else {
-            return new ArrayList<Restaurant>();
-        }
+    public Page<Restaurant> getRestaurants(Pageable paegable) {
+        return  restaurantRepository.findAll(paegable);
     }
 
     public Review createReview(Long restaurantId, Review dto) {

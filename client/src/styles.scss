@@ -7,3 +7,8 @@ $font-path: '~assets/fonts';
 // Only imports variables and mixins
 @import 'node_modules/@baloise/design-system-components/src/styles/global.utilities.scss';
 */
+
+
+.bal-buttons.is-right {
+  justify-content: end;
+}

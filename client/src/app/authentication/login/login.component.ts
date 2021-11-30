@@ -7,7 +7,7 @@ import { AuthenticationService } from 'src/app/authentication.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
   @ViewChild('login_form') form: NgForm;
 
   loginForm = new FormGroup({
@@ -17,9 +17,6 @@ export class LoginComponent implements OnInit {
 
   constructor(private auth: AuthenticationService) { }
 
-  ngOnInit() {
-    console.log(this.form)
-  }
   public onSubmit() {
     if(this.loginForm.valid) {
       this.auth.login(

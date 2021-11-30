@@ -1,0 +1,9 @@
+<div class="container" *isInAdminSection>
+  <!-- action action-label="Action" -->
+  <bal-tabs  data-test-id="tabs">
+    <bal-tab-item value="tab-a" label="Dashboard"  prevent="false" (balNavigate)="navigate(['/admin'])" [active]="url === '/admin'"></bal-tab-item>
+    <bal-tab-item value="tab-b" label="Restaurants" prevent="false" (balNavigate)="navigate(['/admin/restaurants'])" [active]="url.startsWith('/admin/restaurants')"></bal-tab-item>
+    <bal-tab-item bubble value="tab-c" label="Reviews" prevent="false" (balNavigate)="navigate(['/admin/reviews'])" [active]="url.startsWith('/admin/reviews')"></bal-tab-item>
+    <bal-tab-item disabled value="tab-d" label="Users" (balNavigate)="navigate(['/admin/users'])" [active]="url.startsWith('/admin/users')"></bal-tab-item>
+  </bal-tabs>
+</div>
