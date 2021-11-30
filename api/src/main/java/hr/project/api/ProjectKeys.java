@@ -49,13 +49,16 @@ public class ProjectKeys {
             KeyPair pair = generator.generateKeyPair();
             PublicKey pub = pair.getPublic();
             PrivateKey priv = pair.getPrivate();
-            
-        
-            OutputStream out = new FileOutputStream("classpath:auth/id_project.key");
+
+
+            ClassLoader classLoader = getClass().getClassLoader();
+            String private_key = new File(classLoader.getResource(".").getFile() + "/auth/id_project.key").getPath();
+            OutputStream out = new FileOutputStream(private_key);
             out.write(priv.getEncoded());
             out.close();
 
-            out = new FileOutputStream("classpath:auth/id_project.pub");
+            String public_key = new File(classLoader.getResource(".").getFile() + "/auth/id_project.pub").getPath();
+            out = new FileOutputStream(public_key);
             out.write(pub.getEncoded());
             out.close();
             init();
@@ -82,7 +85,7 @@ public class ProjectKeys {
             return Optional.of(pubKey);
 
         } catch (NoSuchAlgorithmException | InvalidKeySpecException | IOException e) {
-            e.printStackTrace();
+            // e.printStackTrace();
             System.out.println("Exception block | Public key parsing error ");
             return Optional.empty();
         }
