@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChildren } from '@angular/core';
 import { catchError, finalize, throwError } from 'rxjs';
 import Page from 'src/app/interfaces/Page';
 import Restaurant from 'src/app/model/Restaurant';
@@ -14,6 +14,7 @@ export class RestaurantOverviewComponent implements OnInit {
   public loading: boolean = true;
   page: number = 10;
   public restaurants: Page<Restaurant>;
+  public selected: number[] = [];
 
   constructor(private restaurantService: RestaurantService) {
 
@@ -21,6 +22,27 @@ export class RestaurantOverviewComponent implements OnInit {
 
   ngOnInit(): void {
     this.getRestaurants();
+  }
+
+  toggleSelected(restaurantId: number, checked: boolean) {
+    if(checked) {
+      this.selected.push(restaurantId);
+    } else {
+      this.selected = this.selected.filter(elem => elem !== restaurantId);
+    }
+  }
+
+  bulkDelete() {
+    this.restaurantService.deleteRestaurants(this.selected).pipe(
+      catchError(error => {
+        return throwError(() => error);
+      }),
+      finalize(() => {
+        this.loading = false;
+      })
+    ).subscribe(() => {
+      this.getRestaurants();
+    })
   }
 
   public getRestaurants(page = 0) {
@@ -33,6 +55,7 @@ export class RestaurantOverviewComponent implements OnInit {
         this.loading = false;
       })
     ).subscribe((data) => {
+      this.selected= [];
       this.restaurants = data as Page<Restaurant>;
       if(this.restaurants.empty && this.restaurants.pageable.pageNumber > 0) {
         this.getRestaurants(--page);

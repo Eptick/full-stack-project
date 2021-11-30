@@ -23,7 +23,10 @@ export class RestaurantService {
     return this.http
     .delete(`${this.base}/restaurants/${restaurantId}`)
   }
-
+  public deleteRestaurants(restaurantIds: number[]) {
+    return this.http
+    .delete(`${this.base}/restaurants/`, {body: {ids: restaurantIds}} )
+  }
   public addReview(content: string, rating: number, restaurant: number) {
     return this.http
     .post(`${this.base}/restaurants/${restaurant}/review`, {

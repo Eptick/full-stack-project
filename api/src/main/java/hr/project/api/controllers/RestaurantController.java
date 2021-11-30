@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import hr.project.api.dto.BulkDeleteIds;
 import hr.project.api.models.Restaurant;
 import hr.project.api.models.Review;
 import hr.project.api.services.RestaurantService;
@@ -30,6 +31,11 @@ public class RestaurantController {
     @GetMapping()
     public ResponseEntity<Page<Restaurant>> Index(@PageableDefault(sort = "id", direction = Direction.DESC) Pageable pageable) {
         return ResponseEntity.ok().body(restaurantService.getRestaurants(pageable));
+    }
+    @DeleteMapping()
+    public ResponseEntity<String> BulkDeleteRestaurants(@RequestBody BulkDeleteIds body) {
+        restaurantService.deleteRestaurants(body.getIds());
+        return ResponseEntity.ok().body(null);
     }
 
     @PostMapping()

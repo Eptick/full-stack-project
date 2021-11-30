@@ -1,6 +1,7 @@
 package hr.project.api.services;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,10 @@ public class RestaurantService {
 
     public void deleteRestaurant(Long id) {
         this.restaurantRepository.deleteById(id);
+    }
+
+    public void deleteRestaurants(List<Long> ids) {
+        this.restaurantRepository.deleteAllById(ids);
     }
 
     public Page<Restaurant> getRestaurants(Pageable paegable) {

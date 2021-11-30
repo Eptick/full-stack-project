@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -43,6 +44,12 @@ public class Restaurant {
     @JsonIgnore
     private List<Review> reviews = new ArrayList<>();
 
+    @Transient
+    private Integer numberOfReviews;
+
+    @Transient
+    private double averageRating;
+
     public long getId() {
         return this.id;
     }
@@ -66,5 +73,15 @@ public class Restaurant {
     public void setReviews(List<Review> reviews) {
         this.reviews = reviews;
     }
-    
+
+    public Integer getNumberOfReviews() {
+        return this.reviews.size();
+    }
+
+    public double getAverageRating() {
+        return this.reviews.stream()
+        .mapToDouble(d -> d.getRating())
+        .average()
+        .orElse(0.0);
+    }
 }
