@@ -1,0 +1,3 @@
+
+<bal-button *ngIf="!loggedIn" [routerLink]="['/login']">Login</bal-button>
+<bal-button *ngIf="loggedIn" (click)="logout()">Logout</bal-button>

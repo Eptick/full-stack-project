@@ -1,0 +1,27 @@
+<bal-card class="has-margin-top">
+  <bal-card-title>Register</bal-card-title>
+  <bal-card-subtitle>Join the Re:view platform</bal-card-subtitle>
+
+  <bal-card-content>
+    <form #register_form="ngForm" class="columns is-multiline mt-0"  [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <bal-field class="column is-half py-0" expanded required>
+        <bal-field-label required>Username</bal-field-label>
+        <bal-field-control>
+          <bal-input name="username" placeholder="Enter your username" required  formControlName="username"></bal-input>
+        </bal-field-control>
+        <bal-field-message color="danger" *ngIf="registerErrorResponse?.status === 409">Usename is already taken</bal-field-message>
+      </bal-field>
+      <bal-field class="column is-half py-0" expanded required>
+        <bal-field-label required>Password</bal-field-label>
+        <bal-field-control>
+          <bal-input name="password" type="password" placeholder="Enter your passwod"  formControlName="password" required></bal-input>
+        </bal-field-control>
+      </bal-field>
+      <small class="px-3">Already have an account? <a href="/login" [routerLink]="['/login']">Register</a></small>
+    </form>
+  </bal-card-content>
+
+  <bal-card-actions>
+    <bal-button type="submit" (click)="submit()">Register</bal-button>
+  </bal-card-actions>
+</bal-card>

@@ -1,0 +1,39 @@
+// Only imports variables and mixins
+@import '~@baloise/design-system-components/src/styles/global.utilities.scss';
+
+:host {
+  display: block;
+  position: static;
+  margin-top: auto;
+}
+footer {
+  padding-bottom: 46px;
+  margin-top: auto;
+  position: relative;
+  font-family: MetaPro, Arial, sans-serif;
+  background-color: $blue;
+  color: white;
+  padding: 32px;
+  &::before {
+    left: 0;
+    width: 100%;
+    background: #ffffff;
+    background: linear-gradient(90deg, #003399 0, #003399 66%, #009ee7 66%, #009ee7 100%);
+    z-index: 1;
+    bottom: 0;
+    content: "";
+    position: absolute;
+    height: 16px;
+  }
+  &::after {
+    bottom: 0;
+    left: 66%;
+    background: #ffffff;
+    transform: translateX(-50%) skew( -45deg);
+    z-index: 100;
+    width: 16px;
+    content: "";
+    position: absolute;
+    height: 16px;
+  }
+}

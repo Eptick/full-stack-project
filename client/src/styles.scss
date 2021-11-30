@@ -1,0 +1,9 @@
+/* You can add global styles to this file, and also import other style files */
+$font-path: '~assets/fonts';
+
+@import 'node_modules/@baloise/design-system-components/src/styles/global.scss';
+
+/**
+// Only imports variables and mixins
+@import 'node_modules/@baloise/design-system-components/src/styles/global.utilities.scss';
+*/

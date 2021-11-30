@@ -1,0 +1,27 @@
+
+  <bal-card class="has-margin-top">
+    <bal-card-title>Login</bal-card-title>
+    <bal-card-subtitle>Enter your credentials</bal-card-subtitle>
+
+    <bal-card-content>
+      <form #login_form="ngForm" class="columns is-multiline mt-0"  [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <bal-field class="column is-half py-0" expanded required>
+          <bal-field-label required>Username</bal-field-label>
+          <bal-field-control>
+            <bal-input name="username" placeholder="Enter your username" required  formControlName="username"></bal-input>
+          </bal-field-control>
+        </bal-field>
+        <bal-field class="column is-half py-0" expanded required>
+          <bal-field-label required>Password</bal-field-label>
+          <bal-field-control>
+            <bal-input name="password" type="password" placeholder="Enter your passwod"  formControlName="password" required></bal-input>
+          </bal-field-control>
+        </bal-field>
+        <small class="px-3">Still don't have an account? <a href="/register" [routerLink]="['/register']">Register</a></small>
+      </form>
+    </bal-card-content>
+
+    <bal-card-actions>
+      <bal-button type="submit" (click)="submit()">Login</bal-button>
+    </bal-card-actions>
+  </bal-card>
