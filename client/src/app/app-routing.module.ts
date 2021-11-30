@@ -8,6 +8,7 @@ import { IsAdminGuard } from './guards/is-admin.guard';
 import { RestaurantOverviewComponent } from './admin/restaurant/restaurant-overview/restaurant-overview.component';
 import { AdminOverviewComponent } from './admin/admin-overview/admin-overview.component';
 import { RouterOutletComponent } from './util/router-outlet/router-outlet.component';
+import { RestaurantCreateComponent } from './admin/restaurant/restaurant-create/restaurant-create.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -18,7 +19,8 @@ const routes: Routes = [
     children: [
       {path: '', component: AdminOverviewComponent, pathMatch: 'full'},
       {path: 'restaurants', component: RouterOutletComponent, children: [
-        { path: '', pathMatch: 'full', component: RestaurantOverviewComponent }
+        { path: '', pathMatch: 'full', component: RestaurantOverviewComponent },
+        { path: 'create', component: RestaurantCreateComponent },
       ]},
     ],
   }

@@ -1,0 +1,23 @@
+<div class="bal-buttons is-right">
+  <bal-button color="info-light" icon="nav-back" [routerLink]="['..']">Back</bal-button>
+</div>
+<bal-card  spacing="medium">
+  <bal-card-title>Register a new restaurant</bal-card-title>
+  <bal-card-content>
+    <form #f="ngForm" [formGroup]="form" (ngSubmit)="onSubmit()" class="columns is-multiline mt-0" [attr.disabled]="loading">
+      <bal-field class="column is-full py-0" expanded required [disabled]="form.get('name')?.disabled">
+        <bal-field-label required>Restaurant name</bal-field-label>
+        <bal-field-control>
+          <bal-input name="name" placeholder="Enter the restaurant name" formControlName="name"></bal-input>
+        </bal-field-control>
+        <bal-field-message color="danger">
+          <bal-ng-error controlName="name" error="isRequired">This field is required</bal-ng-error>
+          <bal-ng-error controlName="name" error="isMinLength">The name must be at least 4 charachters long</bal-ng-error>
+        </bal-field-message>
+      </bal-field>
+    </form>
+  </bal-card-content>
+  <bal-card-actions>
+    <bal-button (click)="submit()" [attr.loading]="loading">Submit</bal-button>
+  </bal-card-actions>
+</bal-card>

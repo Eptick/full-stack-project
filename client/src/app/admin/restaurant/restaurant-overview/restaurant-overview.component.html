@@ -1,5 +1,5 @@
 <div class="bal-buttons is-right">
-  <bal-button color="info" outlined icon="plus">Create new</bal-button>
+  <bal-button color="info" outlined icon="plus" [routerLink]="['create']">Create new</bal-button>
 </div>
 <bal-spinner *ngIf="loading"></bal-spinner>
 <ng-container *ngIf="restaurants">
