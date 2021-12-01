@@ -10,6 +10,9 @@ import { AdminOverviewComponent } from './admin/admin-overview/admin-overview.co
 import { RouterOutletComponent } from './util/router-outlet/router-outlet.component';
 import { RestaurantCreateComponent } from './admin/restaurant/restaurant-create/restaurant-create.component';
 import { RestaurantEditComponent } from './admin/restaurant/restaurant-edit/restaurant-edit.component';
+import { ReviewOverviewComponent } from './admin/review/review-overview/review-overview.component';
+import { ReviewCreateComponent } from './admin/review/review-create/review-create.component';
+import { ReviewEditComponent } from './admin/review/review-edit/review-edit.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -23,6 +26,11 @@ const routes: Routes = [
         { path: '', pathMatch: 'full', component: RestaurantOverviewComponent },
         { path: 'create', component: RestaurantCreateComponent },
         { path: ':id/edit', component: RestaurantEditComponent },
+      ]},
+      {path: 'reviews', component: RouterOutletComponent, children: [
+        { path: '', pathMatch: 'full', component: ReviewOverviewComponent },
+        { path: 'create', component: ReviewCreateComponent },
+        { path: ':id/edit', component: ReviewEditComponent },
       ]},
     ],
   }

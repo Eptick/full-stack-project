@@ -1,13 +1,11 @@
 package hr.project.api.services;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import hr.project.api.models.Review;
@@ -18,20 +16,31 @@ public class ReviewService {
 
     @Autowired
     ReviewRepository reviewRepository;
-    @Autowired
-    RestaurantService restaurantService;
-    @Autowired
-    UserService userService;
 
-    public List<Review> getReviews(Integer pageNumber, Integer pageSize, String sortBy) {
-        Pageable paging = PageRequest.of(pageNumber, pageSize, Sort.by(sortBy));
- 
-        Page<Review> pagedResult = reviewRepository.findAll(paging);
-         
-        if(pagedResult.hasContent()) {
-            return pagedResult.getContent();
-        } else {
-            return new ArrayList<Review>();
-        }
+    public Page<Review> getReviews(Pageable paegable) {
+        return reviewRepository.findAll(paegable);
+    }
+    public Review getReview(Long id) {
+        Optional<Review> review = reviewRepository.findById(id);
+        return review.isPresent() ? review.get() : null;
+    }
+
+    public void deleteReviews(List<Long> ids) {
+        this.reviewRepository.deleteAllById(ids);
+    }
+    public void deleteReview(Long id) {
+        this.reviewRepository.deleteById(id);
+    }
+
+    public Review updateReview(Long id, Review dto) {
+        Optional<Review> review = reviewRepository.findById(id);
+        if(!review.isPresent()) return null;
+        review.get().setContent(dto.getContent());
+        review.get().setRating(dto.getRating());
+        return this.saveReview(review.get());
+    }
+
+    public Review saveReview(Review review) {
+        return this.reviewRepository.save(review);
     }
 }

@@ -28,6 +28,10 @@ import { EmptyComponent } from './util/empty/empty.component';
 import { RestaurantEditComponent } from './admin/restaurant/restaurant-edit/restaurant-edit.component';
 import { ImageUrlPipe } from './image-url.pipe';
 import { RestaurantBackComponent } from './admin/restaurant/restaurant-back/restaurant-back.component';
+import { ReviewBackComponent } from './admin/review/review-back/review-back.component';
+import { ReviewCreateComponent } from './admin/review/review-create/review-create.component';
+import { ReviewEditComponent } from './admin/review/review-edit/review-edit.component';
+import { ReviewOverviewComponent } from './admin/review/review-overview/review-overview.component';
 
 /** Http interceptor providers in outside-in order */
 export const httpInterceptorProviders = [
@@ -56,6 +60,11 @@ export const httpInterceptorProviders = [
     RestaurantEditComponent,
     ImageUrlPipe,
     RestaurantBackComponent,
+
+    ReviewBackComponent,
+    ReviewCreateComponent,
+    ReviewEditComponent,
+    ReviewOverviewComponent,
   ],
   imports: [
     BrowserModule,
