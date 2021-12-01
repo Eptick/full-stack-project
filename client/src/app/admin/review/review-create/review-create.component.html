@@ -1,1 +1,55 @@
-<p>review-create works!</p>
+<app-restaurant-back></app-restaurant-back>
+<bal-card spacing="medium">
+  <bal-card-title>Register a new restaurant</bal-card-title>
+  <bal-card-content>
+    <app-rating></app-rating>
+    <form #f="ngForm" [formGroup]="form" (ngSubmit)="onSubmit()" class="columns is-multiline mt-0" [attr.disabled]="loading">
+      <bal-field class="column is-full py-0" expanded required>
+        <bal-field-label required>Restaurant</bal-field-label>
+        <bal-field-control>
+          <bal-select id="bal-select-typeahaed" typeahead inverted expanded placeholder="Try finding your hero" no-data-label="No option available" data-test-id="typeahead">
+            <bal-select-option value="BlackWidow" label="Black Widow">
+              <b style="display: block">Black Widow</b>
+              <span>S.H.I.E.L.D.</span>
+            </bal-select-option>
+            <bal-select-option value="BlackPanter" label="Black Panter">
+              <b style="display: block">Black Panter</b>
+              <span>Wakanda</span>
+            </bal-select-option>
+            <bal-select-option value="IronMan" label="Iron Man">
+              <b style="display: block">Iron Man</b>
+              <span>Malibu</span>
+            </bal-select-option>
+            <bal-select-option value="SpiderMan" label="Spider Man">
+              <b style="display: block">Spider Man</b>
+              <span>Queens</span>
+            </bal-select-option>
+            <bal-select-option value="CaptainAmerica" label="Captain America">
+              <b style="display: block">Captain America</b>
+              <span>Broklyn</span>
+            </bal-select-option>
+            <bal-select-option value="Thor" label="Thor God of Thunder">
+              <b style="display: block">Thor God of Thunder</b>
+              <span>Asgard</span>
+            </bal-select-option>
+          </bal-select>
+        </bal-field-control>
+      </bal-field>
+
+
+      <bal-field class="column is-full py-0" expanded required [disabled]="form.get('name')?.disabled">
+        <bal-field-label required>Review content</bal-field-label>
+        <bal-field-control>
+          <bal-textarea data-test-id="textarea" name="content" placeholder="Enter your review"></bal-textarea>
+        </bal-field-control>
+        <bal-field-message color="danger">
+          <bal-ng-error controlName="name" error="isRequired">This field is required</bal-ng-error>
+          <bal-ng-error controlName="name" error="isMinLength">The name must be at least 20 charachters long</bal-ng-error>
+        </bal-field-message>
+      </bal-field>
+    </form>
+  </bal-card-content>
+  <bal-card-actions>
+    <bal-button (click)="submit()" [attr.loading]="loading" >Submit</bal-button>
+  </bal-card-actions>
+</bal-card>

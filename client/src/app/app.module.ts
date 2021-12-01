@@ -32,6 +32,7 @@ import { ReviewBackComponent } from './admin/review/review-back/review-back.comp
 import { ReviewCreateComponent } from './admin/review/review-create/review-create.component';
 import { ReviewEditComponent } from './admin/review/review-edit/review-edit.component';
 import { ReviewOverviewComponent } from './admin/review/review-overview/review-overview.component';
+import { RatingComponent } from './util/rating/rating.component';
 
 /** Http interceptor providers in outside-in order */
 export const httpInterceptorProviders = [
@@ -65,6 +66,7 @@ export const httpInterceptorProviders = [
     ReviewCreateComponent,
     ReviewEditComponent,
     ReviewOverviewComponent,
+    RatingComponent,
   ],
   imports: [
     BrowserModule,
