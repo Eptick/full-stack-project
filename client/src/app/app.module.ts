@@ -27,6 +27,7 @@ import { RestaurantCreateComponent } from './admin/restaurant/restaurant-create/
 import { EmptyComponent } from './util/empty/empty.component';
 import { RestaurantEditComponent } from './admin/restaurant/restaurant-edit/restaurant-edit.component';
 import { ImageUrlPipe } from './image-url.pipe';
+import { RestaurantBackComponent } from './admin/restaurant/restaurant-back/restaurant-back.component';
 
 /** Http interceptor providers in outside-in order */
 export const httpInterceptorProviders = [
@@ -54,6 +55,7 @@ export const httpInterceptorProviders = [
     EmptyComponent,
     RestaurantEditComponent,
     ImageUrlPipe,
+    RestaurantBackComponent,
   ],
   imports: [
     BrowserModule,

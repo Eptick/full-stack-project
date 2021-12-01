@@ -1,6 +1,4 @@
-<div class="bal-buttons is-right">
-  <bal-button color="info-light" icon="nav-back" [routerLink]="['/admin/restaurants']">Back</bal-button>
-</div>
+<app-restaurant-back></app-restaurant-back>
 <bal-spinner *ngIf="initialLoading"></bal-spinner>
 <bal-card  spacing="medium" *ngIf="restaurant">
   <bal-card-title>Edit restaurant {{ restaurant?.name }}</bal-card-title>
