@@ -62,8 +62,12 @@ public class RestaurantService {
         this.restaurantRepository.deleteAllById(ids);
     }
 
-    public Page<Restaurant> getRestaurants(Pageable paegable) {
-        return  restaurantRepository.findAll(paegable);
+    public Page<Restaurant> getRestaurants(Pageable paegable, String query) {
+        if(query != null) {
+            return restaurantRepository.findByNameContaining(query, paegable);
+        } else {
+            return restaurantRepository.findAll(paegable);
+        }
     }
 
     public Review createReview(Long restaurantId, Review dto) {

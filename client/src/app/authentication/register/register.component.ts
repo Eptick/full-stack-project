@@ -22,6 +22,7 @@ export class RegisterComponent {
   constructor(private auth: AuthenticationService) { }
 
   public onSubmit() {
+    this.registerForm.markAllAsTouched();
     this.registerErrorResponse = null;
     if(this.registerForm.valid) {
       this.auth.register(

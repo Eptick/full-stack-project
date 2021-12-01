@@ -92,6 +92,7 @@ export class RestaurantEditComponent implements OnInit {
   }
 
   onSubmit() {
+    this.form.markAllAsTouched();
     if(this.form.valid) {
       this.loading = true;
       this.form.disable();

@@ -30,6 +30,7 @@ export class RestaurantCreateComponent {
 
 
   onSubmit() {
+    this.form.markAllAsTouched();
     if(this.form.valid) {
       this.loading = true;
       this.form.disable();
