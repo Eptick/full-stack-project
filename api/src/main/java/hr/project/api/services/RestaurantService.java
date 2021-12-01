@@ -22,10 +22,25 @@ public class RestaurantService {
     @Autowired
     RestaurantRepository restaurantRepository;
     @Autowired
+    FileLocationService fileLocationService;
+    @Autowired
     ReviewRepository reviewRepository;
 
     @Autowired
     UserService userService;
+
+    public Restaurant updateRestaurant(Restaurant restaurant, Restaurant dto) {
+        Image image = restaurant.getImageObject();
+        if(image.getId() != dto.getImage()) {
+            restaurant.setImageObject(null);
+            restaurant.setImage(dto.getImage());
+            Restaurant saved = this.saveRestaurant(restaurant);
+            this.fileLocationService.remove(image.getId(), image.getLocation()); 
+            return saved;
+        } else {
+            return this.saveRestaurant(restaurant);
+        }
+    }
 
     public Restaurant saveRestaurant(Restaurant restaurant) {
         Image image = new Image();

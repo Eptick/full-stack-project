@@ -24,6 +24,15 @@ public class FileLocationService {
         return imageDbRepository.save(new Image(imageName, location, contentType)).getId();
     }
 
+    public void remove(Long imageId,String path) {
+        try {
+            this.fileSystemRepository.remove(path);
+        } catch (Exception e) {
+            System.out.println("Cannot remove file" + path);
+        }
+        this.imageDbRepository.deleteById(imageId);
+    }
+
     public MediaResource find(Long imageId) {
         Image image = imageDbRepository.findById(imageId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         return new MediaResource(fileSystemRepository.findInFileSystem(image.getLocation()), image);

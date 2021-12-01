@@ -49,8 +49,7 @@ public class RestaurantController {
     public ResponseEntity<Restaurant> updateARestaurant(@PathVariable("restaurantId") Long restaurantId, @RequestBody Restaurant dto) {
         Restaurant restaurant = restaurantService.getRestaurant(restaurantId);
         if(restaurant == null) return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        restaurant.setName(dto.getName());
-        restaurantService.saveRestaurant(restaurant);
+        restaurantService.updateRestaurant(restaurant, dto);
         return ResponseEntity.ok().body(restaurant);
     }
 

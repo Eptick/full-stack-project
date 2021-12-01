@@ -47,6 +47,7 @@ typescript                      4.4.4
     - Restaurants, dodati broj review-a
 
 ### backend
+    - transakcije za slike
     - forgot password
     - username already exists ( do this with http codes)
     - delete account

@@ -32,6 +32,13 @@ public class FileSystemRepository {
         return destinationFile.toAbsolutePath().toString();
     }
 
+    public void remove(String path) throws Exception {
+        Path filePath = Paths.get(path);
+        if( Files.exists(filePath) ) {
+            Files.delete(filePath);
+        }
+    }
+
     public FileSystemResource findInFileSystem(String location) {
         try {
             return new FileSystemResource(Paths.get(location));

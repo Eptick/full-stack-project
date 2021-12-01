@@ -16,6 +16,28 @@
           <bal-ng-error controlName="name" error="isMinLength">The name must be at least 4 charachters long</bal-ng-error>
         </bal-field-message>
       </bal-field>
+      <bal-field class="column is-full py-0 image-picker" expanded required>
+        <bal-field-label required>Restaurant featured image
+          <bal-button color="danger" icon="trash" size="small" square *ngIf="image" (click)="removeImage()"></bal-button>
+        </bal-field-label>
+        <bal-field-control class="mt-2">
+          <bal-file-upload
+              *ngIf="!image"
+              (balChange)="fileUpload($event)"
+              id="bal-file-upload-example"
+              accept="image/png,image/jpeg"
+              max-files="1"
+              max-file-size="100000"
+              max-bundle-size="1000000">
+            </bal-file-upload>
+          <ng-container *ngIf="image">
+            <img [src]="image | imageUrl" />
+          </ng-container>
+        </bal-field-control>
+        <bal-field-message color="danger">
+          <bal-ng-error controlName="image" error="isRequired" >You must upload an image</bal-ng-error>
+        </bal-field-message>
+      </bal-field>
     </form>
   </bal-card-content>
   <bal-card-actions>

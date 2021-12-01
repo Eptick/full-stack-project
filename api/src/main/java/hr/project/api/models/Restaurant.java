@@ -48,7 +48,7 @@ public class Restaurant {
     private List<Review> reviews = new ArrayList<>();
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = true, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "image", nullable = false)
     private Image imageObject;
 
