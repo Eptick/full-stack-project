@@ -5,22 +5,31 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Date;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.stereotype.Repository;
 
+import hr.project.api.config.StorageProperties;
+
 @Repository
 public class FileSystemRepository {
-    String RESOURCES_DIR = FileSystemRepository.class.getResource("/").getPath();
+    private final Path rootLocation;
+
+    @Autowired
+    public FileSystemRepository(StorageProperties properties) {
+        this.rootLocation = Paths.get(properties.getLocation());
+    }
 
     public String save(byte[] content, String imageName) throws Exception {
-        Path base = Paths.get(RESOURCES_DIR + "/media/");
-        Path newFile = Paths.get(base.toString() + "/" + new Date().getTime() + "-" + imageName);
-        Files.createDirectories(newFile.getParent());
+        Path destinationFile = this.rootLocation.resolve(
+                Paths.get(new Date().getTime() + "-" + imageName))
+                .normalize().toAbsolutePath();
 
-        Files.write(newFile, content);
+        Files.createDirectories(destinationFile.getParent());
 
-        return newFile.toAbsolutePath()
-            .toString();
+        Files.write(destinationFile, content);
+
+        return destinationFile.toAbsolutePath().toString();
     }
 
     public FileSystemResource findInFileSystem(String location) {

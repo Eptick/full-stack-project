@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import hr.project.api.exceptions.ParentNotFoundException;
+import hr.project.api.models.Image;
 import hr.project.api.models.Restaurant;
 import hr.project.api.models.Review;
 import hr.project.api.repositories.RestaurantRepository;
@@ -27,6 +28,9 @@ public class RestaurantService {
     UserService userService;
 
     public Restaurant saveRestaurant(Restaurant restaurant) {
+        Image image = new Image();
+        image.setId(restaurant.getImage());
+        restaurant.setImageObject(image);
         return restaurantRepository.save(restaurant);
     }
 

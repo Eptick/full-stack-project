@@ -3,20 +3,22 @@ package hr.project.api.models;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Transient;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Image {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue()
     Long id;
 
     String name;
+    @JsonIgnore
     String location;
+    @JsonIgnore
     String contentType;
-    @Transient
-    String url;
+
     public Image() {}
 
     public Image(String name, String location, String contentType) {
@@ -57,10 +59,5 @@ public class Image {
     public void setContentType(String contentType) {
         this.contentType = contentType;
     }
-
-
-    public String getUrl() {
-        return this.url;
-    }   
 
 }

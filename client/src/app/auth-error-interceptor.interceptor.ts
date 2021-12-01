@@ -9,10 +9,15 @@ import {
 import { catchError, Observable, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 import { BalToastService } from '@baloise/design-system-components-angular';
+import { AuthenticationService } from './authentication.service';
+import { JwtService } from './jwt.service';
 
 @Injectable()
 export class AuthErrorInterceptorInterceptor implements HttpInterceptor {
-  constructor(private router: Router, public toast: BalToastService) {}
+  constructor(
+    private jwt: JwtService,
+    private router: Router,
+    public toast: BalToastService) {}
 
   intercept(
     request: HttpRequest<unknown>,
@@ -21,6 +26,7 @@ export class AuthErrorInterceptorInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
         if (error.status === 401) {
+          this.jwt.setToken('');
           this.router.navigate(['/login'], {
             queryParams: { status: 'auth-failed' },
           });

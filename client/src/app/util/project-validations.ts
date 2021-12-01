@@ -4,3 +4,6 @@ export const RestaurantNameValidations = [
   BalValidators.isRequired(),
   BalValidators.isMinLength(4),
 ];
+export const RestaurantImageValidations = [
+  BalValidators.isRequired(),
+];

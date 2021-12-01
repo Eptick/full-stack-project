@@ -40,11 +40,8 @@ export class StatusToastService {
       .subscribe(e => {
         if(e instanceof NavigationEnd) {
           const parsed = router.parseUrl(e.url);
-          console.log("params", parsed.queryParams)
           const state: string = parsed.queryParams["state"]
-          console.log(TOASTS, TOASTS[state])
           if(state && TOASTS[state]) {
-            console.log('toast')
             toasts.create(TOASTS[state])
             delete parsed.queryParams["state"]
             router.navigate([parsed.toString()], {replaceUrl: true})
