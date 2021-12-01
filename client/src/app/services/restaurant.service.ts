@@ -15,9 +15,18 @@ export class RestaurantService {
     return this.http.get(`${this.base}/restaurants`, {params: { page }})
   }
 
+  public getRestaurant(restaurantId: number) {
+    return this.http.get(`${this.base}/restaurants/${restaurantId}`);
+  }
+
   public createRestaurant(restaurant: Partial<Restaurant>) {
     return this.http
     .post(`${this.base}/restaurants`, restaurant)
+  }
+  public updateRestaurant(restaurant: Partial<Restaurant>) {
+    if(!restaurant.id) throw new Error("No id");
+    return this.http
+    .patch(`${this.base}/restaurants/${restaurant.id}`, restaurant)
   }
   public deleteRestaurant(restaurantId: number) {
     return this.http

@@ -26,7 +26,7 @@ public class RestaurantService {
     @Autowired
     UserService userService;
 
-    public Restaurant createRestaurant(Restaurant restaurant) {
+    public Restaurant saveRestaurant(Restaurant restaurant) {
         return restaurantRepository.save(restaurant);
     }
 

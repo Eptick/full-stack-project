@@ -18,7 +18,6 @@ export class AddBearerTokenInterceptor implements HttpInterceptor {
     if(!!this.jwt.token) {
       request = request.clone({
         setHeaders: {
-          'Content-Type' : 'application/json; charset=utf-8',
           'Accept'       : 'application/json',
           'Authorization': `Bearer ${this.jwt.token}`,
         }

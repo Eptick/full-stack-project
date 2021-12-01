@@ -46,6 +46,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
           .antMatchers("/restaurants/**").permitAll()
           .antMatchers("/login").permitAll()
           .antMatchers("/register").permitAll()
+          .antMatchers("/media/image/**").permitAll()
           .anyRequest()
           .authenticated()
           .and()
@@ -91,4 +92,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         expressionHandler.setRoleHierarchy(roleHierarchy());
         return expressionHandler;
     }
+
 }

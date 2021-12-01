@@ -5,9 +5,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -37,10 +39,24 @@ public class RestaurantController {
         restaurantService.deleteRestaurants(body.getIds());
         return ResponseEntity.ok().body(null);
     }
+    @GetMapping("/{restaurantId}")
+    public ResponseEntity<Restaurant> getSingleRestaurant(@PathVariable("restaurantId") Long restaurantId) {
+            Restaurant restaurant = restaurantService.getRestaurant(restaurantId);
+        if(restaurant == null) return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        return ResponseEntity.ok().body(restaurant);
+    }
+    @PatchMapping("/{restaurantId}")
+    public ResponseEntity<Restaurant> updateARestaurant(@PathVariable("restaurantId") Long restaurantId, @RequestBody Restaurant dto) {
+        Restaurant restaurant = restaurantService.getRestaurant(restaurantId);
+        if(restaurant == null) return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        restaurant.setName(dto.getName());
+        restaurantService.saveRestaurant(restaurant);
+        return ResponseEntity.ok().body(restaurant);
+    }
 
     @PostMapping()
     public ResponseEntity<Restaurant> Index(@RequestBody Restaurant restaurant) {
-        return ResponseEntity.ok().body(this.restaurantService.createRestaurant(restaurant));
+        return ResponseEntity.ok().body(this.restaurantService.saveRestaurant(restaurant));
     }
 
     @PostMapping("/{restaurantId}/review")

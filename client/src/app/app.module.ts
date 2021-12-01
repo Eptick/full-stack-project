@@ -25,6 +25,7 @@ import { PagePaddingComponent } from './util/page-padding/page-padding.component
 import { AdminNavigationComponent } from './admin/admin-navigation/admin-navigation.component';
 import { RestaurantCreateComponent } from './admin/restaurant/restaurant-create/restaurant-create.component';
 import { EmptyComponent } from './util/empty/empty.component';
+import { RestaurantEditComponent } from './admin/restaurant/restaurant-edit/restaurant-edit.component';
 
 /** Http interceptor providers in outside-in order */
 export const httpInterceptorProviders = [
@@ -49,7 +50,8 @@ export const httpInterceptorProviders = [
     PagePaddingComponent,
     AdminNavigationComponent,
     RestaurantCreateComponent,
-    EmptyComponent
+    EmptyComponent,
+    RestaurantEditComponent
   ],
   imports: [
     BrowserModule,

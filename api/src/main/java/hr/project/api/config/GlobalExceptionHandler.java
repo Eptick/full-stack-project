@@ -34,6 +34,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
       RuntimeException exception, 
       WebRequest request
   ){
+    exception.printStackTrace(System.err);
     return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
     .body(null);
   }

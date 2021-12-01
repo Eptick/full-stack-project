@@ -28,7 +28,7 @@
               {{ restaurant.averageRating.toFixed(2) }}
             </td>
             <td class="has-buttons">
-              <bal-button color="info" size="small" icon="edit" square outlined></bal-button>
+              <bal-button color="info" size="small" icon="edit" square outlined [routerLink]="[restaurant.id, 'edit']"></bal-button>
               <bal-button color="info" size="small" icon="trash" square outlined (click)="deleteRestaurant(restaurant.id)"></bal-button>
             </td>
           </tr>

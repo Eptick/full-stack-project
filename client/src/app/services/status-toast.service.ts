@@ -16,6 +16,16 @@ const TOASTS: {[key: string]: any} = {
     message: "Resource succesfully created",
     duration: 2500,
   },
+  "not-found": {
+    message: "Resource not found",
+    duration: 2500,
+    color: 'danger'
+  },
+  "resource-updated": {
+    message: "Resource not found",
+    duration: 2500,
+    color: 'success',
+  },
 }
 
 @Injectable({

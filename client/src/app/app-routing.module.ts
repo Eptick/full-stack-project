@@ -9,6 +9,7 @@ import { RestaurantOverviewComponent } from './admin/restaurant/restaurant-overv
 import { AdminOverviewComponent } from './admin/admin-overview/admin-overview.component';
 import { RouterOutletComponent } from './util/router-outlet/router-outlet.component';
 import { RestaurantCreateComponent } from './admin/restaurant/restaurant-create/restaurant-create.component';
+import { RestaurantEditComponent } from './admin/restaurant/restaurant-edit/restaurant-edit.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -21,6 +22,7 @@ const routes: Routes = [
       {path: 'restaurants', component: RouterOutletComponent, children: [
         { path: '', pathMatch: 'full', component: RestaurantOverviewComponent },
         { path: 'create', component: RestaurantCreateComponent },
+        { path: ':id/edit', component: RestaurantEditComponent },
       ]},
     ],
   }
