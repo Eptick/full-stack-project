@@ -40,13 +40,11 @@ typescript                      4.4.4
         - forgot password
         - change password
     - Refresh tokena
-    - ako je token isteka
     - zapamti url odakle si došao
     - možda dodati lokaciju na mapi, leaflet?
 
-    - Restaurants, dodati broj review-a
-
 ### backend
+    - case insensitive search
     - transakcije za slike
     - forgot password
     - username already exists ( do this with http codes)

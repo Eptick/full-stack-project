@@ -33,6 +33,7 @@ import { ReviewCreateComponent } from './admin/review/review-create/review-creat
 import { ReviewEditComponent } from './admin/review/review-edit/review-edit.component';
 import { ReviewOverviewComponent } from './admin/review/review-overview/review-overview.component';
 import { RatingComponent } from './util/rating/rating.component';
+import { RatingInputComponent } from './util/rating-input/rating-input.component';
 
 /** Http interceptor providers in outside-in order */
 export const httpInterceptorProviders = [
@@ -67,6 +68,7 @@ export const httpInterceptorProviders = [
     ReviewEditComponent,
     ReviewOverviewComponent,
     RatingComponent,
+    RatingInputComponent,
   ],
   imports: [
     BrowserModule,

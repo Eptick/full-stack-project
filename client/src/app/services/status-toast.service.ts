@@ -26,6 +26,10 @@ const TOASTS: {[key: string]: any} = {
     duration: 2500,
     color: 'success',
   },
+  "auth-failed": {
+    message: "Session expired, you have been logged out",
+    duration: 2500,
+  },
 }
 
 @Injectable({

@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { CONSTANTS } from '../constants';
+import Page from '../interfaces/Page';
 import Restaurant from '../model/Restaurant';
 
 @Injectable({
@@ -11,7 +13,7 @@ export class RestaurantService {
 
   constructor(private http: HttpClient) { }
 
-  public getRestaurants(page: number = 0, query: string = "") {
+  public getRestaurants(page: number = 0, query: string = ""): Observable<Partial<Page<Restaurant>>> {
     return this.http.get(`${this.base}/restaurants`, {params: { page, query }})
   }
 
@@ -36,7 +38,7 @@ export class RestaurantService {
     return this.http
     .delete(`${this.base}/restaurants/`, {body: {ids: restaurantIds}} )
   }
-  public addReview(content: string, rating: number, restaurant: number) {
+  public addReview(dateOfVisit: string, content: string, rating: number, restaurant: number) {
     return this.http
     .post(`${this.base}/restaurants/${restaurant}/review`, {
       content,

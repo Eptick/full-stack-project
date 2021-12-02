@@ -42,12 +42,4 @@ export class HomeComponent {
       console.log(data);
     })
   }
-
-  createReview() {
-    this.restaurantService
-      .addReview("test content", 5, 1)
-      .subscribe(data => {
-        console.log(data);
-      })
-  }
 }

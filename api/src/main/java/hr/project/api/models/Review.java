@@ -39,6 +39,9 @@ public class Review {
     private Restaurant restaurant;
 
     @Temporal(TemporalType.TIMESTAMP)
+    private Date dateOfVisit;
+
+    @Temporal(TemporalType.TIMESTAMP)
     private Date creationDate;
 
 
@@ -80,6 +83,14 @@ public class Review {
 
     public void setRestaurant(Restaurant restaurant) {
         this.restaurant = restaurant;
+    }
+
+    public Date getDateOfVisit() {
+        return this.dateOfVisit;
+    }
+
+    public void setDateOfVisit(Date dateOfVisit) {
+        this.dateOfVisit = dateOfVisit;
     }
 
 

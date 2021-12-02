@@ -4,14 +4,27 @@
   color: $dark;
   unicode-bidi: bidi-override;
   direction: rtl;
+  font-size: 30px;
+  cursor: default;
+  user-select: none;
+  &.selectable {
+    cursor: pointer;
+    &:hover > span:before {
+      content: none;
+    }
+  }
 }
 .rating > span {
   display: inline-block;
   position: relative;
   width: 1.1em;
+  &.active:before {
+    content: "\2605";
+    position: absolute;
+  }
 }
-.rating > span:hover:before,
-.rating > span:hover ~ span:before {
+.rating.selectable > span:hover:before,
+.rating.selectable > span:hover ~ span:before {
    content: "\2605";
    position: absolute;
 }
