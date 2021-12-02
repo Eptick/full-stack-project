@@ -1,7 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { catchError, finalize, throwError } from 'rxjs';
+import { catchError, debounce, debounceTime, finalize, throwError } from 'rxjs';
+import Page from 'src/app/interfaces/Page';
+import Restaurant from 'src/app/model/Restaurant';
 import { RestaurantService } from 'src/app/services/restaurant.service';
 import { ReviewContantValidations, ReviewRatingValidations, ReviewRestaurantValidations } from 'src/app/util/project-validations';
 
@@ -12,6 +14,8 @@ import { ReviewContantValidations, ReviewRatingValidations, ReviewRestaurantVali
 })
 export class ReviewCreateComponent {
   @ViewChild('f') f: NgForm;
+
+  autocompleteData: Restaurant[] = [];
 
   loading: boolean = false;
   form = new FormGroup({
@@ -24,6 +28,22 @@ export class ReviewCreateComponent {
     private router: Router,
   ) { }
 
+  getAutocompleteValues(val: string) {
+    if(val && val.length > 3) {
+      this.restaurantService.getRestaurants(0, val)
+      .pipe(
+        debounceTime(3000     ),
+        catchError(error => {
+          return throwError(() => error);
+        }),
+        finalize(() => {
+          console.log("a");
+        })
+      ).subscribe((data: any) => {
+        this.autocompleteData = data.content
+      })
+    }
+  }
 
 
   onSubmit() {
