@@ -41,10 +41,17 @@ public class SetupDataLoader implements
         createRoleIfNotFound("ROLE_USER");
 
         Role adminRole = roleRepository.findByName("ROLE_ADMIN");
+        Role userRole = roleRepository.findByName("ROLE_USER");
         User user = new User();
         user.setUsername("user");
         user.setPassword(passwordEncoder.encode("user"));
         user.setRoles(Arrays.asList(adminRole));
+        user.setEnabled(true);
+        userRepository.save(user);
+        user = new User();
+        user.setUsername("aaaa");
+        user.setPassword(passwordEncoder.encode("aaaa"));
+        user.setRoles(Arrays.asList(userRole));
         user.setEnabled(true);
         userRepository.save(user);
 

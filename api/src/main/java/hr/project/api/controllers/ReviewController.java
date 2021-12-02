@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import hr.project.api.dto.BulkDeleteIds;
 import hr.project.api.models.Review;
+import hr.project.api.models.ReviewDto;
 import hr.project.api.services.ReviewService;
 
 @RestController
@@ -36,14 +37,13 @@ public class ReviewController {
         if(review == null) return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         return ResponseEntity.ok().body(review);
     }
-    @PatchMapping("/{reviewId}")
-    public ResponseEntity<Review> updateARestaurant(@PathVariable("reviewId") Long reviewId, @RequestBody Review dto) {
-        Review review = reviewService.getReview(reviewId);
+    @PatchMapping("{reviewId}")
+    public ResponseEntity<Review> updateAReview(@PathVariable("reviewId") Long reviewId, @RequestBody ReviewDto dto) {
+        Review review = this.reviewService.getReview(reviewId);
         if(review == null) return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         review = reviewService.updateReview(reviewId, dto);
         return ResponseEntity.ok().body(review);
     }
-    
     @DeleteMapping()
     public ResponseEntity<String> BulkDeleteRestaurants(@RequestBody BulkDeleteIds body) {
         reviewService.deleteReviews(body.getIds());

@@ -30,7 +30,7 @@ public class RestaurantController {
     @Autowired
     RestaurantService restaurantService;
     @Autowired
-    ReviewService reviewSerview;
+    ReviewService reviewService;
     
     @GetMapping()
     public ResponseEntity<Page<Restaurant>> Index(

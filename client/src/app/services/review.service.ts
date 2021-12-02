@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CONSTANTS } from '../constants';
-import Review from '../model/Review';
+import Review, { ReviewDto } from '../model/Review';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +20,10 @@ export class ReviewService {
   public deleteReview(reviewId: number) {
     return this.http
     .delete(`${this.base}/reviews/${reviewId}`)
+  }
+  public updateReview(dto: ReviewDto) {
+    return this.http
+    .patch(`${this.base}/reviews/${dto.id}`, dto)
   }
   public deleteReviews(reviewIds: number[]) {
     return this.http

@@ -7,6 +7,7 @@ public class ReviewDto {
     private short rating;
     private String content;
     private Long userId;
+    private Long restaurantId;
     private Date dateOfVisit;
 
 
@@ -48,6 +49,14 @@ public class ReviewDto {
 
     public void setDateOfVisit(Date dateOfVisit) {
         this.dateOfVisit = dateOfVisit;
+    }
+
+    public Long getRestaurantId() {
+        return this.restaurantId;
+    }
+
+    public void setRestaurantId(Long restaurantId) {
+        this.restaurantId = restaurantId;
     }
 
 }

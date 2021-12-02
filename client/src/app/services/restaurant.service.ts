@@ -43,4 +43,8 @@ export class RestaurantService {
     return this.http
     .post(`${this.base}/restaurants/${dto.restaurantId}/review`, dto)
   }
+  public updateReview(dto: Partial<ReviewDto>) {
+    return this.http
+    .patch(`${this.base}/restaurants/${dto.restaurantId}/review/${dto.id}`, dto)
+  }
 }

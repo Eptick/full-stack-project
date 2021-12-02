@@ -13,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 
@@ -37,9 +38,11 @@ public class Review {
     @JoinColumn(name = "restaurant_id", nullable = false)
     private Restaurant restaurant;
 
+    @JsonFormat(pattern="yyyy-MM-dd")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateOfVisit;
 
+    @JsonFormat(pattern="yyyy-MM-dd")
     @Temporal(TemporalType.TIMESTAMP)
     private Date creationDate;
 
