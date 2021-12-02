@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import hr.project.api.dto.BulkDeleteIds;
 import hr.project.api.models.Restaurant;
 import hr.project.api.models.Review;
+import hr.project.api.models.ReviewDto;
 import hr.project.api.services.RestaurantService;
 import hr.project.api.services.ReviewService;
 
@@ -62,7 +63,7 @@ public class RestaurantController {
     }
 
     @PostMapping("/{restaurantId}/review")
-    public ResponseEntity<Review> addReview(@PathVariable("restaurantId") Long restaurantId, @RequestBody Review review) {
+    public ResponseEntity<Review> addReview(@PathVariable("restaurantId") Long restaurantId, @RequestBody ReviewDto review) {
         return ResponseEntity.ok().body(this.restaurantService.createReview(restaurantId, review));
     }
 

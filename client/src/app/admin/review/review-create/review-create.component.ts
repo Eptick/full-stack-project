@@ -1,12 +1,20 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { BalDatepicker } from '@baloise/design-system-components-angular';
 import { catchError, debounceTime, finalize, map, Observable, Subject, switchMap, throwError } from 'rxjs';
 import Page from 'src/app/interfaces/Page';
 import Restaurant from 'src/app/model/Restaurant';
+import User from 'src/app/model/User';
 import { RestaurantService } from 'src/app/services/restaurant.service';
-import { ReviewContantValidations, ReviewRatingValidations, ReviewRestaurantValidations } from 'src/app/util/project-validations';
+import { UserService } from 'src/app/services/user.service';
+import {
+  ReviewContentValidations,
+  ReviewDateOfVisitValidations,
+  ReviewRatingValidations,
+  ReviewRestaurantValidations,
+  ReviewUserValidations
+} from 'src/app/util/project-validations';
 
 @Component({
   selector: 'app-review-create',
@@ -17,18 +25,23 @@ export class ReviewCreateComponent implements AfterViewInit {
   @ViewChild('f') f: NgForm;
   @ViewChild(BalDatepicker) datepicker: BalDatepicker;
 
-  autocompleteResults$: Observable<Restaurant[]>;
-  autoCompleteSubject = new Subject<string>()
+  autocompleteRestaurantResults$: Observable<Restaurant[]>;
+  autoCompleteRestauratnSubject = new Subject<string>();
+
+  autocompleteUserResults$: Observable<User[]>;
+  autoCompleteUserSubject = new Subject<string>()
 
   loading: boolean = false;
   form = new FormGroup({
     restaurantId: new FormControl(null, ReviewRestaurantValidations),
-    dateOfVisit: new FormControl((new Date()).toISOString(), ReviewRatingValidations),
-    content: new FormControl(null, ReviewContantValidations),
+    userId: new FormControl(null, ReviewUserValidations),
+    dateOfVisit: new FormControl((new Date()).toISOString(), ReviewDateOfVisitValidations),
+    content: new FormControl(null, ReviewContentValidations),
     rating: new FormControl(3, ReviewRatingValidations),
   })
   constructor(
     private restaurantService: RestaurantService,
+    private userService: UserService,
     private router: Router,
   ) { }
 
@@ -44,20 +57,37 @@ export class ReviewCreateComponent implements AfterViewInit {
       const day =  parseInt(dates[2]);
       return year > today_year || today_month > month || today_day >= day;
     }
-    this.autocompleteResults$ = this.autoCompleteSubject.pipe(
+    this.autocompleteRestaurantResults$ = this.autoCompleteRestauratnSubject.pipe(
       debounceTime(400),
       map((searchText: string) => this.restaurantService.getRestaurants(0, searchText)),
       switchMap((request: Observable<Partial<Page<Restaurant>>>)=> request),
       map((response: Partial<Page<Restaurant>>)=> response.content as Restaurant[]),
-  )
+    )
+    this.autocompleteUserResults$ = this.autoCompleteUserSubject.pipe(
+      debounceTime(400),
+      map((searchText: string) => this.userService.getUsers(0, searchText)),
+      switchMap((request: Observable<Partial<Page<User>>>)=> request),
+      map((response: Partial<Page<User>>)=> response.content as User[]),
+    )
+
   }
 
-  getAutocompleteValues(val: string) {
+  getRestaurantAutocompleteValues(val: string) {
     if(val && val.length > 3) {
-      this.autoCompleteSubject.next(val);
+      this.autoCompleteRestauratnSubject.next(val);
+    } else if(val.length === 0) {
+      this.autoCompleteRestauratnSubject.next("");
     }
   }
 
+  getUsersAutocompleteValues(val: string) {
+    console.log(val)
+    if(val && val.length > 3) {
+      this.autoCompleteUserSubject.next(val);
+    } else if(val.length === 0) {
+      this.autoCompleteUserSubject.next("");
+    }
+  }
 
   onSubmit() {
     this.form.markAllAsTouched();
@@ -65,12 +95,7 @@ export class ReviewCreateComponent implements AfterViewInit {
     if(this.form.valid) {
       this.loading = true;
       this.form.disable();
-      this.restaurantService.addReview(
-        this.form.value.dateOfVisit as string,
-        this.form.value.content as string,
-        this.form.value.rating as number,
-        this.form.value.restaurantId as number,
-      ).pipe(
+      this.restaurantService.addReview(this.form.value).pipe(
         catchError(error => {
           return throwError(() => error);
         }),
@@ -79,7 +104,7 @@ export class ReviewCreateComponent implements AfterViewInit {
           this.loading = false;
         })
       ).subscribe(data => {
-        this.router.navigate(["/admin/restaurants"], {queryParams: {state: 'created'}})
+        this.router.navigate(["/admin/reviews"], {queryParams: {state: 'created'}})
       })
     }
   }

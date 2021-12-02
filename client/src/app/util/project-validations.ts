@@ -8,9 +8,10 @@ export const RestaurantImageValidations = [
   BalValidators.isRequired(),
 ];
 
-export const ReviewContantValidations = [
+export const ReviewContentValidations = [
   BalValidators.isRequired(),
   BalValidators.isMinLength(20),
+  BalValidators.isMaxLength(1500),
 ];
 export const ReviewRatingValidations = [
   BalValidators.isRequired(),
@@ -21,4 +22,10 @@ export const ReviewRestaurantValidations = [
   BalValidators.isRequired(),
   BalValidators.isMin(1),
   BalValidators.isMax(5),
+];
+export const ReviewDateOfVisitValidations = [
+  BalValidators.isRequired(),
+];
+export const ReviewUserValidations = [
+  BalValidators.isRequired(),
 ];

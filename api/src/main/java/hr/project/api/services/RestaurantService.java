@@ -13,6 +13,8 @@ import hr.project.api.exceptions.ParentNotFoundException;
 import hr.project.api.models.Image;
 import hr.project.api.models.Restaurant;
 import hr.project.api.models.Review;
+import hr.project.api.models.ReviewDto;
+import hr.project.api.models.User;
 import hr.project.api.repositories.RestaurantRepository;
 import hr.project.api.repositories.ReviewRepository;
 
@@ -70,15 +72,22 @@ public class RestaurantService {
         }
     }
 
-    public Review createReview(Long restaurantId, Review dto) {
+    public Review createReview(Long restaurantId, ReviewDto dto) {
         Restaurant restaurant = this.getRestaurant(restaurantId);
         if(restaurant == null)
             throw new ParentNotFoundException();
         Review review = new Review();
+        if(dto.getUserId() != null) {
+            User user = this.userService.getUser(dto.getUserId()).get();
+            if(user == null) throw new ParentNotFoundException();
+            review.setUser( user );
+        } else {
+            review.setUser(userService.getCurrentUser());
+        }
         review.setContent(dto.getContent());
         review.setRating(dto.getRating());
-        review.setUser(userService.getCurrentUser());
         review.setRestaurant(restaurant);
+        review.setDateOfVisit(dto.getDateOfVisit());
         review.setCreationDate(new Date());
         return reviewRepository.save(review);
     }

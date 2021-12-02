@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { CONSTANTS } from '../constants';
 import Page from '../interfaces/Page';
 import Restaurant from '../model/Restaurant';
+import Review, { ReviewDto } from '../model/Review';
 
 @Injectable({
   providedIn: 'root'
@@ -38,11 +39,8 @@ export class RestaurantService {
     return this.http
     .delete(`${this.base}/restaurants/`, {body: {ids: restaurantIds}} )
   }
-  public addReview(dateOfVisit: string, content: string, rating: number, restaurant: number) {
+  public addReview(dto: Partial<ReviewDto>) {
     return this.http
-    .post(`${this.base}/restaurants/${restaurant}/review`, {
-      content,
-      rating
-    })
+    .post(`${this.base}/restaurants/${dto.restaurantId}/review`, dto)
   }
 }

@@ -1,17 +1,15 @@
+import Restaurant from "./Restaurant";
+import User from "./User";
+
 export default class Review {
   id: number;
   rating: number;
   content: string;
-  user: number;
-  restaurant: number;
-  constructor(
-    content: string,
-    rating: number,
-    user: number,
-    restaurant: number) {
-      this.content = content;
-      this.rating = rating;
-      this.user = user;
-      this.restaurant = restaurant;
-  }
+  dateOfVisit: number;
+  user: User;
+  restaurant: Restaurant;
+}
+export class ReviewDto extends Review {
+  restaurantId: number;
+  userId: number;
 }

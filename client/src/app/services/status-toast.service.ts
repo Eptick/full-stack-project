@@ -12,6 +12,10 @@ const TOASTS: {[key: string]: any} = {
     message: "Successfully logged in",
     duration: 2500,
   },
+  "registered": {
+    message: "Successfully register, you can login now",
+    duration: 2500,
+  },
   "created": {
     message: "Resource succesfully created",
     duration: 2500,
