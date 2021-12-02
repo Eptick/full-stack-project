@@ -33,18 +33,18 @@ export class ReviewOverviewComponent implements OnInit {
     }
   }
 
-  bulkDelete() {
-    this.reviewService.deleteReviews(this.selected).pipe(
-      catchError(error => {
-        return throwError(() => error);
-      }),
-      finalize(() => {
-        this.loading = false;
-      })
-    ).subscribe(() => {
-      this.getReviews();
-    })
-  }
+  // bulkDelete() {
+  //   this.reviewService.deleteReviews(this.selected).pipe(
+  //     catchError(error => {
+  //       return throwError(() => error);
+  //     }),
+  //     finalize(() => {
+  //       this.loading = false;
+  //     })
+  //   ).subscribe(() => {
+  //     this.getReviews();
+  //   })
+  // }
 
   public getReviews(page = 0) {
     this.page = page;

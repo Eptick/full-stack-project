@@ -23,6 +23,6 @@ export class ReviewService {
   }
   public deleteReviews(reviewIds: number[]) {
     return this.http
-    .delete(`${this.base}/reviews/`, {body: {ids: reviewIds}} )
+    .delete(`${this.base}/reviews`, {body: {ids: reviewIds}} )
   }
 }

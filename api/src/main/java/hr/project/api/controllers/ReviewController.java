@@ -30,14 +30,9 @@ public class ReviewController {
         @PageableDefault(sort = "id", direction = Direction.DESC) Pageable pageable) {
             return ResponseEntity.ok().body(reviewService.getReviews(pageable));
     }
-    @DeleteMapping()
-    public ResponseEntity<String> BulkDeleteRestaurants(@RequestBody BulkDeleteIds body) {
-        reviewService.deleteReviews(body.getIds());
-        return ResponseEntity.ok().body(null);
-    }
     @GetMapping("/{reviewId}")
     public ResponseEntity<Review> getSingleRestaurant(@PathVariable("reviewId") Long reviewId) {
-            Review review = reviewService.getReview(reviewId);
+        Review review = reviewService.getReview(reviewId);
         if(review == null) return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         return ResponseEntity.ok().body(review);
     }
@@ -48,7 +43,12 @@ public class ReviewController {
         review = reviewService.updateReview(reviewId, dto);
         return ResponseEntity.ok().body(review);
     }
-
+    
+    @DeleteMapping()
+    public ResponseEntity<String> BulkDeleteRestaurants(@RequestBody BulkDeleteIds body) {
+        reviewService.deleteReviews(body.getIds());
+        return ResponseEntity.ok().body(null);
+    }
     @DeleteMapping("/{reviewId}")
     public ResponseEntity<String> deleteRestaurant(@PathVariable("reviewId") Long reviewId) {
         this.reviewService.deleteReview(reviewId);

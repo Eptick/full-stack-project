@@ -26,7 +26,14 @@ public class ReviewService {
     }
 
     public void deleteReviews(List<Long> ids) {
-        this.reviewRepository.deleteAllById(ids);
+        for (Long id : ids) {
+            try {
+                System.out.println(id);
+                this.reviewRepository.deleteById(id);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
     public void deleteReview(Long id) {
         this.reviewRepository.deleteById(id);

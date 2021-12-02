@@ -1,5 +1,5 @@
 <div class="bal-buttons is-right">
-  <bal-button color="danger" icon="trash" (click)="bulkDelete()" *ngIf="selected.length > 0" (click)="bulkDelete()">Delete all</bal-button>
+  <!-- <bal-button color="danger" icon="trash" (click)="bulkDelete()" *ngIf="selected.length > 0" (click)="bulkDelete()">Delete all</bal-button> -->
   <bal-button color="info" outlined icon="plus" [routerLink]="['create']">Create new</bal-button>
 </div>
 <bal-spinner *ngIf="loading"></bal-spinner>
@@ -8,21 +8,23 @@
     <bal-card>
       <table class="table is-fullwidth is-striped is-hoverable p-0">
         <thead>
-          <th>Selected</th>
+          <!-- <th>Selected</th> -->
           <th>Content</th>
           <th>Rating</th>
+          <th>Restaurant</th>
+          <th>User</th>
           <th></th>
         </thead>
         <tbody>
 
           <tr *ngFor="let review of reviews.content">
-            <td>
+            <!-- <td>
               <bal-checkbox [attr.id]="review.id" (balChange)="toggleSelected(review.id, $event.detail)"></bal-checkbox>
-            </td>
-            <td>{{ review.content }}</td>
-            <td>
-              {{ review.rating }}
-            </td>
+            </td> -->
+            <td>  {{ review.content }}         </td>
+            <td>  {{ review.rating }}          </td>
+            <td>  {{ review.restaurant.name }} </td>
+            <td>  {{ review.user.username }}   </td>
             <td class="has-buttons">
               <bal-button color="info" size="small" icon="edit" square outlined [routerLink]="[review.id, 'edit']"></bal-button>
               <bal-button color="info" size="small" icon="trash" square outlined (click)="deleteReview(review.id)"></bal-button>
