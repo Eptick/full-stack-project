@@ -1,5 +1,5 @@
 export default interface PagingAndSorting {
   sort?: string;
-  limit?: number;
+  size?: number;
   page?: number;
 }

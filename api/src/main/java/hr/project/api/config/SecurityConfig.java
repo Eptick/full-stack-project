@@ -43,10 +43,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         security.csrf().disable();
         security.cors();
         security.authorizeRequests()
-          .antMatchers("/restaurants/**").permitAll()
           .antMatchers("/login").permitAll()
           .antMatchers("/register").permitAll()
           .antMatchers("/media/image/**").permitAll()
+          .antMatchers("/dashboard/**").permitAll()
+          .antMatchers("/restaurants/**").permitAll()
           .anyRequest()
           .authenticated()
           .and()

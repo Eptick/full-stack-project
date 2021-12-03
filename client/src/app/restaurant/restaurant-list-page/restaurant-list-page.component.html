@@ -1,1 +1,34 @@
-<p>restaurant-list-page works!</p>
+<app-page-padding>
+  <div class="columns">
+    <div class="column is-two-thirds">
+      <bal-heading level="h1">Restaurant list</bal-heading>
+      <bal-heading level="h5" subtitle>Ordered by highest rating</bal-heading>
+    </div>
+    <div class="column is-one-third text-right">
+      <!-- <img src="/assets/images/homepage_1.png" width="250px"/> -->
+    </div>
+  </div>
+  <bal-spinner *ngIf="loading"></bal-spinner>
+  <ng-container *ngIf="restaurants">
+    <ng-container *ngIf="restaurants.totalElements > 0">
+      <div class="columns is-multiline">
+        <div class="column is-one-third" *ngFor="let restaurant of restaurants.content">
+          <app-restaurant-card [restaurant]="restaurant"></app-restaurant-card>
+        </div>
+      </div>
+      <div class="py-4">
+        <bal-pagination
+          [attr.value]="restaurants.pageable.pageNumber + 1"
+          [attr.page-range]="3"
+          [attr.total-pages]="restaurants.totalPages"
+          (balChange)="getRestaurants({page: $event.detail - 1})"
+        ></bal-pagination>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="restaurants.totalElements == 0">
+        <app-empty></app-empty>
+    </ng-container>
+  </ng-container>
+</app-page-padding>
+
+

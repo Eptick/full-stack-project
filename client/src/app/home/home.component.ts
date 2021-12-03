@@ -21,7 +21,6 @@ export class HomeComponent implements OnInit {
   private getRestaurants() {
     const params: any = {
       page: 0,
-      limit: 3,
       size: 3,
     };
     this.restaurantsLoading = true;

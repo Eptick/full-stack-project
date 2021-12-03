@@ -26,6 +26,7 @@ import hr.project.api.models.ReviewDto;
 import hr.project.api.services.RestaurantService;
 import hr.project.api.services.ReviewService;
 
+@PreAuthorize("hasRole('ROLE_ADMIN')")
 @RestController
 @RequestMapping("/restaurants")
 public class RestaurantController {
@@ -33,7 +34,7 @@ public class RestaurantController {
     RestaurantService restaurantService;
     @Autowired
     ReviewService reviewService;
-    
+
     @GetMapping()
     public ResponseEntity<Page<Restaurant>> Index(
         @PageableDefault(sort = "id", direction = Direction.DESC) Pageable pageable,
@@ -45,6 +46,8 @@ public class RestaurantController {
         restaurantService.deleteRestaurants(body.getIds());
         return ResponseEntity.ok().body(null);
     }
+
+    @PreAuthorize("permitAll()")
     @GetMapping("/{restaurantId}")
     public ResponseEntity<Restaurant> getSingleRestaurant(@PathVariable("restaurantId") Long restaurantId) {
             Restaurant restaurant = restaurantService.getRestaurant(restaurantId);
@@ -64,6 +67,7 @@ public class RestaurantController {
         return ResponseEntity.ok().body(this.restaurantService.saveRestaurant(restaurant));
     }
 
+    @PreAuthorize("permitAll()")
     @GetMapping("/{restaurantId}/reviews")
     public ResponseEntity<RestaurantReviewReport> getReviews(@PathVariable("restaurantId") Long restaurantId) {
         return ResponseEntity.ok().body(this.restaurantService.restaurantReview(restaurantId));

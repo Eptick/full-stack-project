@@ -15,6 +15,9 @@ export class DashboardService {
   constructor(private http: HttpClient) {}
 
   public getRestaurants(params: Partial<PagingAndSorting>): Observable<Partial<Page<Restaurant>>> {
+    if(!params.size) {
+      params.size = 9;
+    }
     return this.http.get(`${this.base}/dashboard/restaurants`, { params });
   }
 }
