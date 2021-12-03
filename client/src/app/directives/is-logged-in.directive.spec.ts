@@ -18,7 +18,6 @@ describe('IsLoggedInDirective', () => {
   });
 
   it('should have 0 app-leave-a-review', () => {
-    console.log(fixture.nativeElement);
     const items: HTMLElement[] = fixture.nativeElement.getElementsByTagName('app-leave-a-review');
     expect(items.length).toBe(0);
   });

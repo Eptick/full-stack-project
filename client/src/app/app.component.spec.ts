@@ -26,7 +26,7 @@ describe('AppComponent', () => {
     expect(app.home).toBeDefined();
   });
 
-  it('should render title', () => {
+  it('should render a menu', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;

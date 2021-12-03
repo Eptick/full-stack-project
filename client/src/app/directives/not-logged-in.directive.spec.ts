@@ -18,7 +18,7 @@ describe('NotLoggedInDirective', () => {
   });
 
   it('should have 0 app-login-to-leave-review', () => {
-    console.log(fixture.nativeElement);
+    (fixture.nativeElement);
     const items: HTMLElement[] = fixture.nativeElement.getElementsByTagName('app-login-to-leave-review');
     expect(items.length).toBe(0);
   });
