@@ -21,7 +21,7 @@
             <!-- <td>
               <bal-checkbox [attr.id]="review.id" (balChange)="toggleSelected(review.id, $event.detail)"></bal-checkbox>
             </td> -->
-            <td>  {{ review.content }}         </td>
+            <td>  {{ review.content.substring(0, 50) }}         </td>
             <td>  {{ review.rating }}          </td>
             <td>  {{ review.restaurant.name }} </td>
             <td>  {{ review.user.username }}   </td>

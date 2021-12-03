@@ -33,7 +33,7 @@ export class RegisterComponent {
         catchError(error => {
           console.log(error)
           this.registerErrorResponse = error;
-          return throwError(() => new Error(...error));
+          return throwError(() => error);
         })
       )
       .subscribe(elem => {
