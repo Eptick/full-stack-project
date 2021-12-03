@@ -67,7 +67,7 @@ public class UserService {
             user = new User();
         }
         user.setUsername(dto.getUsername());
-        user.setPassword(dto.getPassword());
+        user.setPassword(passwordEncoder.encode(dto.getPassword()));
         List<Role> roles = dto.getRoles().stream().map( elem -> {
             return roleRepository.findByName(elem);
         }).collect(Collectors.toList());

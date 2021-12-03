@@ -1,5 +1,4 @@
 <div class="bal-buttons is-right">
-  <bal-button color="danger" icon="trash" (click)="bulkDelete()" *ngIf="selected.length > 0" (click)="bulkDelete()">Delete all</bal-button>
   <bal-button color="info" outlined icon="plus" [routerLink]="['create']">Create new</bal-button>
 </div>
 <bal-spinner *ngIf="loading"></bal-spinner>
@@ -8,7 +7,6 @@
     <bal-card>
       <table class="table is-fullwidth is-striped is-hoverable p-0">
         <thead>
-          <th>Selected</th>
           <th>Name</th>
           <th>Number of reviews</th>
           <th>Average rating</th>
@@ -17,9 +15,6 @@
         <tbody>
 
           <tr *ngFor="let restaurant of restaurants.content">
-            <td>
-              <bal-checkbox [attr.id]="restaurant.id" (balChange)="toggleSelected(restaurant.id, $event.detail)"></bal-checkbox>
-            </td>
             <td>{{ restaurant.name }}</td>
             <td>
               {{ restaurant.numberOfReviews }}
