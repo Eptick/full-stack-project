@@ -1,7 +1,11 @@
-<div class="rating" [ngClass]="{rating: true, selectable: selectable}">
-  <span [ngClass]="{active: rating == 5}" (click)="selected(5)">☆</span>
-  <span [ngClass]="{active: rating >= 4}" (click)="selected(4)">☆</span>
-  <span [ngClass]="{active: rating >= 3}" (click)="selected(3)">☆</span>
-  <span [ngClass]="{active: rating >= 2}" (click)="selected(2)">☆</span>
-  <span [ngClass]="{active: rating >= 1}" (click)="selected(1)">☆</span>
+<div
+  [ngStyle]="{fontSize: size}"
+  class="rating"
+  [ngClass]="{ rating: true, selectable: selectable, 'text-left': true }"
+>
+  <span [ngClass]="{ active: rating == 5 }" (click)="selected(5)">☆</span>
+  <span [ngClass]="{ active: rating >= 4 }" (click)="selected(4)">☆</span>
+  <span [ngClass]="{ active: rating >= 3 }" (click)="selected(3)">☆</span>
+  <span [ngClass]="{ active: rating >= 2 }" (click)="selected(2)">☆</span>
+  <span [ngClass]="{ active: rating >= 1 }" (click)="selected(1)">☆</span>
 </div>

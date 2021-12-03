@@ -7,10 +7,24 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 })
 export class RatingComponent {
 
+  private _rating: number;
+
   @Input("readonly") readonly: string;
-  @Input("rating") rating: number = 1;
+  @Input("size") size: string = "30px";
 
   @Output("onSelect") onSelect: EventEmitter<number> = new EventEmitter<number>();
+
+  @Input("rating")
+  set rating(val: number | undefined) {
+    if(!val) this._rating = 1;
+    else {
+      this._rating = Math.round(val);
+    }
+  }
+
+  get rating(): number {
+    return this._rating;
+  }
 
   get selectable() {
     return this.readonly === undefined;

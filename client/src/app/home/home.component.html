@@ -8,7 +8,18 @@
       <img src="/assets/images/homepage_1.png" width="250px"/>
     </div>
   </div>
-  <div class="columns">
-    <div class="column is-one-third"></div>
-  </div>
+  <ng-container *ngIf="!!restaurants">
+    <ng-container *ngIf="!restaurants.empty">
+      <bal-heading level="h2" subtitle>Popular restaurants</bal-heading>
+      <div class="columns is-multiline">
+        <div class="column is-one-third" *ngFor="let restaurant of restaurants.content">
+          <app-restaurant-card [restaurant]="restaurant"></app-restaurant-card>
+        </div>
+      </div>
+      <div class="bal-buttons is-center">
+        <bal-button color="link">See all of them</bal-button>
+      </div>
+    </ng-container>
+
+  </ng-container>
 </app-page-padding>

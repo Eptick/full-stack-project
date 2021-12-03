@@ -78,8 +78,8 @@ public class SetupDataLoader implements
 
         Image image = new Image();
         try {
-            byte[] imageBytes = fileSystemRepository.getImageFromMediaFolder("default.png").getInputStream().readAllBytes();
-            Long imageId = fileLocationService.save(imageBytes, "default", "image/png");
+            byte[] imageBytes = fileSystemRepository.getImageFromMediaFolder("default.jpg").getInputStream().readAllBytes();
+            Long imageId = fileLocationService.save(imageBytes, "default", "image/jpg");
             image.setId(imageId);
         } catch (Exception e) {
             e.printStackTrace();
