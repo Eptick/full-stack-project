@@ -25,7 +25,7 @@
           <bal-select #userSelect formControlName="userId" (balInput)="getUsersAutocompleteValues($event.detail)" typeahead  expanded placeholder="Search for the restaurant" no-data-label="No option available">
             <bal-select-option [value]="data.id" [label]="data.username" *ngFor="let data of autocompleteUserResults$ | async">
               <b style="display: block">{{ data.username }}</b>
-              <span>Number of reviews: XXX</span>
+              <span>Number of reviews: {{ data.numberOfReviews }}</span>
             </bal-select-option>
           </bal-select>
         </bal-field-control>

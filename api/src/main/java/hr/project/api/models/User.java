@@ -39,6 +39,8 @@ public class User implements Serializable
     private List<Role> roles;
     @Transient
     private List<String> roleList;
+    @Transient
+    private Integer numberOfReviews;
 
     @OneToMany(
         mappedBy = "user",
@@ -91,6 +93,10 @@ public class User implements Serializable
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public Integer getNumberOfReviews() {
+        return this.reviews.size();
     }
 
     public List<String> getRoleList() {
