@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BalSelect } from '@baloise/design-system-components-angular';
+import { BalValidators } from '@baloise/web-app-validators-angular';
 import { catchError, finalize, throwError } from 'rxjs';
 import User from 'src/app/model/User';
 import { UserService } from 'src/app/services/user.service';
@@ -24,7 +25,7 @@ export class UserEditComponent implements OnInit {
   loading: boolean = false;
   form = new FormGroup({
     username: new FormControl(null, UsernameValidations),
-    password: new FormControl(null, PasswordValidations),
+    password: new FormControl(null, [BalValidators.isMinLength(4)]), // when editing don't require the password
     roles: new FormControl(null, RolesValidations),
   })
   constructor(

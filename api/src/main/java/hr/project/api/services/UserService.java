@@ -67,7 +67,9 @@ public class UserService {
             user = new User();
         }
         user.setUsername(dto.getUsername());
-        user.setPassword(passwordEncoder.encode(dto.getPassword()));
+        if(dto.getPassword() != null) { // only if the password is sent, then update it
+            user.setPassword(passwordEncoder.encode(dto.getPassword()));
+        } 
         List<Role> roles = dto.getRoles().stream().map( elem -> {
             return roleRepository.findByName(elem);
         }).collect(Collectors.toList());

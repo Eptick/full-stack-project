@@ -3,7 +3,7 @@ import { FormControl, FormGroup, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { catchError, finalize, throwError } from 'rxjs';
 import { UserService } from 'src/app/services/user.service';
-import { PasswordValidations, RestaurantImageValidations, UsernameValidations } from 'src/app/util/project-validations';
+import { PasswordValidations, RestaurantImageValidations, RolesValidations, UsernameValidations } from 'src/app/util/project-validations';
 
 @Component({
   selector: 'app-user-create',
@@ -17,7 +17,7 @@ export class UserCreateComponent {
   form = new FormGroup({
     username: new FormControl(null, UsernameValidations),
     password: new FormControl(null, PasswordValidations),
-    roles: new FormControl(null, PasswordValidations),
+    roles: new FormControl(null, RolesValidations),
   })
   constructor(
     private userService: UserService,
