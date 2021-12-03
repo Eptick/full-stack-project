@@ -39,6 +39,7 @@ import { UserCreateComponent } from './admin/user/user-create/user-create.compon
 import { UserOverviewComponent } from './admin/user/user-overview/user-overview.component';
 import { UserEditComponent } from './admin/user/user-edit/user-edit.component';
 import { RoleFormatPipe } from './pipes/role-format.pipe';
+import { RestaurantCardComponent } from './restaurant/restaurant-card/restaurant-card.component';
 
 /** Http interceptor providers in outside-in order */
 export const httpInterceptorProviders = [
@@ -79,6 +80,7 @@ export const httpInterceptorProviders = [
     UserOverviewComponent,
     UserEditComponent,
     RoleFormatPipe,
+    RestaurantCardComponent,
   ],
   imports: [
     BrowserModule,
