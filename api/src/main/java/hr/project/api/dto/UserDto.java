@@ -1,10 +1,20 @@
 package hr.project.api.dto;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 import hr.project.api.models.User;
 
 public class UserDto {
+    @NotNull()
+    @Size(min = 4, max = 15)
     String username;
+
+    @Size(min = 4, max = 15)
     String password;
+
 
     public String getUsername() {
         return this.username;
