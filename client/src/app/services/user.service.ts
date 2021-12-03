@@ -16,4 +16,16 @@ export class UserService {
   public getUsers(page: number = 0, query: string = ""): Observable<Partial<Page<User>>> {
     return this.http.get(`${this.base}/users`, {params: { page, query }})
   }
+  public getUser(userId: number): Observable<Partial<User>> {
+    return this.http.get(`${this.base}/users/${userId}`)
+  }
+  public deleteUser(userId: number): Observable<Object> {
+    return this.http.delete(`${this.base}/users/${userId}`)
+  }
+  public saveUser(user: Partial<User>): Observable<Partial<User>> {
+    return this.http.post(`${this.base}/users`, user);
+  }
+  public updateUser(user: Partial<User>): Observable<Partial<User>> {
+    return this.http.patch(`${this.base}/users/${user.id}`, user);
+  }
 }

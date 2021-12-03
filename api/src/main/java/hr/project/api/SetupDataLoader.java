@@ -1,6 +1,7 @@
 package hr.project.api;
 
 import java.util.Arrays;
+import java.util.Random;
 
 import javax.transaction.Transactional;
 
@@ -10,10 +11,18 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import hr.project.api.models.Image;
+import hr.project.api.models.Restaurant;
+import hr.project.api.models.Review;
 import hr.project.api.models.Role;
 import hr.project.api.models.User;
+import hr.project.api.repositories.FileSystemRepository;
+import hr.project.api.repositories.RestaurantRepository;
 import hr.project.api.repositories.RoleRepository;
 import hr.project.api.repositories.UserRepository;
+import hr.project.api.services.FileLocationService;
+import hr.project.api.services.RestaurantService;
+import hr.project.api.services.ReviewService;
 
 @Component
 public class SetupDataLoader implements
@@ -29,6 +38,18 @@ public class SetupDataLoader implements
  
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private FileSystemRepository fileSystemRepository;
+
+    @Autowired
+    private FileLocationService fileLocationService;
+
+    @Autowired
+    private RestaurantService restaurantService;
+
+    @Autowired
+    private ReviewService reviewService;
  
     @Override
     @Transactional
@@ -54,6 +75,32 @@ public class SetupDataLoader implements
         user.setRoles(Arrays.asList(userRole));
         user.setEnabled(true);
         userRepository.save(user);
+
+        Image image = new Image();
+        try {
+            byte[] imageBytes = fileSystemRepository.getImageFromMediaFolder("default.png").getInputStream().readAllBytes();
+            Long imageId = fileLocationService.save(imageBytes, "default", "image/png");
+            image.setId(imageId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        Random rand = new Random();
+        for(int i = 1; i < 12; i++) {
+            Restaurant restaurant = new Restaurant();
+            restaurant.setImageObject(image);
+            restaurant.setName("Restaurant name " + i);
+            restaurantService.saveRestaurant(restaurant);
+            for(int j = 1; j < 12; j++) {
+                Review review = new Review();
+                review.setContent("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.");
+                review.setRating((short)rand.nextInt(6));
+                review.setRestaurant(restaurant);
+                review.setUser(user);
+                reviewService.saveReview(review);
+            }
+        }
+
 
         alreadySetup = true;
     }

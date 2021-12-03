@@ -14,6 +14,7 @@ export class AuthenticationService {
   private base: string = CONSTANTS.API_URL;
   private _loggedIn: boolean;
   private _roles: string[] = [];
+  public userInfo: any;
   public loggedIn: EventEmitter<boolean> = new EventEmitter();
 
   constructor(
@@ -33,6 +34,8 @@ export class AuthenticationService {
   }
 
   private handleDecodedToken(decodedToken: JwtToken) {
+    this.userInfo = decodedToken ?? {};
+    console.log(this.userInfo)
     if(decodedToken && decodedToken?.roles) {
         this._roles = decodedToken.roles.split(",").map(elem => elem.trim()) ?? [];
     } else {

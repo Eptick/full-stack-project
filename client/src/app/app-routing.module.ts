@@ -13,6 +13,9 @@ import { RestaurantEditComponent } from './admin/restaurant/restaurant-edit/rest
 import { ReviewOverviewComponent } from './admin/review/review-overview/review-overview.component';
 import { ReviewCreateComponent } from './admin/review/review-create/review-create.component';
 import { ReviewEditComponent } from './admin/review/review-edit/review-edit.component';
+import { UserOverviewComponent } from './admin/user/user-overview/user-overview.component';
+import { UserCreateComponent } from './admin/user/user-create/user-create.component';
+import { UserEditComponent } from './admin/user/user-edit/user-edit.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -31,6 +34,11 @@ const routes: Routes = [
         { path: '', pathMatch: 'full', component: ReviewOverviewComponent },
         { path: 'create', component: ReviewCreateComponent },
         { path: ':id/edit', component: ReviewEditComponent },
+      ]},
+      {path: 'users', component: RouterOutletComponent, children: [
+        { path: '', pathMatch: 'full', component: UserOverviewComponent },
+        { path: 'create', component: UserCreateComponent },
+        { path: ':id/edit', component: UserEditComponent },
       ]},
     ],
   }

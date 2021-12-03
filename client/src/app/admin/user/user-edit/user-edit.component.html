@@ -1,0 +1,76 @@
+<app-user-back></app-user-back>
+<bal-spinner *ngIf="initialLoading"></bal-spinner>
+<bal-card  spacing="medium">
+  <bal-card-title>Edit user {{ user?.username }}</bal-card-title>
+  <bal-card-content>
+    <form #f="ngForm" [formGroup]="form" (ngSubmit)="onSubmit()" class="columns is-multiline mt-0" [attr.disabled]="loading">
+      <bal-field class="column is-full py-0" expanded required>
+        <bal-field-label required>Username</bal-field-label>
+        <bal-field-control>
+          <bal-input
+            name="username"
+            placeholder="Enter the username"
+            formControlName="username"
+          ></bal-input>
+        </bal-field-control>
+        <bal-field-message color="danger">
+          <bal-ng-error controlName="username" error="isRequired"
+            >This field is required</bal-ng-error
+          >
+          <bal-ng-error controlName="username" error="isMinLength"
+            >The username must be at least 4 charachters long</bal-ng-error
+          >
+        </bal-field-message>
+      </bal-field>
+      <bal-field class="column is-full py-0" expanded required>
+        <bal-field-label required>Password</bal-field-label>
+        <bal-field-control>
+          <bal-input
+            name="password"
+            placeholder="Enter the password"
+            formControlName="password"
+            type="password"
+          ></bal-input>
+        </bal-field-control>
+        <bal-field-message color="danger">
+          <bal-ng-error controlName="password" error="isRequired"
+            >This field is required</bal-ng-error
+          >
+          <bal-ng-error controlName="password" error="isMinLength"
+            >The password must be at least 4 charachters long</bal-ng-error
+          >
+        </bal-field-message>
+      </bal-field>
+      <bal-field class="column is-full py-0" expanded required>
+        <bal-field-label required>Roles</bal-field-label>
+        <bal-field-control>
+          <bal-select
+            #roleSelector
+            multiple
+            formControlName="roles"
+            expanded
+            placeholder="Choose roles"
+            no-data-label="No option available"
+          >
+            <bal-select-option checkbox value="ROLE_USER" label="User">
+              <b style="display: block">User</b>
+              <span>Can create reviews on restaurants and view them</span>
+            </bal-select-option>
+            <bal-select-option checkbox value="ROLE_ADMIN" label="Admin">
+              <b style="display: block">Administrator</b>
+              <span>Has application administraion privileges</span>
+            </bal-select-option>
+          </bal-select>
+        </bal-field-control>
+        <bal-field-message color="danger">
+          <bal-ng-error controlName="roles" error="isRequired"
+            >User requires at least one role to be assigned</bal-ng-error
+          >
+        </bal-field-message>
+      </bal-field>
+    </form>
+  </bal-card-content>
+  <bal-card-actions>
+    <bal-button (click)="submit()" [attr.loading]="loading">Submit</bal-button>
+  </bal-card-actions>
+</bal-card>

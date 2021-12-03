@@ -1,15 +1,22 @@
 package hr.project.api.services;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import hr.project.api.dto.UserCreatedByAdminDto;
+import hr.project.api.exceptions.NotFoundException;
+import hr.project.api.exceptions.ParentNotFoundException;
+import hr.project.api.models.Role;
 import hr.project.api.models.User;
 import hr.project.api.repositories.RoleRepository;
 import hr.project.api.repositories.UserRepository;
@@ -36,8 +43,10 @@ public class UserService {
         return this.findUserByUsername(username);
     }
 
-    public Optional<User> getUser(Long id) {
-        return userRepository.findById(id);
+    public User getUser(Long id) {
+        Optional<User> user = userRepository.findById(id);
+        if(!user.isPresent()) throw new NotFoundException();
+        return user.get();
     }
     public Page<User> getUsers(Pageable paegable, String query) {
         if(query != null) {
@@ -50,10 +59,33 @@ public class UserService {
         return userRepository.findByUsername(username);
     }
 
+    public User save(UserCreatedByAdminDto dto) {
+        User user;
+        if(dto.getId() != null) {
+            user = getUser(dto.getId());
+        } else {
+            user = new User();
+        }
+        user.setUsername(dto.getUsername());
+        user.setPassword(dto.getPassword());
+        List<Role> roles = dto.getRoles().stream().map( elem -> {
+            return roleRepository.findByName(elem);
+        }).collect(Collectors.toList());
+        user.setRoles(roles);
+        return userRepository.save(user);
+    }
 
     public User save(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRoles(Arrays.asList(roleRepository.findByName("ROLE_USER")));
         return userRepository.save(user);
+    }
+
+    public void removeUser(Long id) {
+        try {
+            this.userRepository.deleteById(id);
+        } catch (EmptyResultDataAccessException  e) {
+            throw new ParentNotFoundException();
+        }
     }
 }

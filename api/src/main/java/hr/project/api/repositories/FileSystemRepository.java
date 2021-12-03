@@ -39,6 +39,11 @@ public class FileSystemRepository {
         }
     }
 
+    public FileSystemResource getImageFromMediaFolder(String name) {
+        Path destinationFile = this.rootLocation.resolve(Paths.get(name).normalize());
+        return this.findInFileSystem(destinationFile.toString());
+    }
+
     public FileSystemResource findInFileSystem(String location) {
         try {
             return new FileSystemResource(Paths.get(location));

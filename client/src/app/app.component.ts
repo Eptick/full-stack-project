@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { StatusToastService } from './services/status-toast.service';
 
 @Component({
@@ -7,5 +8,10 @@ import { StatusToastService } from './services/status-toast.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  constructor(statusToastService: StatusToastService){}
+  constructor(statusToastService: StatusToastService, private router: Router){}
+
+  home(e: MouseEvent) {
+    e.preventDefault();
+    this.router.navigate(["/"]);
+  }
 }

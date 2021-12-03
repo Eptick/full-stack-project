@@ -11,6 +11,8 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import hr.project.api.exceptions.ParentNotFoundException;
+
 @ControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
@@ -26,6 +28,16 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     WebRequest request
   ){
     return ResponseEntity.status(exception.getStatusCode()).body(null);
+  }
+
+  
+  @ExceptionHandler(ParentNotFoundException.class)
+  @ResponseStatus(HttpStatus.NOT_FOUND)
+  public ResponseEntity<Object> handleNotFoundClientErrorExceptions(
+    HttpClientErrorException exception, 
+    WebRequest request
+  ){
+    return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
   }
 
   @ExceptionHandler(RuntimeException.class)

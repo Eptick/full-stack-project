@@ -34,6 +34,11 @@ import { ReviewEditComponent } from './admin/review/review-edit/review-edit.comp
 import { ReviewOverviewComponent } from './admin/review/review-overview/review-overview.component';
 import { RatingComponent } from './util/rating/rating.component';
 import { RatingInputComponent } from './util/rating-input/rating-input.component';
+import { UserBackComponent } from './admin/user/user-back/user-back.component';
+import { UserCreateComponent } from './admin/user/user-create/user-create.component';
+import { UserOverviewComponent } from './admin/user/user-overview/user-overview.component';
+import { UserEditComponent } from './admin/user/user-edit/user-edit.component';
+import { RoleFormatPipe } from './pipes/role-format.pipe';
 
 /** Http interceptor providers in outside-in order */
 export const httpInterceptorProviders = [
@@ -69,6 +74,11 @@ export const httpInterceptorProviders = [
     ReviewOverviewComponent,
     RatingComponent,
     RatingInputComponent,
+    UserBackComponent,
+    UserCreateComponent,
+    UserOverviewComponent,
+    UserEditComponent,
+    RoleFormatPipe,
   ],
   imports: [
     BrowserModule,

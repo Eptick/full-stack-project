@@ -1,0 +1,55 @@
+<div class="bal-buttons is-right">
+  <bal-button color="info" outlined icon="plus" [routerLink]="['create']"
+    >Create new</bal-button
+  >
+</div>
+<bal-spinner *ngIf="loading"></bal-spinner>
+<ng-container *ngIf="users">
+  <ng-container *ngIf="users.totalElements > 0">
+    <bal-card>
+      <table class="table is-fullwidth is-striped is-hoverable p-0">
+        <thead>
+          <th>Username</th>
+          <th>Roles</th>
+          <th></th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of users.content">
+            <td>{{ user.username }}</td>
+            <td>{{ user.roleList | roleFormat }}</td>
+            <td class="has-buttons">
+              <bal-button
+                color="info"
+                size="small"
+                icon="edit"
+                square
+                outlined
+                [routerLink]="[user.id, 'edit']"
+              ></bal-button>
+              <bal-button
+                [disabled]="auth.userInfo.sub === user.username"
+                color="info"
+                size="small"
+                icon="trash"
+                square
+                outlined
+                (click)="deleteUser(user.id)"
+              ></bal-button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </bal-card>
+    <div class="py-4">
+      <bal-pagination
+        [attr.value]="users.pageable.pageNumber + 1"
+        [attr.page-range]="3"
+        [attr.total-pages]="users.totalPages"
+        (balChange)="getUsers($event.detail - 1)"
+      ></bal-pagination>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="users.totalElements == 0">
+    <app-empty></app-empty>
+  </ng-container>
+</ng-container>

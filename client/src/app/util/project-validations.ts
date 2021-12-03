@@ -4,10 +4,20 @@ export const RestaurantNameValidations = [
   BalValidators.isRequired(),
   BalValidators.isMinLength(4),
 ];
+export const UsernameValidations = [
+  BalValidators.isRequired(),
+  BalValidators.isMinLength(4),
+];
+export const PasswordValidations = [
+  BalValidators.isRequired(),
+  BalValidators.isMinLength(4),
+];
+export const RolesValidations = [
+  BalValidators.isRequired(),
+];
 export const RestaurantImageValidations = [
   BalValidators.isRequired(),
 ];
-
 export const ReviewContentValidations = [
   BalValidators.isRequired(),
   BalValidators.isMinLength(20),

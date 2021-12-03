@@ -37,7 +37,7 @@ public class ReviewController {
         if(review == null) return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         return ResponseEntity.ok().body(review);
     }
-    @PatchMapping("{reviewId}")
+    @PatchMapping("/{reviewId}")
     public ResponseEntity<Review> updateAReview(@PathVariable("reviewId") Long reviewId, @RequestBody ReviewDto dto) {
         Review review = this.reviewService.getReview(reviewId);
         if(review == null) return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);

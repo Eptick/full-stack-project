@@ -1,44 +1,38 @@
-import { Component } from '@angular/core';
-import Restaurant from '../model/Restaurant';
-import { ResourceService } from '../resource.service';
-import { RestaurantService } from '../services/restaurant.service';
-import { ReviewService } from '../services/review.service';
+import { Component, OnInit } from '@angular/core';
+import { catchError, finalize, throwError } from 'rxjs';
+import { DashboardService } from '../services/dashboard.service';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
 
+  restaurantsLoading = true;
   constructor(
-    private resource: ResourceService,
-    private reviewService: ReviewService,
-    private restaurantService: RestaurantService,
+    private dashboardService: DashboardService,
   ) { }
 
-  loadResource() {
-    this.resource.getResource().subscribe(data => {
-      console.log(data);
-    })
+  ngOnInit() {
+    this.getRestaurants()
   }
 
-  loadRestaurants() {
-    this.restaurantService.getRestaurants().subscribe(data => {
-      console.log(data);
-    })
-  }
-
-  createRestaurant() {
-    this.restaurantService
-      .createRestaurant(new Restaurant("Testni"))
-      .subscribe(data => {
-        console.log(data);
+  private getRestaurants() {
+    const params: any = {
+      page: 0,
+      limit: 6,
+      size: 6,
+    }
+    this.restaurantsLoading = true;
+    this.dashboardService.getRestaurants(params).pipe(
+      catchError(error => {
+        return throwError(() => error);
+      }),
+      finalize(() => {
+        this.restaurantsLoading = false;
       })
-  }
-
-  loadReviews() {
-    this.reviewService.getReviews().subscribe(data => {
+    ).subscribe(data => {
       console.log(data);
     })
   }

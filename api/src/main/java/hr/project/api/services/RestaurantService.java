@@ -72,14 +72,17 @@ public class RestaurantService {
         }
     }
 
+    public Page<Restaurant> findHighRatedRestaurants(Pageable pageable) {
+        return restaurantRepository.findHighRatedRestaurants(pageable);
+    }
+
     public Review createReview(Long restaurantId, ReviewDto dto) {
         Restaurant restaurant = this.getRestaurant(restaurantId);
         if(restaurant == null)
             throw new ParentNotFoundException();
         Review review = new Review();
         if(dto.getUserId() != null) {
-            User user = this.userService.getUser(dto.getUserId()).get();
-            if(user == null) throw new ParentNotFoundException();
+            User user = this.userService.getUser(dto.getUserId());
             review.setUser( user );
         } else {
             review.setUser(userService.getCurrentUser());

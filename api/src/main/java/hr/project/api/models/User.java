@@ -8,15 +8,14 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity(name = "User")
 @Table(name = "users")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class User implements Serializable
 {
-    public User()
-    {
-    }
+    public User() {}
     @Id
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
     private long id;
@@ -38,6 +37,8 @@ public class User implements Serializable
           name = "role_id", referencedColumnName = "id"))
     @JsonIgnore
     private List<Role> roles;
+    @Transient
+    private List<String> roleList;
 
     @OneToMany(
         mappedBy = "user",
@@ -92,5 +93,9 @@ public class User implements Serializable
         this.enabled = enabled;
     }
 
-    
+    public List<String> getRoleList() {
+        return this.roles.stream().map(elem -> {
+            return elem.getName();
+        }).collect(Collectors.toList());
+    }
 }
