@@ -1,6 +1,7 @@
 package hr.project.api;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.Random;
 
 import javax.transaction.Transactional;
@@ -17,7 +18,6 @@ import hr.project.api.models.Review;
 import hr.project.api.models.Role;
 import hr.project.api.models.User;
 import hr.project.api.repositories.FileSystemRepository;
-import hr.project.api.repositories.RestaurantRepository;
 import hr.project.api.repositories.RoleRepository;
 import hr.project.api.repositories.UserRepository;
 import hr.project.api.services.FileLocationService;
@@ -86,6 +86,7 @@ public class SetupDataLoader implements
         }
 
         Random rand = new Random();
+        Date date = new Date();
         for(int i = 1; i < 12; i++) {
             Restaurant restaurant = new Restaurant();
             restaurant.setImageObject(image);
@@ -96,6 +97,8 @@ public class SetupDataLoader implements
                 review.setContent("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.");
                 review.setRating((short)rand.nextInt(6));
                 review.setRestaurant(restaurant);
+                review.setCreationDate(date);
+                review.setDateOfVisit(date);
                 review.setUser(user);
                 reviewService.saveReview(review);
             }

@@ -1,0 +1,39 @@
+<app-page-padding>
+  <bal-spinner *ngIf="initialLoading"></bal-spinner>
+  <ng-container *ngIf="!!restaurant">
+    <bal-card>
+      <bal-card-head>
+        <img [src]="restaurant.image | imageUrl" >
+        <div>
+          <h4 class="title is-size-4">{{ restaurant.name }}</h4>
+          <h5 class="subtitle is-size-5">
+            <app-rating [rating]="restaurant.averageRating" size="18px"></app-rating>
+          </h5>
+        </div>
+      </bal-card-head>
+
+      <bal-card-content>
+        Number of reviews: {{ restaurant.numberOfReviews }}
+      </bal-card-content>
+    </bal-card>
+    <ng-container *ngIf="!!restaurant.report">
+      <ng-container *ngIf="restaurant.report.highest">
+        <bal-heading level="h3">Highest rated review</bal-heading>
+        <app-restaurant-review [review]="restaurant.report.highest"></app-restaurant-review>
+      </ng-container>
+      <ng-container *ngIf="restaurant.report.highest">
+        <bal-heading level="h3">Lowest rated review</bal-heading>
+        <app-restaurant-review [review]="restaurant.report.lowest"></app-restaurant-review>
+      </ng-container>
+      <ng-container *ngIf="restaurant.report.highest">
+        <bal-heading level="h3">Latest review</bal-heading>
+        <app-restaurant-review [review]="restaurant.report.latest"></app-restaurant-review>
+      </ng-container>
+    </ng-container>
+
+    <app-leave-a-review *isLoggedIn [restaurantId]="restaurant.id"></app-leave-a-review>
+    <app-login-to-leave-review *notLoggedIn></app-login-to-leave-review>
+
+  </ng-container>
+
+</app-page-padding>

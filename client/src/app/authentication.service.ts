@@ -71,7 +71,7 @@ export class AuthenticationService {
           if(this.isAdmin) {
             this.router.navigate(["/admin"], { queryParams });
           } else {
-            this.router.navigate(["/"], { queryParams });
+            this.router.navigate(["/restaurants"], { queryParams });
           }
         }
       });

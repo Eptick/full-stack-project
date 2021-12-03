@@ -1,13 +1,14 @@
 <bal-app background>
   <header class="has-background-white">
     <bal-navbar>
-      <bal-navbar-brand (click)="home($event)">
-        <app-logo></app-logo>
+      <bal-navbar-brand (click)="$event.preventDefault()">
+        <app-logo (click)="home($event)"></app-logo>
         <bal-text style="margin-left: 15px"><strong>Re:view</strong></bal-text>
       </bal-navbar-brand>
       <bal-navbar-menu>
         <bal-navbar-menu-start>
-          <a class="navbar-item" [routerLink]="['/']"><bal-text >Home</bal-text></a>
+          <a class="navbar-item" [routerLink]="['/']"><bal-text>Home</bal-text></a>
+          <a class="navbar-item" [routerLink]="['/restaurants']"><bal-text>Restaurants</bal-text></a>
           <a class="navbar-item" [routerLink]="['/admin']" *isAdmin><bal-text >Admin</bal-text></a>
         </bal-navbar-menu-start>
         <bal-navbar-menu-end>

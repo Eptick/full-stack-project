@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import hr.project.api.dto.RestaurantReviewReport;
 import hr.project.api.exceptions.ParentNotFoundException;
 import hr.project.api.models.Image;
 import hr.project.api.models.Restaurant;
@@ -74,6 +75,13 @@ public class RestaurantService {
 
     public Page<Restaurant> findHighRatedRestaurants(Pageable pageable) {
         return restaurantRepository.findHighRatedRestaurants(pageable);
+    }
+
+    public RestaurantReviewReport restaurantReview(Long restaurantId) {
+        Review highest = reviewRepository.findHighestRatedReviewForRestaurant(restaurantId);
+        Review lowest = reviewRepository.findLowestRatedReviewForRestaurant(restaurantId);
+        Review latest = reviewRepository.findLatestReviewForRestaurant(restaurantId);
+        return new RestaurantReviewReport(highest, lowest, latest);
     }
 
     public Review createReview(Long restaurantId, ReviewDto dto) {

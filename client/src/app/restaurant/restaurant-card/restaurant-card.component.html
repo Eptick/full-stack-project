@@ -1,5 +1,5 @@
 
-<bal-card>
+<bal-card class="restaurant-card" [routerLink]="['/restaurant', restaurant.id]">
   <div class="card-featured-image">
     <img [src]="restaurant.image | imageUrl" />
   </div>

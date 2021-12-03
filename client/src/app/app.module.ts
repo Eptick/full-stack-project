@@ -40,6 +40,13 @@ import { UserOverviewComponent } from './admin/user/user-overview/user-overview.
 import { UserEditComponent } from './admin/user/user-edit/user-edit.component';
 import { RoleFormatPipe } from './pipes/role-format.pipe';
 import { RestaurantCardComponent } from './restaurant/restaurant-card/restaurant-card.component';
+import { RestaurantPageComponent } from './restaurant/restaurant-page/restaurant-page.component';
+import { RestaurantListPageComponent } from './restaurant/restaurant-list-page/restaurant-list-page.component';
+import { RestaurantReviewComponent } from './restaurant/review/restaurant-review/restaurant-review.component';
+import { LoginToLeaveReviewComponent } from './restaurant/review/login-to-leave-review/login-to-leave-review.component';
+import { IsLoggedInDirective } from './directives/is-logged-in.directive';
+import { NotLoggedInDirective } from './directives/not-logged-in.directive';
+import { LeaveAReviewComponent } from './restaurant/review/leave-a-review/leave-a-review.component';
 
 /** Http interceptor providers in outside-in order */
 export const httpInterceptorProviders = [
@@ -81,6 +88,13 @@ export const httpInterceptorProviders = [
     UserEditComponent,
     RoleFormatPipe,
     RestaurantCardComponent,
+    RestaurantPageComponent,
+    RestaurantListPageComponent,
+    RestaurantReviewComponent,
+    LoginToLeaveReviewComponent,
+    IsLoggedInDirective,
+    NotLoggedInDirective,
+    LeaveAReviewComponent,
   ],
   imports: [
     BrowserModule,

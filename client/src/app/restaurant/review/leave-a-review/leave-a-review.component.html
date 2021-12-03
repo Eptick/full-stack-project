@@ -1,0 +1,46 @@
+<div class="mt-5 is-block" >
+  <bal-card spacing="medium" *ngIf="!added">
+    <bal-card-title>Leave a review</bal-card-title>
+    <bal-card-content>
+      <form #f="ngForm" [formGroup]="form" (ngSubmit)="onSubmit()" class="columns is-multiline mt-0" [attr.disabled]="loading">
+
+        <bal-field class="column py-0" expanded required>
+          <bal-field-label required>Date of visit</bal-field-label>
+          <bal-field-control>
+            <bal-datepicker name="dateOfVisit" formControlName="dateOfVisit" placeholder="When were you there?" expanded></bal-datepicker>
+          </bal-field-control>
+          <bal-field-message color="danger">
+            <bal-ng-error controlName="dateOfVisit" error="isRequired">This field is required</bal-ng-error>
+          </bal-field-message>
+        </bal-field>
+
+        <bal-field class="column is-full py-0" expanded required>
+          <bal-field-label required>Rating</bal-field-label>
+          <bal-field-control>
+            <app-rating-input [(value)]="rating"></app-rating-input>
+          </bal-field-control>
+        </bal-field>
+        <bal-field class="column is-full py-0" expanded required>
+          <bal-field-label required>Review content</bal-field-label>
+          <bal-field-control>
+            <bal-textarea data-test-id="textarea" name="content" formControlName="content" placeholder="Write your review here"></bal-textarea>
+          </bal-field-control>
+          <bal-text small class="column is-full text-right p-0">{{ form.get('content')?.value?.length }}/1500</bal-text>
+          <bal-field-message color="danger">
+            <bal-ng-error controlName="content" error="isRequired">This field is required</bal-ng-error>
+            <bal-ng-error controlName="content" error="isMinLength">The review must be at least 20 charachters long</bal-ng-error>
+            <bal-ng-error controlName="content" error="isMaxLength">The review must not be more than 1500 charachters long</bal-ng-error>
+          </bal-field-message>
+        </bal-field>
+      </form>
+    </bal-card-content>
+    <bal-card-actions>
+      <bal-button (click)="submit()" [attr.loading]="loading" >Submit</bal-button>
+    </bal-card-actions>
+  </bal-card>
+
+  <bal-card color="primary" *ngIf="added">
+    <bal-card-content>You left your mark. Have you been to any of <a href="#" [routerLink]="['/restaurants']">these other</a> restaurants </bal-card-content>
+  </bal-card>
+
+</div>

@@ -30,8 +30,6 @@ export const ReviewRatingValidations = [
 ];
 export const ReviewRestaurantValidations = [
   BalValidators.isRequired(),
-  BalValidators.isMin(1),
-  BalValidators.isMax(5),
 ];
 export const ReviewDateOfVisitValidations = [
   BalValidators.isRequired(),

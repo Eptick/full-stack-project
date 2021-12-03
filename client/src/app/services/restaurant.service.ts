@@ -21,6 +21,10 @@ export class RestaurantService {
   public getRestaurant(restaurantId: number) {
     return this.http.get(`${this.base}/restaurants/${restaurantId}`);
   }
+  public getRestaurantReport(restaurantId: number) {
+    return this.http.get(`${this.base}/restaurants/${restaurantId}/reviews`);
+  }
+
 
   public createRestaurant(restaurant: Partial<Restaurant>) {
     return this.http

@@ -7,6 +7,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import hr.project.api.dto.BulkDeleteIds;
+import hr.project.api.dto.RestaurantReviewReport;
 import hr.project.api.models.Restaurant;
 import hr.project.api.models.Review;
 import hr.project.api.models.ReviewDto;
@@ -62,8 +64,15 @@ public class RestaurantController {
         return ResponseEntity.ok().body(this.restaurantService.saveRestaurant(restaurant));
     }
 
+    @GetMapping("/{restaurantId}/reviews")
+    public ResponseEntity<RestaurantReviewReport> getReviews(@PathVariable("restaurantId") Long restaurantId) {
+        return ResponseEntity.ok().body(this.restaurantService.restaurantReview(restaurantId));
+    }
+
+    @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping("/{restaurantId}/review")
     public ResponseEntity<Review> addReview(@PathVariable("restaurantId") Long restaurantId, @RequestBody ReviewDto review) {
+        // TODO secure this
         return ResponseEntity.ok().body(this.restaurantService.createReview(restaurantId, review));
     }
 

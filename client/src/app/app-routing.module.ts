@@ -16,11 +16,16 @@ import { ReviewEditComponent } from './admin/review/review-edit/review-edit.comp
 import { UserOverviewComponent } from './admin/user/user-overview/user-overview.component';
 import { UserCreateComponent } from './admin/user/user-create/user-create.component';
 import { UserEditComponent } from './admin/user/user-edit/user-edit.component';
+import { RestaurantPageComponent } from './restaurant/restaurant-page/restaurant-page.component';
+import { RestaurantListPageComponent } from './restaurant/restaurant-list-page/restaurant-list-page.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'login', component: LoginComponent, canActivate: [NotLoggedInGuard]},
   {path: 'register', component: RegisterComponent, canActivate: [NotLoggedInGuard]},
+
+  {path: 'restaurants', component: RestaurantListPageComponent},
+  {path: 'restaurant/:id', component: RestaurantPageComponent},
 
   {path: 'admin', component: RouterOutletComponent, canActivate: [IsAdminGuard],
     children: [

@@ -1,0 +1,6 @@
+<div *ngIf="review">
+  <bal-heading level="h4" space="none">{{ review.user.username }}</bal-heading>
+  <app-rating readonly [rating]="review.rating" size="15px"></app-rating>
+  <bal-text>{{ review.content}}</bal-text>
+  <bal-text small color="hint">Visited: {{ review.dateOfVisit }}</bal-text>
+</div>
