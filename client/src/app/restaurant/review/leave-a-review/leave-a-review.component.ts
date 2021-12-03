@@ -53,7 +53,6 @@ export class LeaveAReviewComponent implements AfterViewInit {
 
   onSubmit() {
     this.form.markAllAsTouched();
-    debugger
     if(this.form.valid) {
       this.loading = true;
       this.form.disable();

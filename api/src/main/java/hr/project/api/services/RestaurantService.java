@@ -37,12 +37,10 @@ public class RestaurantService {
         if(image.getId() != dto.getImage()) {
             restaurant.setImageObject(null);
             restaurant.setImage(dto.getImage());
-            Restaurant saved = this.saveRestaurant(restaurant);
             this.fileLocationService.remove(image.getId(), image.getLocation()); 
-            return saved;
-        } else {
-            return this.saveRestaurant(restaurant);
         }
+        restaurant.setName(dto.getName());
+        return this.saveRestaurant(restaurant);
     }
 
     public Restaurant saveRestaurant(Restaurant restaurant) {
