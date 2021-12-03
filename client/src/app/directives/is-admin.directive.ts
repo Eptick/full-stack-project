@@ -1,7 +1,6 @@
 import { Directive, OnDestroy, TemplateRef, ViewContainerRef } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AuthenticationService } from '../authentication.service';
-import { JwtService } from '../jwt.service';
 
 @Directive({
   selector: '[isAdmin]'
