@@ -52,6 +52,8 @@ typescript                      4.4.4
     - update password / email
     - update account details
 
+questions:
+- emails
 
 Write an application to Review Restaurants
 
