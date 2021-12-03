@@ -6,7 +6,7 @@ import { CONSTANTS } from './constants';
 })
 export class ImageUrlPipe implements PipeTransform {
 
-  transform(value: string | number): string {
+  transform(value: string | number | undefined): string {
     return `${CONSTANTS.API_URL}/media/image/${value}`;
   }
 
