@@ -36,12 +36,9 @@ typescript                      4.4.4
             - ovdje trenutno se samo username provjerava
             - dodaj još polja
             - provjere za email, min veličina username-a itd.
-        - login
         - forgot password
         - change password
     - Refresh tokena
-    - zapamti url odakle si došao
-    - možda dodati lokaciju na mapi, leaflet?
 
 ### backend
     - case insensitive search
