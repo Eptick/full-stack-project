@@ -1,4 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { BaloiseDesignSystemModule } from '@baloise/design-system-components-angular';
+import { ImageUrlPipe } from 'src/app/image-url.pipe';
+import { RatingComponent } from 'src/app/util/rating/rating.component';
 
 import { RestaurantCardComponent } from './restaurant-card.component';
 
@@ -8,7 +11,8 @@ describe('RestaurantCardComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ RestaurantCardComponent ]
+      imports: [BaloiseDesignSystemModule],
+      declarations: [ RestaurantCardComponent, ImageUrlPipe, RatingComponent]
     })
     .compileComponents();
   });
@@ -16,6 +20,9 @@ describe('RestaurantCardComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(RestaurantCardComponent);
     component = fixture.componentInstance;
+    component.restaurant = {
+      id: 2,
+    }
     fixture.detectChanges();
   });
 

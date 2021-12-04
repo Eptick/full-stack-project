@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { BaloiseDesignSystemModule } from '@baloise/design-system-components-angular';
 
 import { AdminOverviewComponent } from './admin-overview.component';
 
@@ -8,6 +9,7 @@ describe('AdminOverviewComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [BaloiseDesignSystemModule],
       declarations: [ AdminOverviewComponent ]
     })
     .compileComponents();

@@ -20,16 +20,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'client'`, () => {
+  it(`should have a home method'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('client');
+    expect(app.home).toBeDefined();
   });
 
-  it('should render title', () => {
+  it('should render a menu', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('client app is running!');
+    expect(compiled.querySelector('bal-navbar-menu')).toBeDefined();
   });
 });

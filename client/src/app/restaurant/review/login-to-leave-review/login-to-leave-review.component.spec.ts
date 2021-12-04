@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { BaloiseDesignSystemModule } from '@baloise/design-system-components-angular';
 
 import { LoginToLeaveReviewComponent } from './login-to-leave-review.component';
 
@@ -8,6 +9,7 @@ describe('LoginToLeaveReviewComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [BaloiseDesignSystemModule],
       declarations: [ LoginToLeaveReviewComponent ]
     })
     .compileComponents();

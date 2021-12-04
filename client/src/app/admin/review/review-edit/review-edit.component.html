@@ -2,7 +2,7 @@
 <bal-card spacing="medium">
   <bal-card-title>Edit review</bal-card-title>
   <bal-card-content>
-    <form #f="ngForm" [formGroup]="form" (ngSubmit)="onSubmit()" class="columns is-multiline mt-0" [attr.disabled]="loading">
+    <form #f [formGroup]="form" (ngSubmit)="onSubmit()" class="columns is-multiline mt-0" [attr.disabled]="loading">
 
       <bal-field class="column is-full py-0" expanded required>
         <bal-field-label required>Restaurant</bal-field-label>

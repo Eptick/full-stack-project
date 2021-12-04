@@ -1,4 +1,9 @@
+import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ReactiveFormsModule } from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
+import { BaloiseDesignSystemModule } from '@baloise/design-system-components-angular';
+import { UserBackComponent } from '../user-back/user-back.component';
 
 import { UserCreateComponent } from './user-create.component';
 
@@ -8,7 +13,8 @@ describe('UserCreateComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ UserCreateComponent ]
+      imports: [HttpClientModule, RouterTestingModule, ReactiveFormsModule, BaloiseDesignSystemModule, ],
+      declarations: [ UserCreateComponent, UserBackComponent ]
     })
     .compileComponents();
   });

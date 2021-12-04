@@ -1,4 +1,9 @@
+import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ReactiveFormsModule } from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
+import { BaloiseDesignSystemModule } from '@baloise/design-system-components-angular';
+import { RestaurantBackComponent } from '../restaurant-back/restaurant-back.component';
 
 import { RestaurantCreateComponent } from './restaurant-create.component';
 
@@ -8,7 +13,8 @@ describe('RestaurantCreateComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ RestaurantCreateComponent ]
+      imports: [ HttpClientModule, RouterTestingModule, ReactiveFormsModule, BaloiseDesignSystemModule],
+      declarations: [ RestaurantCreateComponent, RestaurantBackComponent ]
     })
     .compileComponents();
   });
