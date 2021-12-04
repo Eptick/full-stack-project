@@ -28,27 +28,6 @@ rxjs                            7.4.0
 typescript                      4.4.4
 ```
 
-## Checklist
-
-### Frontend
-    - all the forms
-        - register
-            - ovdje trenutno se samo username provjerava
-            - dodaj još polja
-            - provjere za email, min veličina username-a itd.
-        - forgot password
-        - change password
-    - Refresh tokena
-
-### backend
-    - case insensitive search
-    - transakcije za slike
-    - forgot password
-    - delete account
-    - confirm account
-    - update password / email
-    - update account details
-
 Write an application to Review Restaurants
 
 User must be able to create an account and log in.
