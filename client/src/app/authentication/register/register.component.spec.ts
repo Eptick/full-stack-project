@@ -1,4 +1,8 @@
+import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ReactiveFormsModule } from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
+import { BaloiseDesignSystemModule } from '@baloise/design-system-components-angular';
 
 import { RegisterComponent } from './register.component';
 
@@ -8,6 +12,7 @@ describe('RegisterComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [HttpClientModule, RouterTestingModule, ReactiveFormsModule, BaloiseDesignSystemModule],
       declarations: [ RegisterComponent ]
     })
     .compileComponents();

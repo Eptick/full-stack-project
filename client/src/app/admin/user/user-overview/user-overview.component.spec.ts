@@ -5,7 +5,7 @@ import { BaloiseDesignSystemModule } from '@baloise/design-system-components-ang
 
 import { UserOverviewComponent } from './user-overview.component';
 
-fdescribe('UserOverviewComponent', () => {
+describe('UserOverviewComponent', () => {
   let component: UserOverviewComponent;
   let fixture: ComponentFixture<UserOverviewComponent>;
 

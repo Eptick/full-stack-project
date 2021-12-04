@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { BaloiseDesignSystemModule } from '@baloise/design-system-components-angular';
 
 import { FooterComponent } from './footer.component';
 
@@ -8,6 +9,7 @@ describe('FooterComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [BaloiseDesignSystemModule],
       declarations: [ FooterComponent ]
     })
     .compileComponents();
