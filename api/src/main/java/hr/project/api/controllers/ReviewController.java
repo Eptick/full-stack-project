@@ -1,5 +1,7 @@
 package hr.project.api.controllers;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -45,7 +47,7 @@ public class ReviewController {
         return ResponseEntity.ok().body(review);
     }
     @DeleteMapping()
-    public ResponseEntity<String> BulkDeleteRestaurants(@RequestBody BulkDeleteIds body) {
+    public ResponseEntity<String> BulkDeleteRestaurants(@Valid() @RequestBody BulkDeleteIds body) {
         reviewService.deleteReviews(body.getIds());
         return ResponseEntity.ok().body(null);
     }

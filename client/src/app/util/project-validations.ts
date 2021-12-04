@@ -7,6 +7,7 @@ export const RestaurantNameValidations = [
 export const UsernameValidations = [
   BalValidators.isRequired(),
   BalValidators.isMinLength(4),
+  BalValidators.isMaxLength(15),
 ];
 export const PasswordValidations = [
   BalValidators.isRequired(),

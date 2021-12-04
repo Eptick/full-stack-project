@@ -1,5 +1,7 @@
 package hr.project.api.controllers;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -35,7 +37,7 @@ public class UsersController {
             return ResponseEntity.ok().body(userService.getUsers(pageable, query));
     }
     @PostMapping()
-    public User createUser(@RequestBody UserCreatedByAdminDto user) {
+    public User createUser(@Valid @RequestBody UserCreatedByAdminDto user) {
         return this.userService.save(user);
     }
     @GetMapping("/{userId}")
@@ -45,7 +47,7 @@ public class UsersController {
     @PatchMapping("/{userId}")
     public User updateUser(
         @PathVariable("userId") Long userId,
-        @RequestBody UserCreatedByAdminDto user) {
+        @Valid @RequestBody UserCreatedByAdminDto user) {
                 user.setId(userId);
                 return this.userService.save(user);
     }

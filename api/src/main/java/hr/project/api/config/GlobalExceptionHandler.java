@@ -20,6 +20,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import hr.project.api.exceptions.ParentNotFoundException;
+import io.jsonwebtoken.ExpiredJwtException;
 
 @ControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
@@ -46,8 +47,17 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
   }
 
   @ExceptionHandler(UsernameNotFoundException.class)
-  @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+  @ResponseStatus(HttpStatus.UNAUTHORIZED)
   public ResponseEntity<Object> handleAllUsernameNotFoundUncaughtException(
+      RuntimeException exception,
+      WebRequest request) {
+    return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+        .body(null);
+  }
+
+  @ExceptionHandler(ExpiredJwtException.class)
+  @ResponseStatus(HttpStatus.UNAUTHORIZED)
+  public ResponseEntity<Object> handleTokenExpired(
       RuntimeException exception,
       WebRequest request) {
     return ResponseEntity.status(HttpStatus.UNAUTHORIZED)

@@ -96,6 +96,7 @@ public class User implements Serializable
     }
 
     public Integer getNumberOfReviews() {
+        if(this.reviews == null) return 0;
         return this.reviews.size();
     }
 

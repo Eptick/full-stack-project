@@ -20,6 +20,9 @@
           <bal-ng-error controlName="username" error="isMinLength"
             >The username must be at least 4 charachters long</bal-ng-error
           >
+          <bal-ng-error controlName="username" error="isMaxLength"
+            >The username must be at max 15 charachters long</bal-ng-error
+          >
         </bal-field-message>
       </bal-field>
       <bal-field class="column is-full py-0" expanded>
@@ -38,6 +41,9 @@
           >
           <bal-ng-error controlName="password" error="isMinLength"
             >The password must be at least 4 charachters long</bal-ng-error
+          >
+          <bal-ng-error controlName="password" error="isMaxLength"
+            >The password must be max 15 charachters long</bal-ng-error
           >
         </bal-field-message>
       </bal-field>
