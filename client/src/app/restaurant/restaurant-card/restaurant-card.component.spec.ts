@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { BaloiseDesignSystemModule } from '@baloise/design-system-components-angular';
 import { ImageUrlPipe } from 'src/app/image-url.pipe';
 import { RatingComponent } from 'src/app/util/rating/rating.component';
@@ -11,7 +12,7 @@ describe('RestaurantCardComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [BaloiseDesignSystemModule],
+      imports: [BaloiseDesignSystemModule, RouterTestingModule],
       declarations: [ RestaurantCardComponent, ImageUrlPipe, RatingComponent]
     })
     .compileComponents();

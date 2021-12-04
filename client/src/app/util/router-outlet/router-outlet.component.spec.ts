@@ -1,4 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { PagePaddingComponent } from '../page-padding/page-padding.component';
 
 import { RouterOutletComponent } from './router-outlet.component';
 
@@ -8,7 +10,8 @@ describe('RouterOutletComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ RouterOutletComponent ]
+      imports: [RouterTestingModule],
+      declarations: [ RouterOutletComponent, PagePaddingComponent ]
     })
     .compileComponents();
   });

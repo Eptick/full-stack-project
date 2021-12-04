@@ -23,6 +23,7 @@ describe('ReviewEditComponent', () => {
         HttpClientModule,
         RouterTestingModule,
         BaloiseDesignSystemModule,
+        ReactiveFormsModule,
       ],
       declarations: [ ReviewEditComponent, ReviewBackComponent, RatingInputComponent, RatingComponent],
       schemas:[CUSTOM_ELEMENTS_SCHEMA]

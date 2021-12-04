@@ -1,4 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { BaloiseDesignSystemModule } from '@baloise/design-system-components-angular';
+import { RatingComponent } from '../rating/rating.component';
 
 import { RatingInputComponent } from './rating-input.component';
 
@@ -8,7 +10,8 @@ describe('RatingInputComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ RatingInputComponent ]
+      imports: [BaloiseDesignSystemModule],
+      declarations: [ RatingInputComponent, RatingComponent ]
     })
     .compileComponents();
   });

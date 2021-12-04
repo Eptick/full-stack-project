@@ -23,11 +23,10 @@ getTestBed().initTestEnvironment(
   platformBrowserDynamicTesting(),
 );
 
-TestBed.overrideModule(BrowserDynamicTestingModule, {
-  add: {
-    imports: [BaloiseDesignSystemModule]
-  }
-});
+// https://github.com/angular/angular/issues/36430
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+console.error = (data: any) => fail(data);
+
 
 // Then we find all the tests.
 const context = require.context('./', true, /\.spec\.ts$/);

@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { BaloiseDesignSystemModule } from '@baloise/design-system-components-angular';
 
 import { EmptyComponent } from './empty.component';
 
@@ -8,6 +9,7 @@ describe('EmptyComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [BaloiseDesignSystemModule],
       declarations: [ EmptyComponent ]
     })
     .compileComponents();

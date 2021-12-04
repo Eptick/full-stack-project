@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RatingComponent } from 'src/app/util/rating/rating.component';
 
 import { RestaurantReviewComponent } from './restaurant-review.component';
 
@@ -8,7 +9,7 @@ describe('RestaurantReviewComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ RestaurantReviewComponent ]
+      declarations: [ RestaurantReviewComponent, RatingComponent ]
     })
     .compileComponents();
   });
