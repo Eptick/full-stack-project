@@ -1,10 +1,9 @@
-import { AfterViewInit, Component, Input, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, NgForm } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { BalDatepicker, BalToastService } from '@baloise/design-system-components-angular';
-import { catchError, finalize, take, throwError } from 'rxjs';
+import { catchError, finalize, throwError } from 'rxjs';
 import { RestaurantService } from 'src/app/services/restaurant.service';
-import { UserService } from 'src/app/services/user.service';
 import { ReviewContentValidations, ReviewDateOfVisitValidations, ReviewRatingValidations, ReviewRestaurantValidations, ReviewUserValidations } from 'src/app/util/project-validations';
 
 @Component({
@@ -16,6 +15,7 @@ export class LeaveAReviewComponent implements AfterViewInit {
   _restaurantId: number;
   @ViewChild('f') f: NgForm;
   @ViewChild(BalDatepicker) datepicker: BalDatepicker;
+  @Output("reviewed") reviewd: EventEmitter<void> = new EventEmitter();
 
   added: boolean = false;
   loading: boolean = false;
@@ -71,6 +71,7 @@ export class LeaveAReviewComponent implements AfterViewInit {
           message: 'Review succesfully added',
           duration: 2500,
         })
+        this.reviewd.emit();
       })
     }
   }

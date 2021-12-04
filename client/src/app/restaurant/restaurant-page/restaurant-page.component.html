@@ -31,7 +31,7 @@
       </ng-container>
     </ng-container>
 
-    <app-leave-a-review *isLoggedIn [restaurantId]="restaurant.id"></app-leave-a-review>
+    <app-leave-a-review *isLoggedIn [restaurantId]="restaurant.id" (reviewed)="getRestaurantReport()"></app-leave-a-review>
     <app-login-to-leave-review *notLoggedIn></app-login-to-leave-review>
 
   </ng-container>
