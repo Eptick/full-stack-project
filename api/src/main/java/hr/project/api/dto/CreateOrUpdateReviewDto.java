@@ -1,23 +1,30 @@
-package hr.project.api.models;
+package hr.project.api.dto;
 
 import java.util.Date;
 
-public class ReviewDto {
-    private long id;
-    private short rating;
-    private String content;
-    private Long userId;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PastOrPresent;
+import javax.validation.constraints.Size;
+
+public class CreateOrUpdateReviewDto {
+
+    @NotNull
     private Long restaurantId;
+    @NotNull
+    private Long userId;
+    @NotNull
+    @PastOrPresent
     private Date dateOfVisit;
-
-
-    public long getId() {
-        return this.id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
+    @NotNull
+    @Min(1)
+    @Max(5)
+    private short rating;
+    @NotBlank
+    @Size(min = 20, max = 1500)
+    private String content;
 
     public short getRating() {
         return this.rating;

@@ -12,13 +12,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import hr.project.api.dto.CreateOrUpdateRestaurantDto;
+import hr.project.api.dto.CreateOrUpdateReviewDto;
 import hr.project.api.dto.RestaurantReviewReport;
 import hr.project.api.exceptions.NotFoundException;
-import hr.project.api.exceptions.ParentNotFoundException;
 import hr.project.api.models.Image;
 import hr.project.api.models.Restaurant;
 import hr.project.api.models.Review;
-import hr.project.api.models.ReviewDto;
 import hr.project.api.models.User;
 import hr.project.api.repositories.RestaurantRepository;
 import hr.project.api.repositories.ReviewRepository;
@@ -83,7 +82,7 @@ public class RestaurantService {
 
     public Page<Restaurant> getRestaurants(Pageable paegable, String query) {
         if(query != null) {
-            return restaurantRepository.findByNameContaining(query, paegable);
+            return restaurantRepository.findByNameContainingIgnoreCase(query, paegable);
         } else {
             return restaurantRepository.findAll(paegable);
         }
@@ -100,12 +99,11 @@ public class RestaurantService {
         return new RestaurantReviewReport(highest, lowest, latest);
     }
 
-    public Review createReview(Long restaurantId, ReviewDto dto) {
+    public Review createReview(Long restaurantId, CreateOrUpdateReviewDto dto) {
         Restaurant restaurant = this.getRestaurant(restaurantId);
-        if(restaurant == null)
-            throw new ParentNotFoundException();
+
         Review review = new Review();
-        if(dto.getUserId() != null) {
+        if(dto.getUserId() != null && userService.currentUserHasRole("ROLE_ADMIN")) {
             User user = this.userService.getUser(dto.getUserId());
             review.setUser( user );
         } else {

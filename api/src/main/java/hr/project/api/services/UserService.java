@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -35,12 +36,25 @@ public class UserService {
     }
 
     public boolean usernameExists(String username) {
-        return userRepository.findByUsername(username) != null;
+        return this.findUserByUsername(username) != null;
+    }
+
+    public Authentication getAuthentication() {
+        return SecurityContextHolder.getContext().getAuthentication();
     }
 
     public User getCurrentUser() {
-        String  username = (String)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String  username = (String)this.getAuthentication().getPrincipal();
         return this.findUserByUsername(username);
+    }
+
+    public boolean currentUserHasRole(String role) {
+        try {
+            Authentication auth = this.getAuthentication();
+            return auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals(role));
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     public User getUser(Long id) {
@@ -50,7 +64,7 @@ public class UserService {
     }
     public Page<User> getUsers(Pageable paegable, String query) {
         if(query != null) {
-            return userRepository.findByUsernameContaining(query, paegable);
+            return userRepository.findByUsernameContainingIgnoreCase(query, paegable);
         } else {
             return userRepository.findAll(paegable);
         }

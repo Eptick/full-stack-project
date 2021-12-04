@@ -21,10 +21,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import hr.project.api.dto.BulkDeleteIds;
 import hr.project.api.dto.CreateOrUpdateRestaurantDto;
+import hr.project.api.dto.CreateOrUpdateReviewDto;
 import hr.project.api.dto.RestaurantReviewReport;
 import hr.project.api.models.Restaurant;
 import hr.project.api.models.Review;
-import hr.project.api.models.ReviewDto;
 import hr.project.api.services.RestaurantService;
 import hr.project.api.services.ReviewService;
 
@@ -76,9 +76,8 @@ public class RestaurantController {
     @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping("/{restaurantId}/review")
     public ResponseEntity<Review> addReview(@PathVariable("restaurantId") Long restaurantId,
-            @RequestBody ReviewDto review) {
-        // TODO secure this
-        return ResponseEntity.ok().body(this.restaurantService.createReview(restaurantId, review));
+            @Valid @RequestBody CreateOrUpdateReviewDto dto) {
+        return ResponseEntity.ok().body(this.restaurantService.createReview(restaurantId, dto));
     }
 
     @DeleteMapping("/{restaurantId}")

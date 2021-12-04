@@ -47,14 +47,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     return ResponseEntity.status(exception.getStatusCode()).body(null);
   }
 
-  @ExceptionHandler(ParentNotFoundException.class)
-  @ResponseStatus(HttpStatus.NOT_FOUND)
-  public ResponseEntity<Object> handleNotFoundClientErrorExceptions(
-      HttpClientErrorException exception,
-      WebRequest request) {
-    return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-  }
-
   @ExceptionHandler(UsernameNotFoundException.class)
   @ResponseStatus(HttpStatus.UNAUTHORIZED)
   public ResponseEntity<Object> handleAllUsernameNotFoundUncaughtException(
@@ -107,6 +99,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
       DataIntegrityViolationException.class,
       JpaObjectRetrievalFailureException.class,
       EmptyResultDataAccessException.class,
+      ParentNotFoundException.class,
   })
   @ResponseStatus(HttpStatus.BAD_REQUEST)
   ResponseEntity<String> handleConstraintViolationException(Exception e) {

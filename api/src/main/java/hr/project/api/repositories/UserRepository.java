@@ -8,7 +8,7 @@ import hr.project.api.models.User;
 
 public interface UserRepository extends PagingAndSortingRepository<User, Long> {
     User findByUsername(String username);
-    Page<User> findByUsernameContaining(String name, Pageable pageable);
+    Page<User> findByUsernameContainingIgnoreCase(String name, Pageable pageable);
 
     User findById(long id);
 }

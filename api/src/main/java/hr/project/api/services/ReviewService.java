@@ -1,6 +1,5 @@
 package hr.project.api.services;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,10 +7,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import hr.project.api.dto.CreateOrUpdateReviewDto;
+import hr.project.api.exceptions.NotFoundException;
 import hr.project.api.exceptions.ParentNotFoundException;
 import hr.project.api.models.Restaurant;
 import hr.project.api.models.Review;
-import hr.project.api.models.ReviewDto;
 import hr.project.api.models.User;
 import hr.project.api.repositories.RestaurantRepository;
 import hr.project.api.repositories.ReviewRepository;
@@ -19,49 +19,38 @@ import hr.project.api.repositories.UserRepository;
 
 @Service
 public class ReviewService {
-
     @Autowired
-    ReviewRepository reviewRepository;
+    ReviewRepository reviewRepository; // use repository to prevent circular dependencies
     @Autowired
-    RestaurantRepository restaurantRepository;
+    RestaurantRepository restaurantRepository; // use repository to prevent circular dependencies
     @Autowired
-    UserRepository userRepository;
+    UserRepository userRepository; // use repository to prevent circular dependencies
 
     public Page<Review> getReviews(Pageable paegable) {
         return reviewRepository.findAll(paegable);
     }
     public Review getReview(Long id) {
         Optional<Review> review = reviewRepository.findById(id);
-        return review.isPresent() ? review.get() : null;
+        if(!review.isPresent()) throw new NotFoundException();
+        return review.get();
     }
 
-    public void deleteReviews(List<Long> ids) {
-        for (Long id : ids) {
-            try {
-                System.out.println(id);
-                this.reviewRepository.deleteById(id);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
     public void deleteReview(Long id) {
         this.reviewRepository.deleteById(id);
     }
 
-    public Review updateReview(Long id, ReviewDto dto) {
-        Optional<Review> oReview = reviewRepository.findById(id);
-        if(!oReview.isPresent()) return null;
-        Review review = oReview.get();
+    public Review updateReview(Long id, CreateOrUpdateReviewDto dto) {
+        Review review = this.getReview(id);
+
         if(dto.getRestaurantId() != null && dto.getRestaurantId() != review.getRestaurant().getId()) {
-            Restaurant restaurant = restaurantRepository.findById(dto.getId());
-            if(restaurant == null) throw new ParentNotFoundException();
-            review.setRestaurant(restaurant);
+            Optional<Restaurant> restaurant = restaurantRepository.findById(dto.getRestaurantId());
+            if(!restaurant.isPresent()) throw new ParentNotFoundException();
+            review.setRestaurant(restaurant.get());
         }
-        if(dto.getUserId() != null && dto.getRestaurantId() != review.getUser().getId()) {
-            User user = userRepository.findById(dto.getId());
-            if(user == null) throw new ParentNotFoundException();
-            review.setUser(user);
+        if(dto.getUserId() != null && dto.getUserId() != review.getUser().getId()) {
+            Optional<User> user = userRepository.findById(dto.getUserId());
+            if(!user.isPresent()) throw new ParentNotFoundException();
+            review.setUser(user.get());
         }
         review.setDateOfVisit(dto.getDateOfVisit());
         review.setRating(dto.getRating());
