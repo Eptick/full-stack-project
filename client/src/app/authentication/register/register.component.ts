@@ -17,7 +17,7 @@ export class RegisterComponent {
 
   registerForm = new FormGroup({
     username: new FormControl('user', UsernameValidations),
-    password: new FormControl('password', [BalValidators.isRequired(), BalValidators.isMinLength(4),  BalValidators.isMaxLength(15), BalValidators.matchesRegex(/^(?=.{4,15}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/)]),
+    password: new FormControl('user', [BalValidators.isRequired(), BalValidators.isMinLength(4),  BalValidators.isMaxLength(15), BalValidators.matchesRegex(/^(?=.{4,15}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/)]),
   });
 
   constructor(private auth: AuthenticationService) { }

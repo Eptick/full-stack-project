@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -101,6 +102,7 @@ public class User implements Serializable
     }
 
     public List<String> getRoleList() {
+        if(this.roles == null) return new ArrayList<String>();
         return this.roles.stream().map(elem -> {
             return elem.getName();
         }).collect(Collectors.toList());

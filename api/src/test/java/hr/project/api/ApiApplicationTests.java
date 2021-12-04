@@ -17,6 +17,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @AutoConfigureTestDatabase
 class ApiApplicationTests {
+	@Autowired
 	protected static ApplicationContext ctx;
 
 	@Autowired
