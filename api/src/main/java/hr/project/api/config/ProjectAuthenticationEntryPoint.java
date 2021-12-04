@@ -12,10 +12,9 @@ import org.springframework.security.web.authentication.Http403ForbiddenEntryPoin
 
 @Component
 public class ProjectAuthenticationEntryPoint extends Http403ForbiddenEntryPoint {
-
-
-    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException {
-        if(request.getHeader("Authentication") == null) {
+    public void commence(HttpServletRequest request, HttpServletResponse response,
+            AuthenticationException authException) throws IOException {
+        if (request.getHeader("Authentication") == null) {
             response.setStatus(HttpStatus.UNAUTHORIZED.value());
         } else {
             response.setStatus(HttpStatus.FORBIDDEN.value());

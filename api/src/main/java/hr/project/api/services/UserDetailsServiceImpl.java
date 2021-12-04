@@ -16,36 +16,34 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class UserDetailsServiceImpl implements UserDetailsService
-{
+public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
-    
+
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException
-    {
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username);
-        if(user == null)
-        {
+        if (user == null)
             throw new UsernameNotFoundException(username);
-        }
-        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), user.isEnabled(), true, true, true, getAuthorities(user.getRoles()));
+        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
+                user.isEnabled(), true, true, true, getAuthorities(user.getRoles()));
     }
 
     private List<? extends GrantedAuthority> getAuthorities(
-        List<Role> roles) {
- 
+            List<Role> roles) {
+
         return getGrantedAuthorities(getPrivileges(roles));
     }
 
     private List<String> getPrivileges(List<Role> roles) {
- 
+
         List<String> privileges = new ArrayList<>();
         for (Role role : roles) {
             privileges.add(role.getName());
         }
         return privileges;
     }
+
     private List<GrantedAuthority> getGrantedAuthorities(List<String> privileges) {
         List<GrantedAuthority> authorities = new ArrayList<>();
         for (String privilege : privileges) {
