@@ -52,7 +52,7 @@ public class Restaurant {
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER, optional = true, cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "image", nullable = false)
+    @JoinColumn(name = "image")
     private Image imageObject;
 
     @Transient

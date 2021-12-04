@@ -37,7 +37,7 @@ public class Review {
     private User user;
     
     @ManyToOne(optional = false)
-    @JoinColumn(name = "restaurant_id", nullable = false)
+    @JoinColumn(name = "restaurant_id")
     private Restaurant restaurant;
 
     @JsonFormat(pattern="yyyy-MM-dd")
