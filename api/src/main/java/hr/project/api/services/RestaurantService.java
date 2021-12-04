@@ -38,8 +38,7 @@ public class RestaurantService {
     UserService userService;
 
     public Restaurant updateRestaurant(Long restaurantId, CreateOrUpdateRestaurantDto dto) {
-        Restaurant restaurant = this.getRestaurant(restaurantId);
-        return this.updateRestaurant(restaurant, dto.toRestaurant());
+        return this.updateRestaurant(this.getRestaurant(restaurantId), dto.toRestaurant());
     }
 
     public Restaurant updateRestaurant(Restaurant restaurant, Restaurant dto) {

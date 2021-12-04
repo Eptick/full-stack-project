@@ -53,8 +53,7 @@ public class RestaurantController {
     @PreAuthorize("permitAll()")
     @GetMapping("/{restaurantId}")
     public ResponseEntity<Restaurant> getSingleRestaurant(@PathVariable("restaurantId") Long restaurantId) {
-        Restaurant restaurant = restaurantService.getRestaurant(restaurantId);
-        return ResponseEntity.ok().body(restaurant);
+        return ResponseEntity.ok().body(restaurantService.getRestaurant(restaurantId));
     }
 
     @PatchMapping("/{restaurantId}")
