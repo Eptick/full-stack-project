@@ -18,6 +18,7 @@
           ></bal-input>
         </bal-field-control>
         <bal-field-message color="danger">
+          <bal-ng-error controlName="username" error="taken">Usename is already taken</bal-ng-error>
           <bal-ng-error controlName="username" error="isRequired"
             >This field is required</bal-ng-error
           >
@@ -26,6 +27,9 @@
           >
           <bal-ng-error controlName="username" error="isMaxLength"
             >The username must be max 15 charachters long</bal-ng-error
+          >
+          <bal-ng-error controlName="username" error="matchesRegex"
+            >Username must be 4-15 charachters long and contain only letters, numbers, . and _ that can't appear at the start or end of the username</bal-ng-error
           >
         </bal-field-message>
       </bal-field>

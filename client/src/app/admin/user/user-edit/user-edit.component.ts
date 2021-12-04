@@ -67,18 +67,28 @@ export class UserEditComponent implements OnInit {
 
   onSubmit() {
     this.form.markAllAsTouched();
+    this.form.markAsDirty();
     if(this.form.valid) {
       this.loading = true;
-      this.form.disable();
       this.userService.updateUser({
           id: this.userId,
           ...this.form.value
         }).pipe(
         catchError(error => {
+          try {
+            if(error.status === 409) {
+            (window as any).x = this.form.get("username");
+            debugger
+              this.form.get("username")?.setErrors({
+                taken: true
+              })
+            }
+          } catch (error) {
+            debugger
+          }
           return throwError(() => error);
         }),
         finalize(() => {
-          this.form.enable();
           this.loading = false;
         })
       ).subscribe(data => {

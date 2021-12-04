@@ -3,28 +3,23 @@ package hr.project.api.dto;
 import java.util.List;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 public class UserCreatedByAdminDto {
-    Long id;
-
     @NotBlank()
     @Size(min = 4, max = 15)
+    @Pattern(regexp = "^(?=.{4,15}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$")
     String username;
 
     @Size(min = 4, max = 15)
     String password;
 
-    @Size(min = 1, message = "You need to select at least one role")
+    @NotNull
+    @NotEmpty
     List<String> roles;
-
-    public Long getId() {
-        return this.id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getUsername() {
         return this.username;

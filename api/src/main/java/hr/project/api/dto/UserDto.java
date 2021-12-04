@@ -1,6 +1,7 @@
 package hr.project.api.dto;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import hr.project.api.models.User;
@@ -8,6 +9,7 @@ import hr.project.api.models.User;
 public class UserDto {
     @NotNull()
     @Size(min = 4, max = 15)
+    @Pattern(regexp = "^(?=.{4,15}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$")
     String username;
 
     @Size(min = 4, max = 15)

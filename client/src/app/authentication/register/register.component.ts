@@ -17,15 +17,13 @@ export class RegisterComponent {
 
   registerForm = new FormGroup({
     username: new FormControl('user', UsernameValidations),
-    password: new FormControl('password', [BalValidators.isRequired(), BalValidators.isMinLength(4),  BalValidators.isMaxLength(15)]),
+    password: new FormControl('password', [BalValidators.isRequired(), BalValidators.isMinLength(4),  BalValidators.isMaxLength(15), BalValidators.matchesRegex(/^(?=.{4,15}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/)]),
   });
-  registerErrorResponse:  HttpErrorResponse | null;
 
   constructor(private auth: AuthenticationService) { }
 
   public onSubmit() {
     this.registerForm.markAllAsTouched();
-    this.registerErrorResponse = null;
     if(this.registerForm.valid) {
       this.auth.register(
         this.registerForm.value.username,
@@ -33,8 +31,6 @@ export class RegisterComponent {
       )
       .pipe(
         catchError(error => {
-          console.log(error)
-          this.registerErrorResponse = error;
           if(error.status === 409) {
             this.registerForm.get("username")?.setErrors({taken: "Username is already taken"})
           }

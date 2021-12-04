@@ -15,8 +15,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import hr.project.api.dto.UserCreatedByAdminDto;
+import hr.project.api.exceptions.CannotDeleteYourselfException;
 import hr.project.api.exceptions.NotFoundException;
 import hr.project.api.exceptions.ParentNotFoundException;
+import hr.project.api.exceptions.PasswordCannotBeEmpty;
+import hr.project.api.exceptions.UsernameExistsException;
 import hr.project.api.models.Role;
 import hr.project.api.models.User;
 import hr.project.api.repositories.RoleRepository;
@@ -73,17 +76,27 @@ public class UserService {
         return userRepository.findByUsername(username);
     }
 
-    public User save(UserCreatedByAdminDto dto) {
-        User user;
-        if(dto.getId() != null) {
-            user = getUser(dto.getId());
-        } else {
-            user = new User();
-        }
+    public User createUser(UserCreatedByAdminDto dto) {
+        User user = new User();
+        if(usernameExists(dto.getUsername())) throw new UsernameExistsException();
+        user.setUsername(dto.getUsername());
+        if(dto.getPassword() == null) throw new PasswordCannotBeEmpty();
+        user.setPassword(passwordEncoder.encode(dto.getPassword()));
+        List<Role> roles = dto.getRoles().stream().map( elem -> {
+            return roleRepository.findByName(elem);
+        }).collect(Collectors.toList());
+        user.setRoles(roles);
+        return userRepository.save(user);
+    }
+
+    public User save(Long userId, UserCreatedByAdminDto dto) {
+        User user = getUser(userId);
+
+        if(findUserByUsername(dto.getUsername()).getId() != userId) throw new UsernameExistsException();
         user.setUsername(dto.getUsername());
         if(dto.getPassword() != null) { // only if the password is sent, then update it
             user.setPassword(passwordEncoder.encode(dto.getPassword()));
-        } 
+        }
         List<Role> roles = dto.getRoles().stream().map( elem -> {
             return roleRepository.findByName(elem);
         }).collect(Collectors.toList());
@@ -99,6 +112,8 @@ public class UserService {
 
     public void removeUser(Long id) {
         try {
+            User user = this.getCurrentUser();
+            if(user.getId() == id) throw new CannotDeleteYourselfException();
             this.userRepository.deleteById(id);
         } catch (EmptyResultDataAccessException  e) {
             throw new ParentNotFoundException();

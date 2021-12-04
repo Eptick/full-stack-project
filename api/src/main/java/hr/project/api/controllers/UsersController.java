@@ -29,28 +29,31 @@ import hr.project.api.services.UserService;
 public class UsersController {
     @Autowired
     UserService userService;
-    
+
     @GetMapping()
     public ResponseEntity<Page<User>> Index(
-        @PageableDefault(sort = "id", direction = Direction.DESC) Pageable pageable,
-        @RequestParam(required = false) String query) {
-            return ResponseEntity.ok().body(userService.getUsers(pageable, query));
+            @PageableDefault(sort = "id", direction = Direction.DESC) Pageable pageable,
+            @RequestParam(required = false) String query) {
+        return ResponseEntity.ok().body(userService.getUsers(pageable, query));
     }
+
     @PostMapping()
-    public User createUser(@Valid @RequestBody UserCreatedByAdminDto user) {
-        return this.userService.save(user);
+    public User createUser(@Valid @RequestBody UserCreatedByAdminDto dto) {
+        return this.userService.createUser(dto);
     }
+
     @GetMapping("/{userId}")
     public ResponseEntity<User> getUser(@PathVariable("userId") Long userId) {
         return ResponseEntity.ok().body(userService.getUser(userId));
     }
+
     @PatchMapping("/{userId}")
     public User updateUser(
-        @PathVariable("userId") Long userId,
-        @Valid @RequestBody UserCreatedByAdminDto user) {
-                user.setId(userId);
-                return this.userService.save(user);
+            @PathVariable("userId") Long userId,
+            @Valid @RequestBody UserCreatedByAdminDto dto) {
+        return this.userService.save(userId, dto);
     }
+
     @DeleteMapping("{userId}")
     public ResponseEntity<Void> deleteUser(@PathVariable("userId") Long userId) {
         userService.removeUser(userId);

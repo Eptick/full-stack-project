@@ -27,7 +27,10 @@ import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import hr.project.api.exceptions.CannotDeleteYourselfException;
 import hr.project.api.exceptions.ParentNotFoundException;
+import hr.project.api.exceptions.PasswordCannotBeEmpty;
+import hr.project.api.exceptions.UsernameExistsException;
 import io.jsonwebtoken.ExpiredJwtException;
 
 @ControllerAdvice
@@ -84,29 +87,38 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     logger.error(ex.getMessage());
     return ResponseEntity.badRequest().body(null);
   }
+
   @Override
   protected ResponseEntity<Object> handleHttpRequestMethodNotSupported(
       HttpRequestMethodNotSupportedException ex,
       HttpHeaders headers,
       HttpStatus status,
       WebRequest request) {
-    logger.error(((ServletWebRequest)request).getRequest().getRequestURI() + " : " + ex.getMessage());
+    logger.error(((ServletWebRequest) request).getRequest().getRequestURI() + " : " + ex.getMessage());
     return new ResponseEntity<>(null, HttpStatus.METHOD_NOT_ALLOWED);
   }
 
+  @ExceptionHandler(UsernameExistsException.class)
+  @ResponseStatus(HttpStatus.CONFLICT)
+  ResponseEntity<String> handleUsernameExistisException(UsernameExistsException e) {
+    logger.error(e.getMessage());
+    return new ResponseEntity<>(null, HttpStatus.CONFLICT);
+  }
+
   @ExceptionHandler({
+      ParentNotFoundException.class,
       ConstraintViolationException.class,
+      CannotDeleteYourselfException.class,
+      EmptyResultDataAccessException.class,
       DataIntegrityViolationException.class,
       JpaObjectRetrievalFailureException.class,
-      EmptyResultDataAccessException.class,
-      ParentNotFoundException.class,
+      PasswordCannotBeEmpty.class,
   })
   @ResponseStatus(HttpStatus.BAD_REQUEST)
   ResponseEntity<String> handleConstraintViolationException(Exception e) {
     logger.error(e.getMessage());
     return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
   }
-
 
   @Override
   protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,

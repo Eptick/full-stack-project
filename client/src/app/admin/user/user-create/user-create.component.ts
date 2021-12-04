@@ -26,15 +26,17 @@ export class UserCreateComponent {
 
   onSubmit() {
     this.form.markAllAsTouched();
+    this.form.markAsDirty();
     if(this.form.valid) {
       this.loading = true;
-      this.form.disable();
       this.userService.saveUser(this.form.value).pipe(
         catchError(error => {
-          return throwError(() => error);
+          if(error.status === 409) {
+            this.form.get("username")?.setErrors({taken: "Username is already taken"})
+          }
+          return( throwError(() => error));
         }),
         finalize(() => {
-          this.form.enable();
           this.loading = false;
         })
       ).subscribe(data => {
