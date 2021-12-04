@@ -5,7 +5,7 @@ import { BaloiseDesignSystemModule } from '@baloise/design-system-components-ang
 
 import { ReviewOverviewComponent } from './review-overview.component';
 
-fdescribe('ReviewOverviewComponent', () => {
+describe('ReviewOverviewComponent', () => {
   let component: ReviewOverviewComponent;
   let fixture: ComponentFixture<ReviewOverviewComponent>;
 
