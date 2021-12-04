@@ -4,12 +4,16 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import hr.project.api.dto.CreateOrUpdateRestaurantDto;
 import hr.project.api.dto.RestaurantReviewReport;
+import hr.project.api.exceptions.NotFoundException;
 import hr.project.api.exceptions.ParentNotFoundException;
 import hr.project.api.models.Image;
 import hr.project.api.models.Restaurant;
@@ -22,6 +26,7 @@ import hr.project.api.repositories.ReviewRepository;
 @Service
 public class RestaurantService {
 
+    Logger logger = LoggerFactory.getLogger(RestaurantService.class);
     @Autowired
     RestaurantRepository restaurantRepository;
     @Autowired
@@ -32,15 +37,28 @@ public class RestaurantService {
     @Autowired
     UserService userService;
 
+    public Restaurant updateRestaurant(Long restaurantId, CreateOrUpdateRestaurantDto dto) {
+        Restaurant restaurant = this.getRestaurant(restaurantId);
+        return this.updateRestaurant(restaurant, dto.toRestaurant());
+    }
+
     public Restaurant updateRestaurant(Restaurant restaurant, Restaurant dto) {
         Image image = restaurant.getImageObject();
         if(image.getId() != dto.getImage()) {
             restaurant.setImageObject(null);
             restaurant.setImage(dto.getImage());
-            this.fileLocationService.remove(image.getId(), image.getLocation()); 
+            try {
+                this.fileLocationService.remove(image.getId(), image.getLocation()); 
+            } catch (Exception e) {
+                logger.info("Could not delete the image, it's probably tied to another restaurant");
+            }
         }
         restaurant.setName(dto.getName());
         return this.saveRestaurant(restaurant);
+    }
+
+    public Restaurant saveRestaurant(CreateOrUpdateRestaurantDto dto) {
+        return this.saveRestaurant(dto.toRestaurant());
     }
 
     public Restaurant saveRestaurant(Restaurant restaurant) {
@@ -52,7 +70,8 @@ public class RestaurantService {
 
     public Restaurant getRestaurant(Long id) {
         Optional<Restaurant> restaurant = this.restaurantRepository.findById(id);
-        return restaurant.isPresent() ? restaurant.get() : null;
+        if(!restaurant.isPresent()) throw new NotFoundException();
+        return restaurant.get();
     }
 
     public void deleteRestaurant(Long id) {

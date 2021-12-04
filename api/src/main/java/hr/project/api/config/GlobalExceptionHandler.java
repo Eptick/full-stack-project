@@ -5,17 +5,25 @@ import java.util.Map;
 
 import javax.validation.ConstraintViolationException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.orm.jpa.JpaObjectRetrievalFailureException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.FieldError;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
@@ -26,6 +34,7 @@ import io.jsonwebtoken.ExpiredJwtException;
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
   public static final String TRACE = "trace";
+  Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
   @Value("${reflectoring.trace:true}")
   private boolean printStackTrace;
@@ -74,11 +83,37 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         .body(null);
   }
 
-  @ExceptionHandler(ConstraintViolationException.class)
-  @ResponseStatus(HttpStatus.BAD_REQUEST)
-  ResponseEntity<String> handleConstraintViolationException(ConstraintViolationException e) {
-    return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+  @Override
+  protected ResponseEntity<Object> handleHttpMessageNotReadable(
+      HttpMessageNotReadableException ex,
+      HttpHeaders headers,
+      HttpStatus status,
+      WebRequest request) {
+    logger.error(ex.getMessage());
+    return ResponseEntity.badRequest().body(null);
   }
+  @Override
+  protected ResponseEntity<Object> handleHttpRequestMethodNotSupported(
+      HttpRequestMethodNotSupportedException ex,
+      HttpHeaders headers,
+      HttpStatus status,
+      WebRequest request) {
+    logger.error(((ServletWebRequest)request).getRequest().getRequestURI() + " : " + ex.getMessage());
+    return new ResponseEntity<>(null, HttpStatus.METHOD_NOT_ALLOWED);
+  }
+
+  @ExceptionHandler({
+      ConstraintViolationException.class,
+      DataIntegrityViolationException.class,
+      JpaObjectRetrievalFailureException.class,
+      EmptyResultDataAccessException.class,
+  })
+  @ResponseStatus(HttpStatus.BAD_REQUEST)
+  ResponseEntity<String> handleConstraintViolationException(Exception e) {
+    logger.error(e.getMessage());
+    return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+  }
+
 
   @Override
   protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,

@@ -26,18 +26,19 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Restaurant {
 
-    public Restaurant() {
-
-    }
-
+    public Restaurant() {}
     public Restaurant(String name) {
         this.name = name;
+    }
+    public Restaurant(String name, Long image) {
+        this.name = name;
+        this.image = image;
     }
 
     @Id
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
     private long id;
-    
+
     @Column(name= "name", length = 255, nullable = false)
     private String name;
 
