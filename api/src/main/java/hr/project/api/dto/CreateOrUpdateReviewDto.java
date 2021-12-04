@@ -13,8 +13,7 @@ public class CreateOrUpdateReviewDto {
 
     @NotNull
     private Long restaurantId;
-    @NotNull
-    private Long userId;
+    private Long userId; // if it's null that save the current user
     @NotNull
     @PastOrPresent
     private Date dateOfVisit;
