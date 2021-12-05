@@ -1,9 +1,8 @@
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BalDatepicker, BalSelect } from '@baloise/design-system-components-angular';
-import { AsyncSubject, catchError, debounceTime, finalize, map, merge, Observable, pipe, Subject, SubjectLike, switchMap, tap, throwError } from 'rxjs';
+import { catchError, debounceTime, finalize, map, merge, Observable, Subject, switchMap, tap } from 'rxjs';
 import Page from 'src/app/interfaces/Page';
 import Restaurant from 'src/app/model/Restaurant';
 import Review from 'src/app/model/Review';
@@ -68,11 +67,11 @@ export class ReviewEditComponent implements AfterViewInit {
     (window as any).autoCompleteRestaurantDefault$ = this.autoCompleteRestaurantDefault$;
     this.initialLoading = true;
     this.reviewService.getReview(this.reviewId).pipe(
-      catchError(error => {
+      catchError((error, caught) => {
         if(error.status === 404) {
           this.router.navigate(["/admin/review"], { queryParams: {state: 'not-found'}});
         }
-        return throwError(() => error);
+        return caught;
       }),
       finalize(() => {
         this.initialLoading = false;
@@ -151,9 +150,9 @@ export class ReviewEditComponent implements AfterViewInit {
         ...this.form.value,
         id: this.review.id,
       }).pipe(
-        catchError(error => {
+        catchError((error, caught) => {
           this.errorHandling.handleHttpError(error);
-          return throwError(() => error);
+          return caught;
         }),
         finalize(() => {
           this.form.enable();

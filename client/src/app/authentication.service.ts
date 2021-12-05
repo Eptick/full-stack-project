@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { catchError, take, tap, throwError } from 'rxjs';
+import { catchError, tap, throwError } from 'rxjs';
 import { CONSTANTS } from './constants';
 import { Role } from './constants/Role';
 import JwtToken from './interfaces/JwtToken';
@@ -35,7 +35,6 @@ export class AuthenticationService {
 
   private handleDecodedToken(decodedToken: JwtToken) {
     this.userInfo = decodedToken ?? {};
-    console.log(this.userInfo)
     if(decodedToken && decodedToken?.roles) {
         this._roles = decodedToken.roles.split(",").map(elem => elem.trim()) ?? [];
     } else {

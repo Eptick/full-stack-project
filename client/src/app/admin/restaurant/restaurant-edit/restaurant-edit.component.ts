@@ -2,8 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BalFileUpload } from '@baloise/design-system-components-angular';
-import { BalValidators } from '@baloise/web-app-validators-angular';
-import { catchError, finalize, throwError } from 'rxjs';
+import { catchError, finalize} from 'rxjs';
 import Restaurant from 'src/app/model/Restaurant';
 import { ErrorHandlingService } from 'src/app/services/error-handling.service';
 import { MediaService } from 'src/app/services/media.service';
@@ -47,13 +46,13 @@ export class RestaurantEditComponent implements OnInit {
   ngOnInit() {
     this.initialLoading = true;
     this.restaurantService.getRestaurant(this.restaurantId).pipe(
-      catchError(error => {
+      catchError((error, caught) => {
         if(error.status === 404) {
           this.router.navigate(["/admin/restaurants"], { queryParams: {state: 'not-found'}});
         } else {
           this.errorHandling.handleHttpError(error);
         }
-        return throwError(() => error);
+        return caught;
       }),
       finalize(() => {
         this.initialLoading = false;
@@ -79,9 +78,9 @@ export class RestaurantEditComponent implements OnInit {
     const file: File = e.detail[0];
     if(file) {
       this.mediaService.uploadFile(file).pipe(
-        catchError(error => {
+        catchError((error, caught) => {
           this.errorHandling.handleHttpError(error);
-          return throwError(() => error);
+          return caught;
         }),
         finalize(() => {
           // this.loading = false;
@@ -106,9 +105,9 @@ export class RestaurantEditComponent implements OnInit {
           name: this.form.value.name,
           image: this.form.value.image,
         }).pipe(
-        catchError(error => {
+        catchError((error, caught) => {
           this.errorHandling.handleHttpError(error)
-          return throwError(() => error);
+          return caught;
         }),
         finalize(() => {
           this.form.enable();

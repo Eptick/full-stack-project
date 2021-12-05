@@ -9,7 +9,6 @@ import {
 import { catchError, Observable, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 import { BalToastService } from '@baloise/design-system-components-angular';
-import { AuthenticationService } from './authentication.service';
 import { JwtService } from './jwt.service';
 
 @Injectable()

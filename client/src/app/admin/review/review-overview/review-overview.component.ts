@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { catchError, finalize, throwError } from 'rxjs';
+import { catchError, finalize } from 'rxjs';
 import Page from 'src/app/interfaces/Page';
 import Review from 'src/app/model/Review';
 import { ErrorHandlingService } from 'src/app/services/error-handling.service';
@@ -26,8 +26,9 @@ export class ReviewOverviewComponent implements OnInit {
   public getReviews(page = 0) {
     this.page = page;
     this.reviewService.getReviews(page).pipe(
-      catchError(error => {
-        return throwError(() => error);
+      catchError((error, caught) => {
+        this.errorHandling.handleHttpError(error);
+        return caught;
       }),
       finalize(() => {
         this.loading = false;
@@ -42,9 +43,9 @@ export class ReviewOverviewComponent implements OnInit {
 
   public deleteReview(reviewId: number) {
     this.reviewService.deleteReview(reviewId).pipe(
-      catchError(error => {
+      catchError((error, caught) => {
         this.errorHandling.handleHttpError(error);
-        return throwError(() => error);
+        return caught;
       }),
       finalize(() => {
         this.loading = false;

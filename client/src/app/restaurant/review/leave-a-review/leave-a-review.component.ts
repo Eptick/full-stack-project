@@ -1,6 +1,5 @@
 import { AfterViewInit, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, NgForm } from '@angular/forms';
-import { Router } from '@angular/router';
 import { BalDatepicker, BalToastService } from '@baloise/design-system-components-angular';
 import { catchError, finalize, throwError } from 'rxjs';
 import { ErrorHandlingService } from 'src/app/services/error-handling.service';
@@ -58,9 +57,9 @@ export class LeaveAReviewComponent implements AfterViewInit {
       this.loading = true;
       this.form.disable();
       this.restaurantService.addReview(this.form.value).pipe(
-        catchError(error => {
+        catchError((error, caught) => {
           this.errorHandling.handleHttpError(error);
-          return throwError(() => error);
+          return caught;
         }),
         finalize(() => {
           this.form.enable();

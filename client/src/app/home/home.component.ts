@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { catchError, finalize, throwError } from 'rxjs';
+import { catchError, finalize } from 'rxjs';
 import Page from '../interfaces/Page';
 import Restaurant from '../model/Restaurant';
 import { DashboardService } from '../services/dashboard.service';
@@ -31,9 +31,9 @@ export class HomeComponent implements OnInit {
     this.dashboardService
       .getRestaurants(params)
       .pipe(
-        catchError((error) => {
+        catchError((error, caught) => {
           this.errorHandling.handleHttpError(error)
-          return throwError(() => error);
+          return caught;
         }),
         finalize(() => {
           this.restaurantsLoading = false;
@@ -41,7 +41,6 @@ export class HomeComponent implements OnInit {
       )
       .subscribe((data) => {
         this.restaurants = data as Page<Restaurant>;
-        console.log(data);
       });
   }
 }

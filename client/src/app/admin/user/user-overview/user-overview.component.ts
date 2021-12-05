@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { catchError, finalize, throwError } from 'rxjs';
+import { catchError, finalize } from 'rxjs';
 import { AuthenticationService } from 'src/app/authentication.service';
 import Page from 'src/app/interfaces/Page';
 import User from 'src/app/model/User';
@@ -30,9 +30,9 @@ export class UserOverviewComponent implements OnInit {
     this.userService
       .getUsers(page)
       .pipe(
-        catchError((error) => {
+        catchError((error, caught) => {
           this.errorHandling.handleHttpError(error)
-          return throwError(() => error);
+          return caught;
         }),
         finalize(() => {
           this.loading = false;
@@ -50,9 +50,9 @@ export class UserOverviewComponent implements OnInit {
     this.userService
       .deleteUser(userId)
       .pipe(
-        catchError((error) => {
+        catchError((error, caught) => {
           this.errorHandling.handleHttpError(error);
-          return throwError(() => error);
+          return caught;
         }),
         finalize(() => {
           this.loading = false;

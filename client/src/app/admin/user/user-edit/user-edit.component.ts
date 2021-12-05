@@ -3,11 +3,11 @@ import { FormControl, FormGroup, NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BalSelect } from '@baloise/design-system-components-angular';
 import { BalValidators } from '@baloise/web-app-validators-angular';
-import { catchError, finalize, throwError } from 'rxjs';
+import { catchError, finalize } from 'rxjs';
 import User from 'src/app/model/User';
 import { ErrorHandlingService } from 'src/app/services/error-handling.service';
 import { UserService } from 'src/app/services/user.service';
-import { PasswordValidations, RolesValidations, UsernameValidations } from 'src/app/util/project-validations';
+import { RolesValidations, UsernameValidations } from 'src/app/util/project-validations';
 
 @Component({
   selector: 'app-user-edit',
@@ -47,13 +47,13 @@ export class UserEditComponent implements OnInit {
   ngOnInit() {
     this.initialLoading = true;
     this.userService.getUser(this.userId).pipe(
-      catchError(error => {
+      catchError((error, caught) => {
         if(error.status === 404) {
           this.router.navigate(["/admin/users"], { queryParams: {state: 'not-found'}});
         } else {
           this.errorHandling.handleHttpError(error)
         }
-        return throwError(() => error);
+        return caught;
       }),
       finalize(() => {
         this.initialLoading = false;
@@ -78,7 +78,7 @@ export class UserEditComponent implements OnInit {
           id: this.userId,
           ...this.form.value
         }).pipe(
-        catchError(error => {
+        catchError((error, caught) => {
           try {
             if(error.status === 409) {
               this.form.get("username")?.setErrors({
@@ -90,7 +90,7 @@ export class UserEditComponent implements OnInit {
           } catch (error) {
             console.error(error)
           }
-          return throwError(() => error);
+          return caught;
         }),
         finalize(() => {
           this.loading = false;
