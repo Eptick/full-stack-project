@@ -20,6 +20,9 @@ export class ErrorHandlingService {
         this.createToast({message: 'Invalid data', color: 'danger'})
       } else if(error.status === 404) {
         this.createToast({message: 'That was not found', color: 'danger'})
+      } else {
+        console.error(error);
+        this.createToast({message: 'Something went terribly wrong ', color: 'danger'})
       }
     } catch (error) {
       console.error(error);
