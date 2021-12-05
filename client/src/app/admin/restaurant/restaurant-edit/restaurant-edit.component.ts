@@ -5,6 +5,7 @@ import { BalFileUpload } from '@baloise/design-system-components-angular';
 import { BalValidators } from '@baloise/web-app-validators-angular';
 import { catchError, finalize, throwError } from 'rxjs';
 import Restaurant from 'src/app/model/Restaurant';
+import { ErrorHandlingService } from 'src/app/services/error-handling.service';
 import { MediaService } from 'src/app/services/media.service';
 import { RestaurantService } from 'src/app/services/restaurant.service';
 import { RestaurantImageValidations, RestaurantNameValidations } from 'src/app/util/project-validations';
@@ -29,6 +30,7 @@ export class RestaurantEditComponent implements OnInit {
   })
   constructor(
     private restaurantService: RestaurantService,
+    private errorHandling: ErrorHandlingService,
     private mediaService: MediaService,
     private router: Router,
     private route: ActivatedRoute,
@@ -48,6 +50,8 @@ export class RestaurantEditComponent implements OnInit {
       catchError(error => {
         if(error.status === 404) {
           this.router.navigate(["/admin/restaurants"], { queryParams: {state: 'not-found'}});
+        } else {
+          this.errorHandling.handleHttpError(error);
         }
         return throwError(() => error);
       }),
@@ -76,6 +80,7 @@ export class RestaurantEditComponent implements OnInit {
     if(file) {
       this.mediaService.uploadFile(file).pipe(
         catchError(error => {
+          this.errorHandling.handleHttpError(error);
           return throwError(() => error);
         }),
         finalize(() => {
@@ -102,6 +107,7 @@ export class RestaurantEditComponent implements OnInit {
           image: this.form.value.image,
         }).pipe(
         catchError(error => {
+          this.errorHandling.handleHttpError(error)
           return throwError(() => error);
         }),
         finalize(() => {

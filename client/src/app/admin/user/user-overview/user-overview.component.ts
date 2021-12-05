@@ -3,6 +3,7 @@ import { catchError, finalize, throwError } from 'rxjs';
 import { AuthenticationService } from 'src/app/authentication.service';
 import Page from 'src/app/interfaces/Page';
 import User from 'src/app/model/User';
+import { ErrorHandlingService } from 'src/app/services/error-handling.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -16,6 +17,7 @@ export class UserOverviewComponent implements OnInit {
   public users: Page<User>;
 
   constructor(
+    private errorHandling: ErrorHandlingService,
     public auth: AuthenticationService,
     private userService: UserService) {}
 
@@ -29,6 +31,7 @@ export class UserOverviewComponent implements OnInit {
       .getUsers(page)
       .pipe(
         catchError((error) => {
+          this.errorHandling.handleHttpError(error)
           return throwError(() => error);
         }),
         finalize(() => {
@@ -48,6 +51,7 @@ export class UserOverviewComponent implements OnInit {
       .deleteUser(userId)
       .pipe(
         catchError((error) => {
+          this.errorHandling.handleHttpError(error);
           return throwError(() => error);
         }),
         finalize(() => {

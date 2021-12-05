@@ -3,6 +3,7 @@ import { catchError, finalize, throwError } from 'rxjs';
 import Page from '../interfaces/Page';
 import Restaurant from '../model/Restaurant';
 import { DashboardService } from '../services/dashboard.service';
+import { ErrorHandlingService } from '../services/error-handling.service';
 
 @Component({
   selector: 'app-home',
@@ -12,7 +13,10 @@ import { DashboardService } from '../services/dashboard.service';
 export class HomeComponent implements OnInit {
   restaurantsLoading = true;
   restaurants: Page<Restaurant>;
-  constructor(private dashboardService: DashboardService) {}
+  constructor(
+    private errorHandling: ErrorHandlingService,
+    private dashboardService: DashboardService
+  ) {}
 
   ngOnInit() {
     this.getRestaurants();
@@ -28,6 +32,7 @@ export class HomeComponent implements OnInit {
       .getRestaurants(params)
       .pipe(
         catchError((error) => {
+          this.errorHandling.handleHttpError(error)
           return throwError(() => error);
         }),
         finalize(() => {

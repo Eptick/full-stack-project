@@ -33,7 +33,7 @@ public class CreateOrUpdateRestaurantDto {
     }
 
     public Restaurant toRestaurant() {
-        return new Restaurant(name, image);
+        return new Restaurant(name.trim(), image);
     }
 
 }

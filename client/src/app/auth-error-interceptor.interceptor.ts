@@ -32,7 +32,7 @@ export class AuthErrorInterceptorInterceptor implements HttpInterceptor {
           });
         } else if (error.status === 403) {
           this.toast.create({
-            message: 'Access to this denied',
+            message: 'Access to this is denied',
             color: 'danger',
             duration: 3000,
           });

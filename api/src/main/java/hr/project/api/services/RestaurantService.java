@@ -51,7 +51,7 @@ public class RestaurantService {
                 logger.info("Could not delete the image, it's probably tied to another restaurant");
             }
         }
-        restaurant.setName(dto.getName());
+        restaurant.setName(dto.getName().trim());
         return this.saveRestaurant(restaurant);
     }
 

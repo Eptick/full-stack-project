@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChildren } from '@angular/core';
 import { catchError, finalize, throwError } from 'rxjs';
 import Page from 'src/app/interfaces/Page';
 import Restaurant from 'src/app/model/Restaurant';
+import { ErrorHandlingService } from 'src/app/services/error-handling.service';
 import { RestaurantService } from 'src/app/services/restaurant.service';
 
 @Component({
@@ -15,7 +16,10 @@ export class RestaurantOverviewComponent implements OnInit {
   page: number = 10;
   public restaurants: Page<Restaurant>;
 
-  constructor(private restaurantService: RestaurantService) {
+  constructor(
+    private restaurantService: RestaurantService,
+    private errorHandling: ErrorHandlingService,
+  ) {
 
   }
 
@@ -27,6 +31,7 @@ export class RestaurantOverviewComponent implements OnInit {
     this.page = page;
     this.restaurantService.getRestaurants(page).pipe(
       catchError(error => {
+        this.errorHandling.handleHttpError(error)
         return throwError(() => error);
       }),
       finalize(() => {
@@ -43,6 +48,7 @@ export class RestaurantOverviewComponent implements OnInit {
   public deleteRestaurant(restaurantId: number) {
     this.restaurantService.deleteRestaurant(restaurantId).pipe(
       catchError(error => {
+        this.errorHandling.handleHttpError(error);
         return throwError(() => error);
       }),
       finalize(() => {

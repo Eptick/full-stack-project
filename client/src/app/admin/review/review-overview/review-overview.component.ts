@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { catchError, finalize, throwError } from 'rxjs';
 import Page from 'src/app/interfaces/Page';
 import Review from 'src/app/model/Review';
+import { ErrorHandlingService } from 'src/app/services/error-handling.service';
 import { ReviewService } from 'src/app/services/review.service';
 
 @Component({
@@ -14,7 +15,9 @@ export class ReviewOverviewComponent implements OnInit {
   page: number = 10;
   public reviews: Page<Review>;
 
-  constructor(private reviewService: ReviewService) { }
+  constructor(
+    private errorHandling: ErrorHandlingService,
+    private reviewService: ReviewService) { }
 
   ngOnInit(): void {
     this.getReviews();
@@ -40,6 +43,7 @@ export class ReviewOverviewComponent implements OnInit {
   public deleteReview(reviewId: number) {
     this.reviewService.deleteReview(reviewId).pipe(
       catchError(error => {
+        this.errorHandling.handleHttpError(error);
         return throwError(() => error);
       }),
       finalize(() => {

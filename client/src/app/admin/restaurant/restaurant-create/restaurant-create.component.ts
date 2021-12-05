@@ -3,6 +3,7 @@ import { FormControl, FormGroup, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { BalFileUpload } from '@baloise/design-system-components-angular';
 import { catchError, finalize, throwError } from 'rxjs';
+import { ErrorHandlingService } from 'src/app/services/error-handling.service';
 import { MediaService } from 'src/app/services/media.service';
 import { RestaurantService } from 'src/app/services/restaurant.service';
 import { RestaurantImageValidations, RestaurantNameValidations } from 'src/app/util/project-validations';
@@ -23,6 +24,7 @@ export class RestaurantCreateComponent {
   })
   constructor(
     private restaurantService: RestaurantService,
+    private errorHandling: ErrorHandlingService,
     private mediaService: MediaService,
     private router: Router,
   ) { }
@@ -39,6 +41,7 @@ export class RestaurantCreateComponent {
         image: this.form.value.image,
       }).pipe(
         catchError(error => {
+          this.errorHandling.handleHttpError(error);
           return throwError(() => error);
         }),
         finalize(() => {
@@ -66,6 +69,7 @@ export class RestaurantCreateComponent {
     if(file) {
       this.mediaService.uploadFile(file).pipe(
         catchError(error => {
+          this.errorHandling.handleHttpError(error)
           return throwError(() => error);
         }),
         finalize(() => {

@@ -8,6 +8,7 @@ import Page from 'src/app/interfaces/Page';
 import Restaurant from 'src/app/model/Restaurant';
 import Review from 'src/app/model/Review';
 import User from 'src/app/model/User';
+import { ErrorHandlingService } from 'src/app/services/error-handling.service';
 import { RestaurantService } from 'src/app/services/restaurant.service';
 import { ReviewService } from 'src/app/services/review.service';
 import { UserService } from 'src/app/services/user.service';
@@ -48,6 +49,7 @@ export class ReviewEditComponent implements AfterViewInit {
   })
   constructor(
     private restaurantService: RestaurantService,
+    private errorHandling: ErrorHandlingService,
     private reviewService: ReviewService,
     private userService: UserService,
     private route: ActivatedRoute,
@@ -150,6 +152,7 @@ export class ReviewEditComponent implements AfterViewInit {
         id: this.review.id,
       }).pipe(
         catchError(error => {
+          this.errorHandling.handleHttpError(error);
           return throwError(() => error);
         }),
         finalize(() => {

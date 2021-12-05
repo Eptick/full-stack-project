@@ -5,6 +5,7 @@ import { BalSelect } from '@baloise/design-system-components-angular';
 import { BalValidators } from '@baloise/web-app-validators-angular';
 import { catchError, finalize, throwError } from 'rxjs';
 import User from 'src/app/model/User';
+import { ErrorHandlingService } from 'src/app/services/error-handling.service';
 import { UserService } from 'src/app/services/user.service';
 import { PasswordValidations, RolesValidations, UsernameValidations } from 'src/app/util/project-validations';
 
@@ -29,6 +30,7 @@ export class UserEditComponent implements OnInit {
     roles: new FormControl(null, RolesValidations),
   })
   constructor(
+    private errorHandling: ErrorHandlingService,
     private userService: UserService,
     private router: Router,
     private route: ActivatedRoute,
@@ -48,6 +50,8 @@ export class UserEditComponent implements OnInit {
       catchError(error => {
         if(error.status === 404) {
           this.router.navigate(["/admin/users"], { queryParams: {state: 'not-found'}});
+        } else {
+          this.errorHandling.handleHttpError(error)
         }
         return throwError(() => error);
       }),
@@ -77,14 +81,14 @@ export class UserEditComponent implements OnInit {
         catchError(error => {
           try {
             if(error.status === 409) {
-            (window as any).x = this.form.get("username");
-            debugger
               this.form.get("username")?.setErrors({
                 taken: true
               })
+            } else {
+              this.errorHandling.handleHttpError(error)
             }
           } catch (error) {
-            debugger
+            console.error(error)
           }
           return throwError(() => error);
         }),

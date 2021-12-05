@@ -3,6 +3,7 @@ import { FormControl, FormGroup, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { BalDatepicker, BalToastService } from '@baloise/design-system-components-angular';
 import { catchError, finalize, throwError } from 'rxjs';
+import { ErrorHandlingService } from 'src/app/services/error-handling.service';
 import { RestaurantService } from 'src/app/services/restaurant.service';
 import { ReviewContentValidations, ReviewDateOfVisitValidations, ReviewRatingValidations, ReviewRestaurantValidations, ReviewUserValidations } from 'src/app/util/project-validations';
 
@@ -26,8 +27,8 @@ export class LeaveAReviewComponent implements AfterViewInit {
     rating: new FormControl(1, ReviewRatingValidations),
   })
   constructor(
+    private errorHandling: ErrorHandlingService,
     private restaurantService: RestaurantService,
-    private router: Router,
     private toast: BalToastService,
   ) {}
 
@@ -58,6 +59,7 @@ export class LeaveAReviewComponent implements AfterViewInit {
       this.form.disable();
       this.restaurantService.addReview(this.form.value).pipe(
         catchError(error => {
+          this.errorHandling.handleHttpError(error);
           return throwError(() => error);
         }),
         finalize(() => {

@@ -1,10 +1,10 @@
 
-<bal-card class="restaurant-card" [routerLink]="['/restaurant', restaurant.id]">
-  <div class="card-featured-image">
+<bal-card class="restaurant-card" [routerLink]="['/restaurant', restaurant.id]" *ngIf="restaurant">
+  <div class="card-featured-image" *ngIf="restaurant.image">
     <img [src]="restaurant.image | imageUrl" />
   </div>
   <bal-card-content class="restaurant-card-content">
-    <bal-heading level="h5" space="top">Restaurant name</bal-heading>
+    <bal-heading level="h5" space="top">{{ restaurant.name }}</bal-heading>
     <app-rating [rating]="restaurant.averageRating" readonly size="20px"></app-rating>
     <bal-text small># of reviews: {{ restaurant.numberOfReviews }}</bal-text>
   </bal-card-content>

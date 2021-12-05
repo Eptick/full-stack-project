@@ -4,6 +4,7 @@ import Page from 'src/app/interfaces/Page';
 import PagingAndSorting from 'src/app/model/PagingAndSorting';
 import Restaurant from 'src/app/model/Restaurant';
 import { DashboardService } from 'src/app/services/dashboard.service';
+import { ErrorHandlingService } from 'src/app/services/error-handling.service';
 
 @Component({
   selector: 'app-restaurant-list-page',
@@ -16,7 +17,9 @@ export class RestaurantListPageComponent implements OnInit {
   page: number = 0;
   public restaurants: Page<Restaurant>;
 
-  constructor(private dashboardService: DashboardService) {}
+  constructor(
+    private errorHandling: ErrorHandlingService,
+    private dashboardService: DashboardService) {}
 
   ngOnInit(): void {
     this.getRestaurants();
@@ -27,6 +30,7 @@ export class RestaurantListPageComponent implements OnInit {
   }) {
     this.dashboardService.getRestaurants(params).pipe(
       catchError(error => {
+        this.errorHandling.handleHttpError(error)
         return throwError(() => error);
       }),
       finalize(() => {

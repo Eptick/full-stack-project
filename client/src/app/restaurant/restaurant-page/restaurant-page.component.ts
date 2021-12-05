@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { catchError, finalize, throwError } from 'rxjs';
 import Page from 'src/app/interfaces/Page';
 import Restaurant, { RestaurantReport } from 'src/app/model/Restaurant';
+import { ErrorHandlingService } from 'src/app/services/error-handling.service';
 import { RestaurantService } from 'src/app/services/restaurant.service';
 
 @Component({
@@ -18,6 +19,7 @@ export class RestaurantPageComponent implements OnInit {
   initialLoading: boolean = true;
 
   constructor(
+    private errorHandling: ErrorHandlingService,
     private route: ActivatedRoute,
     private router: Router,
     private restaurantService: RestaurantService) {
@@ -32,6 +34,7 @@ export class RestaurantPageComponent implements OnInit {
   getRestaurantReport() {
     this.restaurantService.getRestaurantReport(this.restaurantId).pipe(
       catchError(error => {
+        this.errorHandling.handleHttpError(error);
         return throwError(() => error);
       }),
       finalize(() => {
@@ -48,6 +51,8 @@ export class RestaurantPageComponent implements OnInit {
       catchError(error => {
         if(error.status === 404) {
           this.router.navigate(["/"], { queryParams: {state: 'not-found'}});
+        } else {
+          this.errorHandling.handleHttpError(error);
         }
         return throwError(() => error);
       }),

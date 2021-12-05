@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { catchError, finalize, throwError } from 'rxjs';
+import { ErrorHandlingService } from 'src/app/services/error-handling.service';
 import { UserService } from 'src/app/services/user.service';
 import { PasswordValidations, RestaurantImageValidations, RolesValidations, UsernameValidations } from 'src/app/util/project-validations';
 
@@ -20,6 +21,7 @@ export class UserCreateComponent {
     roles: new FormControl(null, RolesValidations),
   })
   constructor(
+    private errorHandling: ErrorHandlingService,
     private userService: UserService,
     private router: Router,
   ) { }
@@ -33,6 +35,8 @@ export class UserCreateComponent {
         catchError(error => {
           if(error.status === 409) {
             this.form.get("username")?.setErrors({taken: "Username is already taken"})
+          } else {
+            this.errorHandling.handleHttpError(error);
           }
           return( throwError(() => error));
         }),

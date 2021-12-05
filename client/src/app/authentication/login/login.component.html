@@ -10,6 +10,10 @@
           <bal-field-control>
             <bal-input name="username" placeholder="Enter your username" required  formControlName="username"></bal-input>
           </bal-field-control>
+          <bal-field-message color="danger" >
+            <bal-ng-error controlName="username" error="taken">Usename is already taken</bal-ng-error>
+            <bal-ng-error controlName="username" error="isRequired">This field is required</bal-ng-error>
+          </bal-field-message>
         </bal-field>
         <bal-field class="column is-half py-0" expanded required>
           <bal-field-label required>Password</bal-field-label>
