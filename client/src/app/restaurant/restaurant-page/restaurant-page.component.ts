@@ -47,7 +47,7 @@ export class RestaurantPageComponent implements OnInit {
     })
   }
 
-  ngOnInit(): void {
+  getRestaurant() {
     this.initialLoading = true;
     this.restaurantService.getRestaurant(this.restaurantId).pipe(
       catchError((error) => {
@@ -69,6 +69,10 @@ export class RestaurantPageComponent implements OnInit {
         this.restaurantReportLoading = false;
       }
     })
+  }
+
+  ngOnInit(): void {
+    this.getRestaurant();
   }
 
 }
