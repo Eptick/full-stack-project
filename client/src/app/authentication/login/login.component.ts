@@ -1,6 +1,8 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, NgForm } from '@angular/forms';
 import { BalValidators } from '@baloise/web-app-validators-angular';
+import { catchError, throwError } from 'rxjs';
 import { AuthenticationService } from 'src/app/authentication.service';
 
 @Component({
@@ -24,7 +26,13 @@ export class LoginComponent {
       this.auth.login(
         this.loginForm.value.username,
         this.loginForm.value.password
-      );
+      ).pipe(catchError((error: HttpErrorResponse) => {
+        if(error.status === 401) {
+          this.loginForm.get("username")?.setErrors({'invalid': true});
+        }
+        return throwError(() => error)
+      }))
+      .subscribe(() => {})
     }
   }
 

@@ -60,21 +60,23 @@ export class AuthenticationService {
   }
 
   login(username: string, password: string) {
-    this.http
-      .post(`${this.base}/login`, { username, password })
-      .subscribe((data: { access_token?: string }) => {
-        if (data.access_token) {
-          this.jwt.setToken(data.access_token);
-          const queryParams = {
-            state: 'logged-in'
+    return this.http
+      .post(`${this.base}/login`, { username, password }).pipe(
+        tap((data : { access_token?: string }) => {
+          debugger
+          if (data.access_token) {
+            this.jwt.setToken(data.access_token);
+            const queryParams = {
+              state: 'logged-in'
+            }
+            if(this.isAdmin) {
+              this.router.navigate(["/admin"], { queryParams });
+            } else {
+              this.router.navigate(["/restaurants"], { queryParams });
+            }
           }
-          if(this.isAdmin) {
-            this.router.navigate(["/admin"], { queryParams });
-          } else {
-            this.router.navigate(["/restaurants"], { queryParams });
-          }
-        }
-      });
+        })
+      )
   }
 
   register(username: string, password: string) {
