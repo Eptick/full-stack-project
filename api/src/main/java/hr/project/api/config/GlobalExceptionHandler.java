@@ -1,5 +1,6 @@
 package hr.project.api.config;
 
+import java.nio.file.AccessDeniedException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import hr.project.api.exceptions.CannotDeleteYourselfException;
@@ -51,6 +53,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
   }
 
   @ExceptionHandler({
+    AccessDeniedException.class,
     UsernameNotFoundException.class,
     ExpiredJwtException.class,
   })
@@ -106,6 +109,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
       EmptyResultDataAccessException.class,
       DataIntegrityViolationException.class,
       JpaObjectRetrievalFailureException.class,
+      MethodArgumentTypeMismatchException.class,
       PasswordCannotBeEmpty.class,
   })
   @ResponseStatus(HttpStatus.BAD_REQUEST)

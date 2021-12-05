@@ -14,4 +14,7 @@ public interface RestaurantRepository extends PagingAndSortingRepository<Restaur
 
     @Query(value = "SELECT r.* FROM restaurants r ORDER BY (select avg(re.rating) from reviews re where r.id = re.restaurant_id) desc", nativeQuery = true)
     Page<Restaurant> findHighRatedRestaurants(Pageable pageable);
+
+    @Query(value = "SELECT r.* FROM restaurants r ORDER BY (select avg(re.rating) from reviews re where r.id = re.restaurant_id) asc", nativeQuery = true)
+    Page<Restaurant> findLowestRestaurants(Pageable pageable);
 }

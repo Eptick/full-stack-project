@@ -17,4 +17,7 @@ public interface ReviewRepository extends PagingAndSortingRepository<Review, Lon
 
     @Query(value = "SELECT e.* from reviews e where e.restaurant_id =:restaurant_id order by e.creation_date desc limit 1", nativeQuery = true)
     Review findLatestReviewForRestaurant(@Param("restaurant_id") Long restaurant_id);
+
+    @Query(value = "SELECT avg(e.rating) from reviews e", nativeQuery = true)
+    double findAverageReview();
 }
