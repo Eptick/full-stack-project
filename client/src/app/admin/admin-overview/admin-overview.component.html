@@ -17,11 +17,11 @@
       </bal-data-item>
       <bal-data-item>
         <bal-data-label>Highest rated restaurant</bal-data-label>
-        <bal-data-value>{{ overviewData.highestRatedRestaurant ?? 'No restaurants' }}</bal-data-value>
+        <bal-data-value>{{ overviewData.highestRatedRestaurant?.name ?? 'No restaurants' }}</bal-data-value>
       </bal-data-item>
       <bal-data-item>
         <bal-data-label>Lowest rated restaurant</bal-data-label>
-        <bal-data-value>{{ overviewData.lowestRatedRestaurant ?? 'No restaurants' }}</bal-data-value>
+        <bal-data-value>{{ overviewData.lowestRatedRestaurant?.name ?? 'No restaurants' }}</bal-data-value>
       </bal-data-item>
     </bal-data>
   </bal-card-content>

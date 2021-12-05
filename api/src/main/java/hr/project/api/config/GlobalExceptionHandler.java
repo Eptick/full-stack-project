@@ -53,16 +53,15 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
   }
 
   @ExceptionHandler({
-    AccessDeniedException.class,
-    UsernameNotFoundException.class,
-    ExpiredJwtException.class,
+      AccessDeniedException.class,
+      UsernameNotFoundException.class,
+      ExpiredJwtException.class,
   })
   @ResponseStatus(HttpStatus.UNAUTHORIZED)
   public ResponseEntity<Object> handleAllUsernameNotFoundUncaughtException(
       RuntimeException exception,
       WebRequest request) {
-    return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-        .body(null);
+    return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
   }
 
   @ExceptionHandler(RuntimeException.class)
