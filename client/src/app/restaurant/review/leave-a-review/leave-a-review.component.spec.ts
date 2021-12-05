@@ -15,7 +15,7 @@ import { RestaurantService } from 'src/app/services/restaurant.service';
 import { CONSTANTS } from 'src/app/constants';
 
 
-fdescribe('LeaveAReviewComponent', () => {
+describe('LeaveAReviewComponent', () => {
   let httpClient: HttpClient;
   let httpTestingController: HttpTestingController;
 
