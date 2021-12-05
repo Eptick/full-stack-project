@@ -64,6 +64,7 @@ describe('RegisterComponent', () => {
     // to set values
     component.registerForm.controls['username'].setValue('user');
     component.registerForm.controls['password'].setValue('user');
+    component.registerForm.controls['confirm'].setValue('user');
     registerElement.triggerEventHandler('ngSubmit', null);
     const req = httpTestingController.expectOne(`${CONSTANTS.API_URL}/register`);
     expect(req.request.method).toBe("POST");
@@ -87,6 +88,7 @@ describe('RegisterComponent', () => {
     // to set values
     component.registerForm.controls['username'].setValue('user');
     component.registerForm.controls['password'].setValue('user');
+    component.registerForm.controls['confirm'].setValue('user');
     registerElement.triggerEventHandler('ngSubmit', null);
     const req = httpTestingController.expectOne(`${CONSTANTS.API_URL}/register`);
     expect(req.request.method).toBe("POST");

@@ -1,5 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, NgForm } from '@angular/forms';
+import { BalValidators } from '@baloise/web-app-validators-angular';
 import { catchError, EMPTY } from 'rxjs';
 import { AuthenticationService } from 'src/app/authentication.service';
 import { ErrorHandlingService } from 'src/app/services/error-handling.service';
@@ -14,9 +15,18 @@ export class RegisterComponent {
 
   @ViewChild('register_form') form: NgForm;
 
-  registerForm = new FormGroup({
+  registerForm: FormGroup = new FormGroup({
     username: new FormControl('', UsernameValidations),
     password: new FormControl('', PasswordValidations),
+    confirm: new FormControl('', [
+      BalValidators.isCustom((value) => {
+        if(this.registerForm) {
+          return this?.registerForm?.controls?.['password']?.value === value;
+        }
+        return false
+      }),
+      BalValidators.isRequired()
+    ]),
   });
 
   constructor(
