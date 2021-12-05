@@ -1,11 +1,10 @@
 package hr.project.api.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import hr.project.api.dto.MediaResource;
+import hr.project.api.exceptions.NotFoundException;
 import hr.project.api.models.Image;
 import hr.project.api.repositories.FileSystemRepository;
 import hr.project.api.repositories.ImageDbRepository;
@@ -34,7 +33,7 @@ public class FileLocationService {
     }
 
     public MediaResource find(Long imageId) {
-        Image image = imageDbRepository.findById(imageId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        Image image = imageDbRepository.findById(imageId).orElseThrow(() -> new NotFoundException());
         return new MediaResource(fileSystemRepository.findInFileSystem(image.getLocation()), image);
     }
 }

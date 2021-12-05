@@ -30,6 +30,7 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import hr.project.api.exceptions.CannotDeleteYourselfException;
+import hr.project.api.exceptions.NotFoundException;
 import hr.project.api.exceptions.ParentNotFoundException;
 import hr.project.api.exceptions.PasswordCannotBeEmpty;
 import hr.project.api.exceptions.UsernameExistsException;
@@ -71,6 +72,15 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
       WebRequest request) {
     exception.printStackTrace(System.err);
     return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+        .body(null);
+  }
+
+  @ExceptionHandler(NotFoundException.class)
+  @ResponseStatus(HttpStatus.NOT_FOUND)
+  public ResponseEntity<Object> handleAllUncaughtException(
+      NotFoundException exception,
+      WebRequest request) {
+    return ResponseEntity.status(HttpStatus.NOT_FOUND)
         .body(null);
   }
 
