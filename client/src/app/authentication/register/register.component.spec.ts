@@ -15,7 +15,7 @@ import { Router } from '@angular/router';
 import { By } from '@angular/platform-browser';
 import { CONSTANTS } from 'src/app/constants';
 
-fdescribe('RegisterComponent', () => {
+describe('RegisterComponent', () => {
   let httpClient: HttpClient;
   let httpTestingController: HttpTestingController;
 
