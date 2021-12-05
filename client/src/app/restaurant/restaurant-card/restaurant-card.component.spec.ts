@@ -1,3 +1,5 @@
+import { HttpClient } from '@angular/common/http';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
@@ -17,10 +19,13 @@ describe('RestaurantCardComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [BaloiseDesignSystemModule, RouterTestingModule],
+      imports: [BaloiseDesignSystemModule, RouterTestingModule, HttpClientTestingModule],
       declarations: [ RestaurantCardComponent, ImageUrlPipe, RatingComponent],
     })
     .compileComponents();
+
+    TestBed.inject(HttpClient);
+    TestBed.inject(HttpTestingController);
   });
 
   beforeEach(() => {

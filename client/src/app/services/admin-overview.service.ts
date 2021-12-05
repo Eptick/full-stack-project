@@ -7,6 +7,7 @@ import { CONSTANTS } from '../constants';
   providedIn: 'root'
 })
 export class AdminOverviewService {
+
   private base: string = CONSTANTS.API_URL;
 
   constructor(private http: HttpClient) { }

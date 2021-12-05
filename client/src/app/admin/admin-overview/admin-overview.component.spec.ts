@@ -1,3 +1,5 @@
+import { HttpClient } from '@angular/common/http';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BaloiseDesignSystemModule } from '@baloise/design-system-components-angular';
 
@@ -9,10 +11,13 @@ describe('AdminOverviewComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [BaloiseDesignSystemModule],
+      imports: [BaloiseDesignSystemModule, HttpClientTestingModule],
       declarations: [ AdminOverviewComponent ]
     })
     .compileComponents();
+
+    TestBed.inject(HttpClient);
+    TestBed.inject(HttpTestingController);
   });
 
   beforeEach(() => {

@@ -1,4 +1,5 @@
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 
 import { RestaurantService } from './restaurant.service';
@@ -8,9 +9,12 @@ describe('RestaurantService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientModule]
+      imports: [HttpClientTestingModule]
     });
     service = TestBed.inject(RestaurantService);
+
+    TestBed.inject(HttpClient);
+    TestBed.inject(HttpTestingController);
   });
 
   it('should be created', () => {

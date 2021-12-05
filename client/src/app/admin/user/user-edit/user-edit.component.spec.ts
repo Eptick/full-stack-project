@@ -1,4 +1,5 @@
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -13,10 +14,13 @@ describe('UserEditComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HttpClientModule, BaloiseDesignSystemModule, ReactiveFormsModule, RouterTestingModule],
+      imports: [HttpClientTestingModule, BaloiseDesignSystemModule, ReactiveFormsModule, RouterTestingModule],
       declarations: [ UserEditComponent, UserBackComponent ]
     })
     .compileComponents();
+
+    TestBed.inject(HttpClient);
+    TestBed.inject(HttpTestingController);
   });
 
   beforeEach(() => {
