@@ -1,4 +1,28 @@
 <bal-card>
   <bal-card-title>Application overview</bal-card-title>
-  <bal-card-content></bal-card-content>
+  <bal-card-content>
+    <bal-spinner *ngIf="!overviewData"></bal-spinner>
+    <bal-data border *ngIf="overviewData">
+      <bal-data-item>
+        <bal-data-label>Number of restaurants</bal-data-label>
+        <bal-data-value>{{ overviewData.numberOfRestaurants }}</bal-data-value>
+      </bal-data-item>
+      <bal-data-item>
+        <bal-data-label>Number of reviews</bal-data-label>
+        <bal-data-value>{{ overviewData.numberOfReviews }}</bal-data-value>
+      </bal-data-item>
+      <bal-data-item>
+        <bal-data-label>Number of users</bal-data-label>
+        <bal-data-value>{{ overviewData.numberOfUsers }}</bal-data-value>
+      </bal-data-item>
+      <bal-data-item>
+        <bal-data-label>Highest rated restaurant</bal-data-label>
+        <bal-data-value>{{ overviewData.highestRatedRestaurant ?? 'No restaurants' }}</bal-data-value>
+      </bal-data-item>
+      <bal-data-item>
+        <bal-data-label>Lowest rated restaurant</bal-data-label>
+        <bal-data-value>{{ overviewData.lowestRatedRestaurant ?? 'No restaurants' }}</bal-data-value>
+      </bal-data-item>
+    </bal-data>
+  </bal-card-content>
 </bal-card>

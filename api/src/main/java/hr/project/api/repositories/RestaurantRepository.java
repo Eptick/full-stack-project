@@ -12,9 +12,9 @@ public interface RestaurantRepository extends PagingAndSortingRepository<Restaur
     Restaurant findById(long id);
     Page<Restaurant> findByNameContainingIgnoreCase(String name, Pageable pageable);
 
-    @Query(value = "select *, coalesce((select avg(rating) from reviews re where re.restaurant_id = r.id), 1) average from restaurants r order by average desc", nativeQuery = true)
+    @Query(value = " select r.* from restaurants r, coalesce((select avg(rating) from reviews re where re.restaurant_id = r.id), 1) average order by average desc", nativeQuery = true)
     Page<Restaurant> findHighRatedRestaurants(Pageable pageable);
 
-    @Query(value = "select *, coalesce((select avg(rating) from reviews re where re.restaurant_id = r.id),1) average from restaurants r order by average asc", nativeQuery = true)
+    @Query(value = " select r.* from restaurants r, coalesce((select avg(rating) from reviews re where re.restaurant_id = r.id), 1) average order by average asc", nativeQuery = true)
     Page<Restaurant> findLowestRestaurants(Pageable pageable);
 }

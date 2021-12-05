@@ -1,7 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { catchError, EMPTY } from 'rxjs';
+import Restaurant from 'src/app/model/Restaurant';
 import { AdminOverviewService } from 'src/app/services/admin-overview.service';
 import { ErrorHandlingService } from 'src/app/services/error-handling.service';
+
+interface AdminOverview {
+  numberOfRestaurants: number;
+  numberOfReviews: number;
+  numberOfUsers: number;
+  averageReview: number;
+  highestRatedRestaurant: Restaurant;
+  lowestRatedRestaurant: Restaurant;
+}
 
 @Component({
   selector: 'app-admin-overview',
@@ -9,6 +19,7 @@ import { ErrorHandlingService } from 'src/app/services/error-handling.service';
   styleUrls: ['./admin-overview.component.scss']
 })
 export class AdminOverviewComponent implements OnInit {
+  overviewData: AdminOverview;
 
   constructor(
     private errorHandlingService: ErrorHandlingService,
@@ -21,8 +32,8 @@ export class AdminOverviewComponent implements OnInit {
         this.errorHandlingService.handleHttpError(error)
         return EMPTY;
       })
-    ).subscribe(data => {
-      console.log(data)
+    ).subscribe((data: Partial<AdminOverview>) => {
+      this.overviewData = data as AdminOverview;
     })
   }
 
