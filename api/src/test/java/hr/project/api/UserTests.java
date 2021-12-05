@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
@@ -31,7 +30,7 @@ import hr.project.api.services.UserService;
 @RunWith(JUnit4.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-@AutoConfigureTestDatabase
+// @AutoConfigureTestDatabase
 public class UserTests {
     @Autowired
     private WebApplicationContext context;
