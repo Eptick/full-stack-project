@@ -22,8 +22,7 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     this.loginForm.controls['password']?.valueChanges.subscribe(() => {
       if(this.loginForm.controls['username'].hasError('invalid'))
-
-        this.loginForm.controls['username'].setErrors({ });
+        this.loginForm.controls['username'].setErrors(null);
     })
   }
 

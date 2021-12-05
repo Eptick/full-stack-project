@@ -16,6 +16,7 @@ export class RestaurantPageComponent implements OnInit {
   restaurant: Restaurant;
 
   initialLoading: boolean = true;
+  restaurantReportLoading: boolean = true;
 
   constructor(
     private errorHandling: ErrorHandlingService,
@@ -31,6 +32,7 @@ export class RestaurantPageComponent implements OnInit {
   }
 
   getRestaurantReport() {
+    this.restaurantReportLoading = true;
     this.restaurantService.getRestaurantReport(this.restaurantId).pipe(
       catchError((error) => {
         this.errorHandling.handleHttpError(error);
@@ -38,6 +40,7 @@ export class RestaurantPageComponent implements OnInit {
       }),
       finalize(() => {
         this.initialLoading = false;
+        this.restaurantReportLoading = false;
       })
     ).subscribe(data => {
       this.restaurant.report = data as RestaurantReport;
@@ -62,6 +65,8 @@ export class RestaurantPageComponent implements OnInit {
       this.restaurant = data as Restaurant;
       if(this.restaurant.numberOfReviews > 0) {
         this.getRestaurantReport();
+      } else {
+        this.restaurantReportLoading = false;
       }
     })
   }

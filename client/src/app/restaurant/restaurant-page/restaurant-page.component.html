@@ -16,7 +16,9 @@
         Number of reviews: {{ restaurant.numberOfReviews }}
       </bal-card-content>
     </bal-card>
-    <ng-container *ngIf="!!restaurant.report">
+    <bal-spinner *ngIf="!!!restaurant.report && restaurantReportLoading"></bal-spinner>
+    <bal-heading level="h3" *ngIf="!!!restaurant.report && !restaurantReportLoading" class="my-5">No one reviewed this, be the first one to leave a mark!</bal-heading>
+    <ng-container *ngIf="!!restaurant.report && !restaurantReportLoading">
       <ng-container *ngIf="restaurant.report.highest">
         <bal-heading level="h3">Highest rated review</bal-heading>
         <app-restaurant-review [review]="restaurant.report.highest"></app-restaurant-review>
