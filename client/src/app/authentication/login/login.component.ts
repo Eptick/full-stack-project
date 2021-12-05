@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, NgForm } from '@angular/forms';
 import { BalValidators } from '@baloise/web-app-validators-angular';
 import { catchError, EMPTY, } from 'rxjs';
@@ -9,7 +9,7 @@ import { AuthenticationService } from 'src/app/authentication.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   @ViewChild('login_form') form: NgForm;
 
   loginForm = new FormGroup({
@@ -18,6 +18,14 @@ export class LoginComponent {
   });
 
   constructor(private auth: AuthenticationService) { }
+
+  ngOnInit() {
+    this.loginForm.controls['password']?.valueChanges.subscribe(() => {
+      if(this.loginForm.controls['username'].hasError('invalid'))
+
+        this.loginForm.controls['username'].setErrors({ });
+    })
+  }
 
   public onSubmit() {
     this.loginForm.markAllAsTouched();
