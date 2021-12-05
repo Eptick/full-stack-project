@@ -1,4 +1,3 @@
-import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -8,6 +7,7 @@ import { RegisterComponent } from './register.component';
 
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { HttpClient } from '@angular/common/http';
+
 import { LoginComponent } from '../login/login.component';
 import { DebugElement } from '@angular/core';
 import { AuthenticationService } from 'src/app/authentication.service';

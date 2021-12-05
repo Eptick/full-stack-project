@@ -2,7 +2,7 @@ import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BalDatepicker, BalSelect } from '@baloise/design-system-components-angular';
-import { catchError, debounceTime, finalize, map, merge, Observable, Subject, switchMap, tap } from 'rxjs';
+import { catchError, debounceTime, EMPTY, finalize, map, merge, Observable, Subject, switchMap, tap } from 'rxjs';
 import Page from 'src/app/interfaces/Page';
 import Restaurant from 'src/app/model/Restaurant';
 import Review from 'src/app/model/Review';
@@ -67,11 +67,11 @@ export class ReviewEditComponent implements AfterViewInit {
     (window as any).autoCompleteRestaurantDefault$ = this.autoCompleteRestaurantDefault$;
     this.initialLoading = true;
     this.reviewService.getReview(this.reviewId).pipe(
-      catchError((error, caught) => {
+      catchError((error) => {
         if(error.status === 404) {
           this.router.navigate(["/admin/review"], { queryParams: {state: 'not-found'}});
         }
-        return caught;
+        return EMPTY;
       }),
       finalize(() => {
         this.initialLoading = false;
@@ -150,9 +150,9 @@ export class ReviewEditComponent implements AfterViewInit {
         ...this.form.value,
         id: this.review.id,
       }).pipe(
-        catchError((error, caught) => {
+        catchError((error) => {
           this.errorHandling.handleHttpError(error);
-          return caught;
+          return EMPTY;
         }),
         finalize(() => {
           this.form.enable();

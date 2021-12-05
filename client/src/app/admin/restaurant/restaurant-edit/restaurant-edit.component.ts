@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BalFileUpload } from '@baloise/design-system-components-angular';
-import { catchError, finalize} from 'rxjs';
+import { catchError, EMPTY, finalize, throwError} from 'rxjs';
 import Restaurant from 'src/app/model/Restaurant';
 import { ErrorHandlingService } from 'src/app/services/error-handling.service';
 import { MediaService } from 'src/app/services/media.service';
@@ -46,13 +46,13 @@ export class RestaurantEditComponent implements OnInit {
   ngOnInit() {
     this.initialLoading = true;
     this.restaurantService.getRestaurant(this.restaurantId).pipe(
-      catchError((error, caught) => {
+      catchError((error) => {
         if(error.status === 404) {
           this.router.navigate(["/admin/restaurants"], { queryParams: {state: 'not-found'}});
         } else {
           this.errorHandling.handleHttpError(error);
         }
-        return caught;
+        return EMPTY;
       }),
       finalize(() => {
         this.initialLoading = false;
@@ -78,9 +78,9 @@ export class RestaurantEditComponent implements OnInit {
     const file: File = e.detail[0];
     if(file) {
       this.mediaService.uploadFile(file).pipe(
-        catchError((error, caught) => {
+        catchError((error) => {
           this.errorHandling.handleHttpError(error);
-          return caught;
+          return EMPTY
         }),
         finalize(() => {
           // this.loading = false;
@@ -105,9 +105,9 @@ export class RestaurantEditComponent implements OnInit {
           name: this.form.value.name,
           image: this.form.value.image,
         }).pipe(
-        catchError((error, caught) => {
+        catchError((error) => {
           this.errorHandling.handleHttpError(error)
-          return caught;
+          return EMPTY
         }),
         finalize(() => {
           this.form.enable();

@@ -1,9 +1,10 @@
 import { AfterViewInit, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, NgForm } from '@angular/forms';
 import { BalDatepicker, BalToastService } from '@baloise/design-system-components-angular';
-import { catchError, finalize, throwError } from 'rxjs';
+import { catchError, EMPTY, finalize, throwError } from 'rxjs';
 import { ErrorHandlingService } from 'src/app/services/error-handling.service';
 import { RestaurantService } from 'src/app/services/restaurant.service';
+import { getTodayYYYYMMDD } from 'src/app/util';
 import { ReviewContentValidations, ReviewDateOfVisitValidations, ReviewRatingValidations, ReviewRestaurantValidations, ReviewUserValidations } from 'src/app/util/project-validations';
 
 @Component({
@@ -21,7 +22,7 @@ export class LeaveAReviewComponent implements AfterViewInit {
   loading: boolean = false;
   form = new FormGroup({
     restaurantId: new FormControl(null, ReviewRestaurantValidations),
-    dateOfVisit: new FormControl((new Date()).toISOString(), ReviewDateOfVisitValidations),
+    dateOfVisit: new FormControl(getTodayYYYYMMDD(), ReviewDateOfVisitValidations),
     content: new FormControl(null, ReviewContentValidations),
     rating: new FormControl(1, ReviewRatingValidations),
   })
@@ -57,9 +58,9 @@ export class LeaveAReviewComponent implements AfterViewInit {
       this.loading = true;
       this.form.disable();
       this.restaurantService.addReview(this.form.value).pipe(
-        catchError((error, caught) => {
+        catchError((error) => {
           this.errorHandling.handleHttpError(error);
-          return caught;
+          return EMPTY;
         }),
         finalize(() => {
           this.form.enable();

@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { catchError, finalize } from 'rxjs';
+import { catchError, EMPTY, finalize } from 'rxjs';
 import { ErrorHandlingService } from 'src/app/services/error-handling.service';
 import { UserService } from 'src/app/services/user.service';
 import { PasswordValidations, RolesValidations, UsernameValidations } from 'src/app/util/project-validations';
@@ -32,13 +32,13 @@ export class UserCreateComponent {
     if(this.form.valid) {
       this.loading = true;
       this.userService.saveUser(this.form.value).pipe(
-        catchError((error, caught) => {
+        catchError((error) => {
           if(error.status === 409) {
             this.form.get("username")?.setErrors({taken: "Username is already taken"})
           } else {
             this.errorHandling.handleHttpError(error);
           }
-          return caught;
+          return EMPTY;
         }),
         finalize(() => {
           this.loading = false;

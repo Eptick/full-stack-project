@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, NgForm } from '@angular/forms';
 import { BalValidators } from '@baloise/web-app-validators-angular';
-import { catchError, } from 'rxjs';
+import { catchError, EMPTY, } from 'rxjs';
 import { AuthenticationService } from 'src/app/authentication.service';
 
 @Component({
@@ -26,11 +26,11 @@ export class LoginComponent {
         this.loginForm.value.username,
         this.loginForm.value.password
       ).pipe(
-        catchError((error, caught) => {
+        catchError((error) => {
         if(error.status === 401) {
           this.loginForm.get("username")?.setErrors({'invalid': true});
         }
-        return caught
+        return EMPTY
       }))
       .subscribe(() => {})
     }

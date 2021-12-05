@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, NgForm } from '@angular/forms';
-import { catchError } from 'rxjs';
+import { catchError, EMPTY } from 'rxjs';
 import { AuthenticationService } from 'src/app/authentication.service';
 import { ErrorHandlingService } from 'src/app/services/error-handling.service';
 import { PasswordValidations, UsernameValidations } from 'src/app/util/project-validations';
@@ -32,13 +32,13 @@ export class RegisterComponent {
         this.registerForm.value.password
       )
       .pipe(
-        catchError((error, caught) => {
+        catchError((error) => {
           if(error.status === 409) {
             this.registerForm.get("username")?.setErrors({taken: "Username is already taken"})
           } else {
             this.errorHandling.handleHttpError(error);
           }
-          return caught;
+          return EMPTY;
         })
       )
       .subscribe(elem => { }); // triger the request

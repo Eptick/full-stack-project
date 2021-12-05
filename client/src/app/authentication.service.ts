@@ -62,7 +62,6 @@ export class AuthenticationService {
     return this.http
       .post(`${this.base}/login`, { username, password }).pipe(
         tap((data : { access_token?: string }) => {
-          debugger
           if (data.access_token) {
             this.jwt.setToken(data.access_token);
             const queryParams = {

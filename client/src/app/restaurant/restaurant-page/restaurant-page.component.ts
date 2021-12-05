@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { catchError, finalize } from 'rxjs';
+import { catchError, EMPTY, finalize } from 'rxjs';
 import Restaurant, { RestaurantReport } from 'src/app/model/Restaurant';
 import { ErrorHandlingService } from 'src/app/services/error-handling.service';
 import { RestaurantService } from 'src/app/services/restaurant.service';
@@ -32,9 +32,9 @@ export class RestaurantPageComponent implements OnInit {
 
   getRestaurantReport() {
     this.restaurantService.getRestaurantReport(this.restaurantId).pipe(
-      catchError((error, caught) => {
+      catchError((error) => {
         this.errorHandling.handleHttpError(error);
-        return caught;
+        return EMPTY;
       }),
       finalize(() => {
         this.initialLoading = false;
@@ -47,13 +47,13 @@ export class RestaurantPageComponent implements OnInit {
   ngOnInit(): void {
     this.initialLoading = true;
     this.restaurantService.getRestaurant(this.restaurantId).pipe(
-      catchError((error, caught) => {
+      catchError((error) => {
         if(error.status === 404) {
           this.router.navigate(["/"], { queryParams: {state: 'not-found'}});
         } else {
           this.errorHandling.handleHttpError(error);
         }
-        return caught;
+        return EMPTY;
       }),
       finalize(() => {
         this.initialLoading = false;

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { catchError, finalize } from 'rxjs';
+import { catchError, EMPTY, finalize } from 'rxjs';
 import Page from 'src/app/interfaces/Page';
 import PagingAndSorting from 'src/app/model/PagingAndSorting';
 import Restaurant from 'src/app/model/Restaurant';
@@ -29,9 +29,9 @@ export class RestaurantListPageComponent implements OnInit {
     page: 0,
   }) {
     this.dashboardService.getRestaurants(params).pipe(
-      catchError((error, caught) => {
+      catchError((error) => {
         this.errorHandling.handleHttpError(error)
-        return caught;
+        return EMPTY;
       }),
       finalize(() => {
         this.loading = false;

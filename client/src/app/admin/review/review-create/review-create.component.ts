@@ -2,7 +2,7 @@ import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { BalDatepicker } from '@baloise/design-system-components-angular';
-import { catchError, debounceTime, finalize, map, Observable, Subject, switchMap } from 'rxjs';
+import { catchError, debounceTime, EMPTY, finalize, map, Observable, Subject, switchMap } from 'rxjs';
 import Page from 'src/app/interfaces/Page';
 import Restaurant from 'src/app/model/Restaurant';
 import User from 'src/app/model/User';
@@ -98,9 +98,9 @@ export class ReviewCreateComponent implements AfterViewInit {
       this.loading = true;
       this.form.disable();
       this.restaurantService.addReview(this.form.value).pipe(
-        catchError((error, caught) => {
+        catchError((error) => {
           this.errorHandling.handleHttpError(error);
-          return caught;
+          return EMPTY;
         }),
         finalize(() => {
           this.form.enable();

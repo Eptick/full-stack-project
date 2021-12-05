@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { catchError, finalize } from 'rxjs';
+import { catchError, EMPTY, finalize } from 'rxjs';
 import Page from 'src/app/interfaces/Page';
 import Restaurant from 'src/app/model/Restaurant';
 import { ErrorHandlingService } from 'src/app/services/error-handling.service';
@@ -30,9 +30,9 @@ export class RestaurantOverviewComponent implements OnInit {
   public getRestaurants(page = 0) {
     this.page = page;
     this.restaurantService.getRestaurants(page).pipe(
-      catchError((error, caught) => {
+      catchError((error) => {
         this.errorHandling.handleHttpError(error)
-        return caught;
+        return EMPTY;
       }),
       finalize(() => {
         this.loading = false;
@@ -47,9 +47,9 @@ export class RestaurantOverviewComponent implements OnInit {
 
   public deleteRestaurant(restaurantId: number) {
     this.restaurantService.deleteRestaurant(restaurantId).pipe(
-      catchError((error, caught) => {
+      catchError((error) => {
         this.errorHandling.handleHttpError(error);
-        return caught;
+        return EMPTY;
       }),
       finalize(() => {
         this.loading = false;

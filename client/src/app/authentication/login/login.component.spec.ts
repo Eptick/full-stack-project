@@ -17,6 +17,7 @@ import { HttpClient } from '@angular/common/http';
 import { LoginComponent } from './login.component';
 import { RestaurantPageComponent } from 'src/app/restaurant/restaurant-page/restaurant-page.component';
 import { CONSTANTS } from 'src/app/constants';
+import TESTING_TOKEN from 'src/app/constants/token';
 
 describe('LoginComponent', () => {
 
@@ -67,7 +68,7 @@ describe('LoginComponent', () => {
     loginElement.triggerEventHandler('ngSubmit', null);
     const req = httpTestingController.expectOne(`${CONSTANTS.API_URL}/login`);
     expect(req.request.method).toBe("POST");
-    req.flush({ access_token: 'eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJ1c2VyIiwicm9sZXMiOiJST0xFX0FETUlOIiwiZXhwIjoxNjM4NzkzMzIwfQ.bsRpGI8L3Egu81mdPsswY9w9nQw8-vs-2X2HjCXtyeIyqTuZ11cjMsAspbeFY3rYsRP_i4BYHdwsxHoUHHxp79bNqicbjISO2yTYp9QF-7sUrB-po2-Jvhwa3nEBVF1kvHFh3sraHkI0PImd58LVVKDrWNEc3jCl8au5YdKNN3ZSSp9jsu28RP-jDoiBvQf81KSqU42_S9c_1YaeI3eOk8XzsUbcjfKM3nMBHC71T55AhDEDYDQZEHh9lBq7Ez0okWlHpqgSyvmjkZ1CCbQoZtiCCODWbrmlPbfRnX64y75XM4zpdd9BJEBrEINF1nIkSJ--IUFO_sWAQ0fexCFVXg'}, {status: 200, statusText: ''});
+    req.flush({ access_token: TESTING_TOKEN}, {status: 200, statusText: ''});
 
     expect(loginSpy).toHaveBeenCalledTimes(1); // check that service is called once
     expect(navigateSpy).toHaveBeenCalledTimes(1); // check that service is called once
