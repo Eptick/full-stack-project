@@ -13,6 +13,7 @@ public class UserDto {
     String username;
 
     @Size(min = 4, max = 15)
+    @Pattern(regexp = "^(?=.{4,15}$)(?!.*[_.!?#]{2})[a-zA-Z0-9._!?#]+$")
     String password;
 
 
@@ -25,7 +26,7 @@ public class UserDto {
     }
 
     public String getPassword() {
-        return this.password;
+        return this.password.trim();
     }
 
     public void setPassword(String password) {

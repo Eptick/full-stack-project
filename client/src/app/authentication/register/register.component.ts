@@ -5,7 +5,7 @@ import { BalValidators } from '@baloise/web-app-validators-angular';
 import { catchError, throwError } from 'rxjs';
 import { AuthenticationService } from 'src/app/authentication.service';
 import { ErrorHandlingService } from 'src/app/services/error-handling.service';
-import { UsernameValidations } from 'src/app/util/project-validations';
+import { PasswordValidations, UsernameValidations } from 'src/app/util/project-validations';
 
 @Component({
   selector: 'app-register',
@@ -17,8 +17,8 @@ export class RegisterComponent {
   @ViewChild('register_form') form: NgForm;
 
   registerForm = new FormGroup({
-    username: new FormControl('user', UsernameValidations),
-    password: new FormControl('user', [BalValidators.isRequired(), BalValidators.isMinLength(4),  BalValidators.isMaxLength(15), BalValidators.matchesRegex(/^(?=.{4,15}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/)]),
+    username: new FormControl('', UsernameValidations),
+    password: new FormControl('', PasswordValidations),
   });
 
   constructor(

@@ -14,6 +14,7 @@
           <bal-ng-error controlName="username" error="isRequired">This field is required</bal-ng-error>
           <bal-ng-error controlName="username" error="isMinLength">Username needs to be at least 4 charachters long</bal-ng-error>
           <bal-ng-error controlName="username" error="isMaxLength">Username needs to be max 15 charachters long</bal-ng-error>
+          <bal-ng-error controlName="username" error="matchesRegex">Username must be 4-15 charachters long and contain only letters, numbers, . and _ that can't appear at the start or end of the username</bal-ng-error>
         </bal-field-message>
       </bal-field>
       <bal-field class="column is-half py-0" expanded required>
@@ -25,6 +26,7 @@
           <bal-ng-error controlName="password" error="isRequired">This field is required</bal-ng-error>
           <bal-ng-error controlName="password" error="isMinLength">Password needs to be at least 4 charachters long</bal-ng-error>
           <bal-ng-error controlName="password" error="isMaxLength">Password needs to be max 15 charachters long</bal-ng-error>
+          <bal-ng-error controlName="password" error="matchesRegex">The password can contain alphanumerical charachters and , . ! ? # these special charachters that can't appear more than twice in a row</bal-ng-error>
         </bal-field-message>
       </bal-field>
       <small class="px-3">Already have an account? <a href="/login" [routerLink]="['/login']">Login</a></small>

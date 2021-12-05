@@ -20,6 +20,9 @@
           <bal-field-control>
             <bal-input name="password" type="password" placeholder="Enter your passwod"  formControlName="password" required></bal-input>
           </bal-field-control>
+          <bal-field-message color="danger" >
+            <bal-ng-error controlName="password" error="isRequired">This field is required</bal-ng-error>
+          </bal-field-message>
         </bal-field>
         <small class="px-3">Still don't have an account? <a href="/register" [routerLink]="['/register']">Register</a></small>
       </form>

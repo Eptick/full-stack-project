@@ -11,6 +11,8 @@ export const UsernameValidations = [
 export const PasswordValidations = [
   BalValidators.isRequired(),
   BalValidators.isMinLength(4),
+  BalValidators.isMaxLength(15),
+  BalValidators.matchesRegex(/^(?=.{4,15}$)(?!.*[_.!?#]{2})[a-zA-Z0-9._!?#]+$/),
 ];
 export const RolesValidations = [
   BalValidators.isRequired(),

@@ -26,7 +26,7 @@ export class UserEditComponent implements OnInit {
   loading: boolean = false;
   form = new FormGroup({
     username: new FormControl(null, UsernameValidations),
-    password: new FormControl(null, [BalValidators.isMinLength(4)]), // when editing don't require the password
+    password: new FormControl(null, [BalValidators.isMinLength(4), BalValidators.isMinLength(4),BalValidators.isMaxLength(15), BalValidators.matchesRegex(/^(?=.{4,15}$)(?!.*[_.!?#]{2})[a-zA-Z0-9._!?#]+$/),]), // when editing don't require the password
     roles: new FormControl(null, RolesValidations),
   })
   constructor(

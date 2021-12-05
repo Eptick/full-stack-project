@@ -50,6 +50,12 @@
           <bal-ng-error controlName="password" error="isMinLength"
             >The password must be at least 4 charachters long</bal-ng-error
           >
+          <bal-ng-error controlName="password" error="isMaxLength"
+            >The password must be max 15 charachters long</bal-ng-error
+          >
+          <bal-ng-error controlName="password" error="matchesRegex"
+            >The password can contain alphanumerical charachters and , . ! ? # these special charachters that can't appear more than twice in a row</bal-ng-error
+          >
         </bal-field-message>
       </bal-field>
       <bal-field class="column is-full py-0" expanded required>
